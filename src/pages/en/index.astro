@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import Services from '../../components/Services.astro';
+import Features from '../../components/Features.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import FAQ from '../../components/FAQ.astro';
+import Contact from '../../components/Contact.astro';
+import site from '../../content/site.json';
+
+const locale = 'en';
+---
+
+<Layout title="EazyFix - Electronics Repair in Salamina">
+  <Hero business={site.business} locale={locale} />
+  <Services services={site.services} locale={locale} />
+  <Features features={site.features} locale={locale} />
+  <Testimonials testimonials={site.testimonials} locale={locale} />
+  <FAQ faq={site.faq} locale={locale} />
+  <Contact business={site.business} locale={locale} />
+</Layout>

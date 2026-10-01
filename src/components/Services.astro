@@ -1,0 +1,77 @@
+---
+const { services, locale } = Astro.props;
+---
+
+<section id="services" class="services">
+  <div class="container">
+    <h2 class="section-title">
+      {locale === 'el' ? 'Οι Υπηρεσίες μας' : 'Our Services'}
+    </h2>
+    <div class="services-grid">
+      {services.map((service) => (
+        <div class="service-card">
+          <div class="service-icon">{service.icon}</div>
+          <h3>{service.title[locale]}</h3>
+          <p>{service.description[locale]}</p>
+          <div class="service-price">{service.price}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding: 80px 0;
+    background: #f8f9ff;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: #1a1a2e;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .service-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.15);
+  }
+
+  .service-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #1a1a2e;
+  }
+
+  .service-card p {
+    color: #4a4a68;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .service-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #6c63ff;
+  }
+</style>

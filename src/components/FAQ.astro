@@ -1,0 +1,68 @@
+---
+const { faq, locale } = Astro.props;
+---
+
+<section id="faq" class="faq">
+  <div class="container">
+    <h2 class="section-title">
+      {locale === 'el' ? 'Συχνές Ερωτήσεις' : 'Frequently Asked Questions'}
+    </h2>
+    <div class="faq-list">
+      {faq.map((item, index) => (
+        <details class="faq-item">
+          <summary>{item.question[locale]}</summary>
+          <p>{item.answer[locale]}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding: 80px 0;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: #f8f9ff;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1a1a2e;
+    list-style: none;
+    position: relative;
+    padding-right: 50px;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #6c63ff;
+    transition: transform 0.3s;
+  }
+
+  .faq-item[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: #4a4a68;
+    line-height: 1.6;
+  }
+</style>

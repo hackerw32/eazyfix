@@ -1,0 +1,191 @@
+{
+  "business": {
+    "name": "EazyFix",
+    "tagline": {
+      "el": "Επισκευές Ηλεκτρονικών στη Σαλαμίνα",
+      "en": "Electronics Repair in Salamina"
+    },
+    "description": {
+      "el": "Επαγγελματικές επισκευές υπολογιστών, λάπτοπ και κινητών με επίσκεψη στο σπίτι σας. Δουλεύουμε με ραντεβού για την ευκολία σας.",
+      "en": "Professional computer, laptop and mobile repairs with home visits. We work by appointment for your convenience."
+    },
+    "phone": "6971234567",
+    "email": "info@eazyfix.gr",
+    "whatsapp": "6971234567",
+    "address": {
+      "el": "Σαλαμίνα, Ελλάδα",
+      "en": "Salamina, Greece"
+    },
+    "hours": {
+      "el": "Δευτέρα - Παρασκευή: 9:00 - 18:00, Σάββατο: 10:00 - 14:00",
+      "en": "Monday - Friday: 9:00 - 18:00, Saturday: 10:00 - 14:00"
+    }
+  },
+  "services": [
+    {
+      "id": "computer-repair",
+      "icon": "💻",
+      "title": { "el": "Επισκευή Υπολογιστών", "en": "Computer Repair" },
+      "description": {
+        "el": "Διάγνωση και επισκευή desktop και laptop. Αντικατάσταση εξαρτημάτων, εγκατάσταση λογισμικού.",
+        "en": "Diagnosis and repair of desktops and laptops. Component replacement, software installation."
+      },
+      "price": "€30+"
+    },
+    {
+      "id": "laptop-repair",
+      "icon": "🖥️",
+      "title": { "el": "Επισκευή Λάπτοπ", "en": "Laptop Repair" },
+      "description": {
+        "el": "Επισκευή οθόνης, πληκτρολογίου, μπαταρίας, μητρικής πλακέτας και άλλων εξαρτημάτων λάπτοπ.",
+        "en": "Repair of screen, keyboard, battery, motherboard and other laptop components."
+      },
+      "price": "€40+"
+    },
+    {
+      "id": "mobile-repair",
+      "icon": "📱",
+      "title": { "el": "Επισκευή Κινητών", "en": "Mobile Repair" },
+      "description": {
+        "el": "Επισκευή smartphones και tablets. Αλλαγή οθόνης, μπαταρίας, θύρας φόρτισης.",
+        "en": "Smartphone and tablet repair. Screen, battery, charging port replacement."
+      },
+      "price": "€25+"
+    },
+    {
+      "id": "virus-removal",
+      "icon": "🛡️",
+      "title": { "el": "Καθαρισμός Ιών", "en": "Virus Removal" },
+      "description": {
+        "el": "Αφαίρεση ιών, malware και ανεπιθύμητου λογισμικού. Ενίσχυση ασφάλειας συστήματος.",
+        "en": "Removal of viruses, malware and unwanted software. System security enhancement."
+      },
+      "price": "€35+"
+    },
+    {
+      "id": "data-recovery",
+      "icon": "💾",
+      "title": { "el": "Ανάκτηση Δεδομένων", "en": "Data Recovery" },
+      "description": {
+        "el": "Ανάκτηση χαμένων αρχείων από σκληρούς δίσκους, SSD, USB και άλλες συσκευές.",
+        "en": "Recovery of lost files from hard drives, SSDs, USBs and other devices."
+      },
+      "price": "€50+"
+    },
+    {
+      "id": "maintenance",
+      "icon": "🔧",
+      "title": { "el": "Συντήρηση & Αναβάθμιση", "en": "Maintenance & Upgrade" },
+      "description": {
+        "el": "Καθαρισμός, αναβάθμιση RAM, SSD, και γενική συντήρηση για καλύτερη απόδοση.",
+        "en": "Cleaning, RAM, SSD upgrade and general maintenance for better performance."
+      },
+      "price": "€20+"
+    }
+  ],
+  "features": [
+    {
+      "icon": "🏠",
+      "title": { "el": "Επίσκεψη στο Σπίτι", "en": "Home Visit" },
+      "description": {
+        "el": "Έρχομαι στο σπίτι σας για επισκευές. Δεν χρειάζεται να μετακινήσετε τον υπολογιστή σας.",
+        "en": "I come to your home for repairs. No need to move your computer."
+      }
+    },
+    {
+      "icon": "📅",
+      "title": { "el": "Ραντεβού", "en": "By Appointment" },
+      "description": {
+        "el": "Δουλεύουμε με ραντεβού για να εξασφαλίσουμε γρήγορη και αποτελεσματική εξυπηρέτηση.",
+        "en": "We work by appointment to ensure fast and efficient service."
+      }
+    },
+    {
+      "icon": "⚡",
+      "title": { "el": "Γρήγορη Εξυπηρέτηση", "en": "Fast Service" },
+      "description": {
+        "el": "Οι περισσότερες επισκευές ολοκληρώνονται σε 24-48 ώρες.",
+        "en": "Most repairs are completed within 24-48 hours."
+      }
+    },
+    {
+      "icon": "🛡️",
+      "title": { "el": "Εγγύηση", "en": "Warranty" },
+      "description": {
+        "el": "Παρέχουμε εγγύηση σε όλες τις επισκευές μας.",
+        "en": "We provide warranty on all our repairs."
+      }
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Γιώργος Π.",
+      "location": { "el": "Σαλαμίνα", "en": "Salamina" },
+      "text": {
+        "el": "Εξαιρετική εξυπηρέτηση! Ο τεχνικός ήρθε σπίτι μου και διόρθωσε το laptop μου σε λίγη ώρα.",
+        "en": "Excellent service! The technician came to my home and fixed my laptop in no time."
+      },
+      "rating": 5
+    },
+    {
+      "name": "Μαρία Κ.",
+      "location": { "el": "Σαλαμίνα", "en": "Salamina" },
+      "text": {
+        "el": "Πολύ επαγγελματικός και τίμιός τεχνικός. Συνέστησε τον υπολογιστή μου και τον έχω πάλι δουλεύοντας τέλεια.",
+        "en": "Very professional and honest technician. He upgraded my computer and it works perfectly again."
+      },
+      "rating": 5
+    },
+    {
+      "name": "Νίκος Α.",
+      "location": { "el": "Σαλαμίνα", "en": "Salamina" },
+      "text": {
+        "el": "Ανάκτησε δεδομένα από τον χαλασμένο μου δίσκο που νόμιζα ότι τα είχα χάσει για πάντα. Ευχαριστώ!",
+        "en": "Recovered data from my broken drive that I thought was lost forever. Thank you!"
+      },
+      "rating": 5
+    }
+  ],
+  "faq": [
+    {
+      "question": {
+        "el": "Πόσο κοστίζει μια επισκευή;",
+        "en": "How much does a repair cost?"
+      },
+      "answer": {
+        "el": "Το κόστος εξαρτάται από το πρόβλημα. Η διάγνωση είναι δωρεάν και σας δίνουμε τιμή πριν ξεκινήσουμε.",
+        "en": "The cost depends on the problem. Diagnosis is free and we give you a price before starting."
+      }
+    },
+    {
+      "question": {
+        "el": "Χρειάζεται ραντεβού;",
+        "en": "Do I need an appointment?"
+      },
+      "answer": {
+        "el": "Ναι, δουλεύουμε αποκλειστικά με ραντεβού για να σας εξυπηρετήσουμε καλύτερα.",
+        "en": "Yes, we work exclusively by appointment to serve you better."
+      }
+    },
+    {
+      "question": {
+        "el": "Παρέχετε εγγύηση;",
+        "en": "Do you provide warranty?"
+      },
+      "answer": {
+        "el": "Ναι, όλες οι επισκευές έχουν εγγύηση 30 ημερών.",
+        "en": "Yes, all repairs come with a 30-day warranty."
+      }
+    },
+    {
+      "question": {
+        "el": "Αναλαμβάνετε επισκευές εκτός Σαλαμίνας;",
+        "en": "Do you handle repairs outside Salamina?"
+      },
+      "answer": {
+        "el": "Προς το παρόν, εξυπηρετούμε τη Σαλαμίνα και τα γύρω χωριά.",
+        "en": "Currently, we serve Salamina and surrounding villages."
+      }
+    }
+  ]
+}

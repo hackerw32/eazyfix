@@ -1,0 +1,70 @@
+---
+const { testimonials, locale } = Astro.props;
+---
+
+<section id="testimonials" class="testimonials">
+  <div class="container">
+    <h2 class="section-title">
+      {locale === 'el' ? 'Τι Λένε οι Πελάτες μας' : 'What Our Customers Say'}
+    </h2>
+    <div class="testimonials-grid">
+      {testimonials.map((testimonial) => (
+        <div class="testimonial-card">
+          <div class="stars">{'★'.repeat(testimonial.rating)}</div>
+          <p class="testimonial-text">"{testimonial.text[locale]}"</p>
+          <div class="testimonial-author">
+            <strong>{testimonial.name}</strong>
+            <span>{testimonial.location[locale]}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding: 80px 0;
+    background: #f8f9ff;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .testimonial-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .testimonial-text {
+    color: #4a4a68;
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-author strong {
+    color: #1a1a2e;
+  }
+
+  .testimonial-author span {
+    color: #6c63ff;
+    font-size: 0.9rem;
+  }
+</style>
