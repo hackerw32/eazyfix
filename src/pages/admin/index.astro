@@ -1,0 +1,42 @@
+---
+import '../../styles/admin.css';
+import { COOKIE_NAME, isValidSession } from '../../lib/auth';
+
+if (!(await isValidSession(Astro.cookies.get(COOKIE_NAME)?.value))) {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>EazyFix Admin</title>
+  </head>
+  <body>
+    <header class="admin-header">
+      <h1>🔧 EazyFix Admin</h1>
+      <div class="header-actions">
+        <a href="/" target="_blank" rel="noopener">Προβολή σελίδας ↗</a>
+        <form method="POST" action="/api/admin/logout">
+          <button type="submit" class="btn-logout">Αποσύνδεση</button>
+        </form>
+      </div>
+    </header>
+
+    <main class="admin-container">
+      <div id="admin-app"><div class="loading">Φόρτωση...</div></div>
+    </main>
+
+    <div class="save-bar">
+      <span id="save-status"></span>
+      <button id="save-btn" class="btn btn-primary">💾 Αποθήκευση</button>
+    </div>
+
+    <script>
+      import '../../scripts/admin.js';
+    </script>
+  </body>
+</html>

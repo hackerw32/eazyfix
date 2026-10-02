@@ -1,0 +1,30 @@
+---
+import '../../styles/admin.css';
+import { COOKIE_NAME, isValidSession } from '../../lib/auth';
+
+if (await isValidSession(Astro.cookies.get(COOKIE_NAME)?.value)) {
+  return Astro.redirect('/admin');
+}
+
+const hasError = Astro.url.searchParams.has('error');
+---
+
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Σύνδεση - EazyFix Admin</title>
+  </head>
+  <body class="login-body">
+    <form class="login-card" method="POST" action="/api/admin/login">
+      <h1>🔧 EazyFix Admin</h1>
+      <p>Συνδεθείτε για να διαχειριστείτε τη σελίδα.</p>
+      {hasError && <div class="login-error">Λάθος κωδικός πρόσβασης. Δοκιμάστε ξανά.</div>}
+      <label for="password">Κωδικός πρόσβασης</label>
+      <input id="password" name="password" type="password" required autofocus autocomplete="current-password" />
+      <button type="submit">Σύνδεση</button>
+    </form>
+  </body>
+</html>

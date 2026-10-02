@@ -2,13 +2,51 @@
 interface Props {
   title: string;
   description?: string;
+  locale?: 'el' | 'en';
+  business?: {
+    name: string;
+    phone: string;
+    email: string;
+    address: { el: string; en: string };
+    hours: { el: string; en: string };
+  };
 }
 
-const { title, description = 'EazyFix - Επισκευές Ηλεκτρονικών στη Σαλαμίνα' } = Astro.props;
+const {
+  title,
+  description = 'EazyFix - Επισκευές Ηλεκτρονικών στη Σαλαμίνα',
+  locale = 'el',
+  business,
+} = Astro.props;
+
+const t = locale === 'en'
+  ? {
+      services: 'Services',
+      features: 'Why Us',
+      testimonials: 'Reviews',
+      faq: 'FAQ',
+      contact: 'Contact',
+      hoursTitle: 'Opening Hours',
+      rights: 'All rights reserved.',
+    }
+  : {
+      services: 'Υπηρεσίες',
+      features: 'Γιατί Εμείς',
+      testimonials: 'Μαρτυρίες',
+      faq: 'FAQ',
+      contact: 'Επικοινωνία',
+      hoursTitle: 'Ώρες Λειτουργίας',
+      rights: 'Με επιφύλαξη παντός δικαιώματος.',
+    };
+
+const phone = business?.phone ?? '6971234567';
+const email = business?.email ?? 'info@eazyfix.gr';
+const address = business?.address?.[locale] ?? '';
+const hours = business?.hours?.[locale] ?? '';
 ---
 
 <!DOCTYPE html>
-<html lang={Astro.currentLocale}>
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,15 +65,15 @@ const { title, description = 'EazyFix - Επισκευές Ηλεκτρονικ�
           <span class="logo-text">EazyFix</span>
         </a>
         <div class="nav-links">
-          <a href="#services" class="nav-link">Υπηρεσίες</a>
-          <a href="#features" class="nav-link">Γιατί Εμείς</a>
-          <a href="#testimonials" class="nav-link">Μαρτυρίες</a>
-          <a href="#faq" class="nav-link">FAQ</a>
-          <a href="#contact" class="nav-link nav-cta">Επικοινωνία</a>
+          <a href="#services" class="nav-link">{t.services}</a>
+          <a href="#features" class="nav-link">{t.features}</a>
+          <a href="#testimonials" class="nav-link">{t.testimonials}</a>
+          <a href="#faq" class="nav-link">{t.faq}</a>
+          <a href="#contact" class="nav-link nav-cta">{t.contact}</a>
         </div>
         <div class="lang-switch">
-          <a href="/el/" class="lang-btn" class:list={{ 'active': Astro.currentLocale === 'el' }}>EL</a>
-          <a href="/en/" class="lang-btn" class:list={{ 'active': Astro.currentLocale === 'en' }}>EN</a>
+          <a href="/el/" class="lang-btn" class:list={{ active: locale === 'el' }}>EL</a>
+          <a href="/en/" class="lang-btn" class:list={{ active: locale === 'en' }}>EN</a>
         </div>
         <button class="mobile-menu-btn" aria-label="Menu">
           <span></span>
@@ -53,23 +91,22 @@ const { title, description = 'EazyFix - Επισκευές Ηλεκτρονικ�
       <div class="container">
         <div class="footer-content">
           <div class="footer-brand">
-            <h3>EazyFix</h3>
-            <p>Επισκευές Ηλεκτρονικών στη Σαλαμίνα</p>
+            <h3>{business?.name ?? 'EazyFix'}</h3>
+            <p>{description}</p>
           </div>
           <div class="footer-contact">
-            <h4>Επικοινωνία</h4>
-            <p>📞 6971234567</p>
-            <p>✉️ info@eazyfix.gr</p>
-            <p>📍 Σαλαμίνα, Ελλάδα</p>
+            <h4>{t.contact}</h4>
+            <p>📞 {phone}</p>
+            <p>✉️ {email}</p>
+            {address && <p>📍 {address}</p>}
           </div>
           <div class="footer-hours">
-            <h4>Ώρες Λειτουργίας</h4>
-            <p>Δευ-Παρ: 9:00 - 18:00</p>
-            <p>Σάββατο: 10:00 - 14:00</p>
+            <h4>{t.hoursTitle}</h4>
+            <p>{hours}</p>
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2026 EazyFix. Με επιφύλαξη παντός δικαιώματος.</p>
+          <p>&copy; 2026 {business?.name ?? 'EazyFix'}. {t.rights}</p>
         </div>
       </div>
     </footer>

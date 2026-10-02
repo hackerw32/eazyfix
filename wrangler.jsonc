@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "eazyfix",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "CONTENT_DB",
+      "database_name": "eazyfix-content",
+      "database_id": "fcd83c5a-ff8d-4e3a-b7bd-8eb3da9d10a9"
+    }
+  ]
+}

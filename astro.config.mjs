@@ -1,14 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://eazyfix.gr',
-  i18n: {
-    defaultLocale: 'el',
-    locales: ['el', 'en'],
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
-  output: 'static',
+  output: 'server',
+  session: false,
+  adapter: cloudflare(),
 });

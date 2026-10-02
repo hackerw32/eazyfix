@@ -6,12 +6,13 @@ import Features from '../../components/Features.astro';
 import Testimonials from '../../components/Testimonials.astro';
 import FAQ from '../../components/FAQ.astro';
 import Contact from '../../components/Contact.astro';
-import site from '../../content/site.json';
+import { getContent } from '../../lib/content';
 
 const locale = 'el';
+const site = await getContent();
 ---
 
-<Layout title="EazyFix - Επισκευές Ηλεκτρονικών στη Σαλαμίνα">
+<Layout title="EazyFix - Επισκευές Ηλεκτρονικών στη Σαλαμίνα" locale={locale} business={site.business}>
   <Hero business={site.business} locale={locale} />
   <Services services={site.services} locale={locale} />
   <Features features={site.features} locale={locale} />
