@@ -1,0 +1,650 @@
+---
+import Icon from './Icon.astro';
+import type { Template } from '../data/templates';
+
+interface Props {
+  data: Template;
+}
+
+const { data } = Astro.props;
+const c = data.contact;
+const dark = ['gym', 'law', 'restaurant'].includes(data.slug);
+const navLinks = ['Σχετικά', data.offeringTitle, 'Gallery', 'Επικοινωνία'];
+const navHrefs = ['#about', '#offering', '#gallery', '#contact'];
+---
+
+<div
+  class="tpl"
+  data-dark={dark ? 'true' : 'false'}
+  style={`--p:${data.theme.primary};--d:${data.theme.dark};--s:${data.theme.soft};--a:${data.theme.accent ?? data.theme.primary};`}
+>
+  <header class="tpl-nav">
+    <div class="tpl-container nav-inner">
+      <span class="tpl-brand">
+        <span class="tpl-mark"><Icon name={data.accentIcon} size={18} /></span>
+        {data.brand}
+      </span>
+      <nav class="tpl-links">
+        {navLinks.map((label, i) => (
+          <a href={navHrefs[i]}>{label}</a>
+        ))}
+      </nav>
+      <a href="#contact" class="tpl-btn tpl-btn--primary">{data.heroCta}</a>
+    </div>
+  </header>
+
+  <section class="tpl-hero">
+    <div class="tpl-container hero-grid">
+      <div class="hero-text">
+        <span class="tpl-tag">{data.industry ? data.brand : ''}</span>
+        <h1>{data.heroTitle}</h1>
+        <p>{data.heroSubtitle}</p>
+        <div class="hero-actions">
+          <a href="#contact" class="tpl-btn tpl-btn--primary">{data.heroCta}</a>
+          <a href="#offering" class="tpl-btn tpl-btn--ghost">{data.heroSecondary}</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual-card"></div>
+        <div class="hero-badge">
+          <Icon name="star" size={16} />
+          4.9 / 5 · {data.testimonials.length * 47} reviews
+        </div>
+      </div>
+    </div>
+
+    <div class="tpl-container hero-strip">
+      <div class="strip-item"><Icon name="map-pin" size={18} /> {c.address}</div>
+      <div class="strip-item"><Icon name="phone" size={18} /> {c.phone}</div>
+      <div class="strip-item"><Icon name="clock" size={18} /> {c.hours}</div>
+    </div>
+  </section>
+
+  <section id="about" class="tpl-section">
+    <div class="tpl-container about-grid">
+      <div>
+        <span class="tpl-eyebrow">Σχετικά</span>
+        <h2>{data.aboutTitle}</h2>
+        <p class="muted">{data.aboutText}</p>
+      </div>
+      <ul class="points">
+        {data.aboutPoints.map((point) => (
+          <li><span class="check"><Icon name="check" size={15} /></span>{point}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="offering" class="tpl-section tpl-section--soft">
+    <div class="tpl-container">
+      <div class="center-head">
+        <span class="tpl-eyebrow">Προσφορά</span>
+        <h2>{data.offeringTitle}</h2>
+      </div>
+      <div class="offering-grid">
+        {data.offering.map((item) => (
+          <article class="offering-item">
+            <div class="offering-head">
+              <h3>{item.name}</h3>
+              {item.price && <span class="offering-price">{item.price}</span>}
+            </div>
+            <p>{item.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="tpl-section">
+    <div class="tpl-container">
+      <div class="center-head">
+        <span class="tpl-eyebrow">Gallery</span>
+        <h2>Ρίξτε μια ματιά</h2>
+      </div>
+      <div class="gallery-grid">
+        {data.gallery.map((caption, i) => (
+          <div class={`gallery-tile tile-${i % 4}`}>
+            <span>{caption}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="tpl-section tpl-section--soft">
+    <div class="tpl-container">
+      <div class="center-head">
+        <span class="tpl-eyebrow">Μαρτυρίες</span>
+        <h2>Τι λένε οι πελάτες</h2>
+      </div>
+      <div class="testi-grid">
+        {data.testimonials.map((testimonial) => (
+          <figure class="testi">
+            <div class="stars">
+              {Array.from({ length: testimonial.rating }).map(() => (
+                <Icon name="star" size={15} />
+              ))}
+            </div>
+            <blockquote>{testimonial.text}</blockquote>
+            <figcaption>{testimonial.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="tpl-section tpl-contact">
+    <div class="tpl-container contact-grid">
+      <div>
+        <span class="tpl-eyebrow">Επικοινωνία</span>
+        <h2>Ελάτε σε επαφή</h2>
+        <ul class="contact-list">
+          <li><Icon name="map-pin" size={18} /> {c.address}</li>
+          <li><Icon name="phone" size={18} /> {c.phone}</li>
+          <li><Icon name="mail" size={18} /> {c.email}</li>
+          <li><Icon name="clock" size={18} /> {c.hours}</li>
+        </ul>
+      </div>
+      <form class="demo-form" onsubmit="event.preventDefault(); this.reset();">
+        <input type="text" placeholder="Όνομα" required />
+        <input type="tel" placeholder="Τηλέφωνο" required />
+        <input type="email" placeholder="Email" required />
+        <textarea rows="4" placeholder="Μήνυμα" required></textarea>
+        <button type="submit" class="tpl-btn tpl-btn--primary">Αποστολή</button>
+        <small>Ενδεικτική φόρμα demo — δεν αποστέλλει δεδομένα.</small>
+      </form>
+    </div>
+  </section>
+
+  <footer class="tpl-footer">
+    <div class="tpl-container footer-inner">
+      <span class="tpl-brand tpl-brand--footer">
+        <span class="tpl-mark"><Icon name={data.accentIcon} size={18} /></span>
+        {data.brand}
+      </span>
+      <span>© {new Date().getFullYear()} {data.brand}. Demo template.</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .tpl {
+    --tpl-radius: 16px;
+    background: #fff;
+    color: #0f172a;
+  }
+
+  .tpl-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .tpl h1,
+  .tpl h2,
+  .tpl h3 {
+    font-family: 'Sora', 'Inter', sans-serif;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .tpl h2 {
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    margin-bottom: 14px;
+  }
+
+  .muted {
+    color: #64748b;
+  }
+
+  /* Nav */
+  .tpl-nav {
+    position: sticky;
+    top: 44px;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #eef1f6;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 70px;
+  }
+
+  .tpl-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+  }
+
+  .tpl-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--p);
+    color: #fff;
+  }
+
+  .tpl-links {
+    display: flex;
+    gap: 26px;
+    font-size: 0.94rem;
+    font-weight: 500;
+  }
+
+  .tpl-links a {
+    color: #334155;
+    text-decoration: none;
+  }
+
+  .tpl-links a:hover {
+    color: var(--p);
+  }
+
+  .tpl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.94rem;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+
+  .tpl-btn--primary {
+    background: var(--p);
+    color: #fff;
+  }
+
+  .tpl-btn--primary:hover {
+    transform: translateY(-2px);
+  }
+
+  .tpl-btn--ghost {
+    border-color: #d6dbe4;
+    color: #0f172a;
+  }
+
+  /* Hero */
+  .tpl-hero {
+    background: linear-gradient(180deg, var(--s), #fff);
+    padding: 70px 0 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 50px;
+    align-items: center;
+    padding-bottom: 56px;
+  }
+
+  .tpl-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--p);
+    margin-bottom: 18px;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(2.1rem, 4.4vw, 3.2rem);
+  }
+
+  .hero-text p {
+    color: #475569;
+    font-size: 1.1rem;
+    margin: 20px 0 30px;
+    max-width: 48ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+
+  .hero-visual-card {
+    height: 340px;
+    border-radius: 20px;
+    background: linear-gradient(140deg, var(--p), var(--d));
+    box-shadow: 0 40px 70px -40px color-mix(in srgb, var(--p) 60%, #000);
+  }
+
+  .hero-badge {
+    position: absolute;
+    left: -14px;
+    bottom: 22px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    box-shadow: 0 18px 40px -22px rgba(15, 23, 42, 0.5);
+  }
+
+  .hero-badge svg {
+    color: #f59e0b;
+    fill: currentColor;
+  }
+
+  .hero-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: var(--tpl-radius);
+    padding: 22px 26px;
+    box-shadow: 0 24px 50px -40px rgba(15, 23, 42, 0.5);
+    transform: translateY(28px);
+  }
+
+  .strip-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #334155;
+  }
+
+  .strip-item svg {
+    color: var(--p);
+    flex-shrink: 0;
+  }
+
+  /* Sections */
+  .tpl-section {
+    padding: 96px 0;
+  }
+
+  .tpl-section--soft {
+    background: var(--s);
+  }
+
+  .tpl-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--p);
+    margin-bottom: 14px;
+  }
+
+  .center-head {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 48px;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .about-grid p {
+    margin-top: 16px;
+    font-size: 1.02rem;
+  }
+
+  .points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .points li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+
+  .check {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--p) 14%, #fff);
+    color: var(--p);
+    flex-shrink: 0;
+  }
+
+  .offering-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .offering-item {
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: var(--tpl-radius);
+    padding: 26px;
+  }
+
+  .offering-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .offering-head h3 {
+    font-size: 1.1rem;
+  }
+
+  .offering-price {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    color: var(--p);
+    white-space: nowrap;
+  }
+
+  .offering-item p {
+    color: #64748b;
+    font-size: 0.94rem;
+    margin-top: 8px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .gallery-tile {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--tpl-radius);
+    display: flex;
+    align-items: flex-end;
+    padding: 18px;
+    color: #fff;
+    font-weight: 600;
+    background: linear-gradient(150deg, var(--p), var(--d));
+  }
+
+  .gallery-tile.tile-1 {
+    background: linear-gradient(150deg, var(--a), var(--d));
+  }
+  .gallery-tile.tile-2 {
+    background: linear-gradient(150deg, var(--d), var(--p));
+  }
+  .gallery-tile.tile-3 {
+    background: linear-gradient(150deg, var(--p), var(--a));
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .testi {
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: var(--tpl-radius);
+    padding: 28px;
+    margin: 0;
+  }
+
+  .stars {
+    display: flex;
+    gap: 3px;
+    color: #f59e0b;
+    margin-bottom: 14px;
+  }
+
+  .stars svg {
+    fill: currentColor;
+  }
+
+  .testi blockquote {
+    margin: 0 0 16px;
+    font-size: 1rem;
+    color: #1e293b;
+  }
+
+  .testi figcaption {
+    font-weight: 700;
+    font-family: 'Sora', sans-serif;
+    color: var(--p);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+  }
+
+  .contact-list {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+
+  .contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    color: #334155;
+  }
+
+  .contact-list svg {
+    color: var(--p);
+  }
+
+  .demo-form {
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: var(--tpl-radius);
+    padding: 30px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 30px 60px -45px rgba(15, 23, 42, 0.6);
+  }
+
+  .demo-form input,
+  .demo-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #dde3ec;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.96rem;
+  }
+
+  .demo-form input:focus,
+  .demo-form textarea:focus {
+    outline: none;
+    border-color: var(--p);
+  }
+
+  .demo-form small {
+    color: #94a3b8;
+    text-align: center;
+  }
+
+  .tpl-footer {
+    background: var(--d);
+    color: #cbd5e1;
+    padding: 34px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .tpl-brand--footer {
+    color: #fff;
+  }
+
+  .tpl-brand--footer .tpl-mark {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .about-grid,
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .hero-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .offering-grid,
+    .testi-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tpl-links {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import Icon from './Icon.astro';
+import TemplateCard from './TemplateCard.astro';
+import { templates } from '../data/templates';
+
+interface Props {
+  portfolio: {
+    badge: Record<string, string>;
+    title: Record<string, string>;
+    subtitle: Record<string, string>;
+  };
+  locale: 'el' | 'en';
+}
+
+const { portfolio, locale } = Astro.props;
+const featured = templates.slice(0, 3);
+const allLabel = locale === 'en' ? 'See all templates' : 'Δείτε όλα τα πρότυπα';
+const allHref = locale === 'en' ? '/en/templates' : '/templates';
+---
+
+<section id="portfolio" class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow">{portfolio.badge[locale]}</span>
+      <h2 class="h2">{portfolio.title[locale]}</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto">{portfolio.subtitle[locale]}</p>
+    </div>
+
+    <div class="portfolio-grid">
+      {featured.map((template) => (
+        <TemplateCard template={template} locale={locale} />
+      ))}
+    </div>
+
+    <div class="portfolio-cta">
+      <a href={allHref} class="btn btn--outline">
+        {allLabel}
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .portfolio-cta {
+    text-align: center;
+    margin-top: 46px;
+  }
+
+  @media (max-width: 980px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

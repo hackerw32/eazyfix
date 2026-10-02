@@ -1,0 +1,145 @@
+---
+interface Props {
+  title: string;
+  brand: string;
+  industry: string;
+  from?: string;
+}
+
+const { title, brand, industry, from = 'el' } = Astro.props;
+const backHref = from === 'en' ? '/en/templates' : '/templates';
+const backLabel = from === 'en' ? 'Back to templates' : 'Πίσω στα πρότυπα';
+const ctaLabel = from === 'en' ? 'I want a site like this' : 'Θέλω τέτοια σελίδα';
+---
+
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="demo-bar">
+      <div class="demo-bar-inner">
+        <div class="demo-bar-left">
+          <span class="demo-tag">DEMO</span>
+          <span class="demo-name">{brand}</span>
+          <span class="demo-industry">{industry}</span>
+        </div>
+        <div class="demo-bar-right">
+          <a href="/#contact" class="demo-cta">{ctaLabel}</a>
+          <a href={backHref} class="demo-back">{backLabel}</a>
+        </div>
+      </div>
+    </div>
+
+    <slot />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      :global(body) {
+        margin: 0;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        color: #0f172a;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .demo-bar {
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        background: #0b1120;
+        color: #e2e8f0;
+      }
+
+      .demo-bar-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .demo-bar-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .demo-tag {
+        font-size: 0.66rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        background: #4f46e5;
+        color: #fff;
+        padding: 4px 9px;
+        border-radius: 6px;
+      }
+
+      .demo-name {
+        font-weight: 700;
+      }
+
+      .demo-industry {
+        color: #94a3b8;
+        font-size: 0.86rem;
+      }
+
+      .demo-bar-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .demo-back {
+        color: #94a3b8;
+        font-size: 0.88rem;
+        text-decoration: none;
+      }
+
+      .demo-back:hover {
+        color: #fff;
+      }
+
+      .demo-cta {
+        background: #fff;
+        color: #0b1120;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 8px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+      }
+
+      .demo-cta:hover {
+        background: #e2e8f0;
+      }
+
+      @media (max-width: 560px) {
+        .demo-industry {
+          display: none;
+        }
+        .demo-back {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>

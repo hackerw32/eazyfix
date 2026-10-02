@@ -1,0 +1,218 @@
+---
+import Icon from './Icon.astro';
+import type { Template } from '../data/templates';
+
+interface Props {
+  template: Template;
+  locale: 'el' | 'en';
+}
+
+const { template, locale } = Astro.props;
+const t = template.theme;
+const demoLabel = locale === 'en' ? 'View live demo' : 'Δείτε το demo';
+---
+
+<a
+  class="tcard"
+  href={`/demo/${template.slug}?from=${locale}`}
+  style={`--tp:${t.primary}; --td:${t.dark}; --ts:${t.soft}; --ta:${t.accent ?? t.primary};`}
+>
+  <div class="tcard-preview">
+    <div class="mini">
+      <div class="mini-top">
+        <span class="mini-logo"></span>
+        <span class="mini-nav"></span>
+        <span class="mini-nav"></span>
+        <span class="mini-nav mini-nav--btn"></span>
+      </div>
+      <div class="mini-hero">
+        <div class="mini-hero-text">
+          <span class="mini-line mini-line--lg"></span>
+          <span class="mini-line mini-line--md"></span>
+          <span class="mini-btn"></span>
+        </div>
+        <div class="mini-hero-visual"></div>
+      </div>
+      <div class="mini-blocks">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tcard-body">
+    <span class="tcard-industry">
+      <Icon name={template.accentIcon} size={15} />
+      {template.industry[locale]}
+    </span>
+    <h3>{template.brand}</h3>
+    <p>{template.tagline}</p>
+    <span class="tcard-link">
+      {demoLabel}
+      <Icon name="arrow-up-right" size={16} />
+    </span>
+  </div>
+</a>
+
+<style>
+  .tcard {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  }
+
+  .tcard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+  }
+
+  .tcard-preview {
+    padding: 22px 22px 0;
+    background: linear-gradient(180deg, var(--ts), color-mix(in srgb, var(--ts) 60%, #fff));
+  }
+
+  .mini {
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 14px 30px -18px rgba(15, 23, 42, 0.5);
+    overflow: hidden;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    border-bottom: 0;
+  }
+
+  .mini-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 13px;
+    border-bottom: 1px solid #eef1f6;
+  }
+
+  .mini-logo {
+    width: 22px;
+    height: 10px;
+    border-radius: 4px;
+    background: var(--tp);
+  }
+
+  .mini-nav {
+    width: 22px;
+    height: 5px;
+    border-radius: 3px;
+    background: #e2e8f0;
+  }
+
+  .mini-nav--btn {
+    margin-left: auto;
+    width: 30px;
+    height: 12px;
+    border-radius: 6px;
+    background: var(--tp);
+  }
+
+  .mini-hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 12px;
+    padding: 16px 15px;
+  }
+
+  .mini-hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .mini-line {
+    height: 7px;
+    border-radius: 4px;
+    background: #e2e8f0;
+  }
+
+  .mini-line--lg {
+    height: 11px;
+    width: 90%;
+    background: var(--td);
+    opacity: 0.85;
+  }
+
+  .mini-line--md {
+    width: 66%;
+  }
+
+  .mini-btn {
+    width: 46px;
+    height: 13px;
+    border-radius: 7px;
+    background: var(--ta);
+    margin-top: 4px;
+  }
+
+  .mini-hero-visual {
+    border-radius: 9px;
+    background: linear-gradient(140deg, var(--tp), var(--td));
+    min-height: 74px;
+  }
+
+  .mini-blocks {
+    display: flex;
+    gap: 9px;
+    padding: 0 15px 16px;
+  }
+
+  .mini-blocks span {
+    flex: 1;
+    height: 34px;
+    border-radius: 7px;
+    background: var(--ts);
+  }
+
+  .tcard-body {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .tcard-industry {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tp);
+  }
+
+  .tcard-body h3 {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+  }
+
+  .tcard-body p {
+    color: var(--muted);
+    font-size: 0.94rem;
+    flex: 1;
+  }
+
+  .tcard-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 0.93rem;
+    color: var(--ink);
+  }
+
+  .tcard:hover .tcard-link {
+    color: var(--tp);
+  }
+</style>

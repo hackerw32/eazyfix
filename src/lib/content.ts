@@ -27,6 +27,35 @@ function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Deep merge so that content saved in the database keeps working when new
+ * fields are added to the default schema. Stored values win; missing values
+ * fall back to the defaults.
+ */
+export function mergeContent<T>(defaults: T, stored: unknown): T {
+  if (!isPlainObject(defaults)) {
+    return (stored === undefined ? defaults : (stored as T));
+  }
+  if (!isPlainObject(stored)) return defaults;
+
+  const result: Record<string, unknown> = { ...defaults };
+  for (const key of Object.keys(stored)) {
+    if (key in defaults) {
+      result[key] = mergeContent(
+        (defaults as Record<string, unknown>)[key],
+        (stored as Record<string, unknown>)[key]
+      );
+    } else {
+      result[key] = (stored as Record<string, unknown>)[key];
+    }
+  }
+  return result as T;
+}
+
 export async function getContent(): Promise<SiteContent> {
   const db = getDb();
   if (!db) return clone(defaultContent);
@@ -43,7 +72,8 @@ export async function getContent(): Promise<SiteContent> {
       return seed;
     }
 
-    return JSON.parse(row.value) as SiteContent;
+    const stored = JSON.parse(row.value) as unknown;
+    return mergeContent(defaultContent, stored);
   } catch {
     return clone(defaultContent);
   }

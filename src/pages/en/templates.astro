@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TemplatesGallery from '../../components/TemplatesGallery.astro';
+import { getContent } from '../../lib/content';
+
+const locale = 'en';
+const site = await getContent();
+---
+
+<Layout
+  title="Website Templates - EazyFix"
+  description="Ready-made website templates for every profession. Browse fully functional demos."
+  locale={locale}
+  business={site.business}
+>
+  <TemplatesGallery locale={locale} />
+</Layout>

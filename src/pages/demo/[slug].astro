@@ -1,0 +1,25 @@
+---
+import DemoLayout from '../../layouts/DemoLayout.astro';
+import TemplateDemo from '../../components/TemplateDemo.astro';
+import { getTemplate } from '../../data/templates';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const template = getTemplate(slug ?? '');
+
+if (!template) {
+  return new Response('Template not found', { status: 404 });
+}
+
+const from = Astro.url.searchParams.get('from') === 'en' ? 'en' : 'el';
+---
+
+<DemoLayout
+  title={`${template.brand} — Demo`}
+  brand={template.brand}
+  industry={template.industry.el}
+  from={from}
+>
+  <TemplateDemo data={template} />
+</DemoLayout>

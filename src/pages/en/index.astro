@@ -2,6 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import Hero from '../../components/Hero.astro';
 import Services from '../../components/Services.astro';
+import WebDev from '../../components/WebDev.astro';
+import Process from '../../components/Process.astro';
+import Portfolio from '../../components/Portfolio.astro';
 import Features from '../../components/Features.astro';
 import Testimonials from '../../components/Testimonials.astro';
 import FAQ from '../../components/FAQ.astro';
@@ -13,15 +16,18 @@ const site = await getContent();
 ---
 
 <Layout
-  title="EazyFix - Electronics Repair in Salamina"
+  title="EazyFix - Electronics Repair & Web Development in Salamina"
   description={site.business.description.en}
   locale={locale}
   business={site.business}
 >
-  <Hero business={site.business} locale={locale} />
+  <Hero hero={site.hero} locale={locale} />
   <Services services={site.services} locale={locale} />
+  <WebDev webdev={site.webdev} locale={locale} />
+  <Process process={site.process} locale={locale} />
+  <Portfolio portfolio={site.portfolio} locale={locale} />
   <Features features={site.features} locale={locale} />
   <Testimonials testimonials={site.testimonials} locale={locale} />
   <FAQ faq={site.faq} locale={locale} />
-  <Contact business={site.business} locale={locale} />
+  <Contact business={site.business} contact={site.contact} locale={locale} />
 </Layout>
