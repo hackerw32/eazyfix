@@ -45,7 +45,7 @@ const { business, locale } = Astro.props;
           </div>
         </div>
       </div>
-      <form class="contact-form" id="contactForm">
+      <form class="contact-form" id="contactForm" data-whatsapp={business.whatsapp} data-locale={locale}>
         <div class="form-group">
           <label for="name">{locale === 'el' ? 'Όνομα' : 'Name'}</label>
           <input type="text" id="name" name="name" required />
@@ -83,22 +83,24 @@ const { business, locale } = Astro.props;
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(form);
+    const locale = form.dataset.locale === 'en' ? 'en' : 'el';
+    const whatsapp = form.dataset.whatsapp || '';
     const name = formData.get('name');
     const phone = formData.get('phone');
-    const service = formData.get('service');
+    const service = String(formData.get('service') ?? '');
     const message = formData.get('message');
 
-    const serviceNames = {
-      computer: 'Επισκευή Υπολογιστών',
-      laptop: 'Επισκευή Λάπτοπ',
-      mobile: 'Επισκευή Κινητών',
-      virus: 'Καθαρισμός Ιών',
-      data: 'Ανάκτηση Δεδομένων',
-      other: 'Άλλο'
-    };
+    const serviceNames = locale === 'en'
+      ? { computer: 'Computer Repair', laptop: 'Laptop Repair', mobile: 'Mobile Repair', virus: 'Virus Removal', data: 'Data Recovery', other: 'Other' }
+      : { computer: 'Επισκευή Υπολογιστών', laptop: 'Επισκευή Λάπτοπ', mobile: 'Επισκευή Κινητών', virus: 'Καθαρισμός Ιών', data: 'Ανάκτηση Δεδομένων', other: 'Άλλο' };
 
-    const text = `Νέο Αίτημα Επισκευής%0A%0AΌνομα: ${name}%0AΤηλέφωνο: ${phone}%0AΥπηρεσία: ${serviceNames[service]}%0AΜήνυμα: ${message}`;
-    window.open(`https://wa.me/6971234567?text=${text}`, '_blank');
+    const header = locale === 'en' ? 'New Repair Request' : 'Νέο Αίτημα Επισκευής';
+    const labels = locale === 'en'
+      ? { name: 'Name', phone: 'Phone', service: 'Service', message: 'Message' }
+      : { name: 'Όνομα', phone: 'Τηλέφωνο', service: 'Υπηρεσία', message: 'Μήνυμα' };
+
+    const text = `${header}%0A%0A${labels.name}: ${name}%0A${labels.phone}: ${phone}%0A${labels.service}: ${serviceNames[service]}%0A${labels.message}: ${message}`;
+    window.open(`https://wa.me/${whatsapp}?text=${text}`, '_blank');
   });
 </script>
 

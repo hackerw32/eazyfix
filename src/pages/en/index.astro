@@ -12,7 +12,12 @@ const locale = 'en';
 const site = await getContent();
 ---
 
-<Layout title="EazyFix - Electronics Repair in Salamina" locale={locale} business={site.business}>
+<Layout
+  title="EazyFix - Electronics Repair in Salamina"
+  description={site.business.description.en}
+  locale={locale}
+  business={site.business}
+>
   <Hero business={site.business} locale={locale} />
   <Services services={site.services} locale={locale} />
   <Features features={site.features} locale={locale} />
