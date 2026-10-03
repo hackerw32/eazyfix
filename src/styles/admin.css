@@ -472,6 +472,40 @@ body {
   cursor: default;
 }
 
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.icon-btn--danger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: #fef2f2;
+}
+
+.icon-btn--on {
+  color: var(--success);
+  border-color: #bbf7d0;
+}
+
+.icon-btn--on:hover {
+  border-color: var(--success);
+  color: var(--success);
+}
+
 /* ---------------- Toolbar ---------------- */
 .toolbar {
   display: flex;

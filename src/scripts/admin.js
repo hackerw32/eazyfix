@@ -54,6 +54,18 @@ function esc(value) {
     .replace(/"/g, '&quot;');
 }
 
+const ICONS = {
+  power: '<path d="M12 2v10"/><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>',
+  edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  trash:
+    '<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+};
+
+function icon(name, size = 17) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] ?? ''}</svg>`;
+}
+
 const GREEK = {
   α: 'a', β: 'v', γ: 'g', δ: 'd', ε: 'e', ζ: 'z', η: 'i', θ: 'th', ι: 'i', κ: 'k', λ: 'l',
   μ: 'm', ν: 'n', ξ: 'x', ο: 'o', π: 'p', ρ: 'r', σ: 's', ς: 's', τ: 't', υ: 'y', φ: 'f',
@@ -185,9 +197,9 @@ function renderProjectsList() {
           </div>
         </div>
         <div class="prow-actions">
-          <button type="button" class="abtn abtn--ghost2 abtn--sm" data-action="toggle" data-id="${project.id}">${project.enabled ? 'Απενεργοποίηση' : 'Ενεργοποίηση'}</button>
-          <button type="button" class="abtn abtn--ghost2 abtn--sm" data-action="edit" data-id="${project.id}">Επεξεργασία</button>
-          <button type="button" class="abtn abtn--danger abtn--sm" data-action="delete" data-id="${project.id}">Διαγραφή</button>
+          <button type="button" class="icon-btn ${project.enabled ? '' : 'icon-btn--on'}" data-action="toggle" data-id="${project.id}" title="${project.enabled ? 'Απενεργοποίηση' : 'Ενεργοποίηση'}" aria-label="${project.enabled ? 'Απενεργοποίηση' : 'Ενεργοποίηση'}">${icon('power')}</button>
+          <button type="button" class="icon-btn" data-action="edit" data-id="${project.id}" title="Επεξεργασία" aria-label="Επεξεργασία">${icon('edit')}</button>
+          <button type="button" class="icon-btn icon-btn--danger" data-action="delete" data-id="${project.id}" title="Διαγραφή" aria-label="Διαγραφή">${icon('trash')}</button>
         </div>
       </div>`
     )
