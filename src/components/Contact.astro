@@ -21,24 +21,42 @@ const labels =
     ? {
         name: 'Name',
         phone: 'Phone',
-        service: 'Service',
+        service: 'What do you need?',
         message: 'Message',
         submit: 'Send message',
         choose: 'Select...',
-        other: 'Other',
-        whatsapp: 'WhatsApp',
-        serviceOptions: ['Computer repair', 'Laptop repair', 'Mobile repair', 'Virus removal', 'Data recovery', 'Website design', 'Other'],
+        phoneLabel: 'Phone',
+        emailLabel: 'Email',
+        areaLabel: 'Area',
+        hoursLabel: 'Hours',
+        options: [
+          { value: 'electronics', label: 'Electronics repair' },
+          { value: 'website', label: 'Website development' },
+          { value: 'android-app', label: 'Android app' },
+          { value: 'android-game', label: 'Android game' },
+          { value: 'windows-app', label: 'Windows / Python app' },
+          { value: 'other', label: 'Other' },
+        ],
       }
     : {
         name: 'Όνομα',
         phone: 'Τηλέφωνο',
-        service: 'Υπηρεσία',
+        service: 'Τι χρειάζεστε;',
         message: 'Μήνυμα',
         submit: 'Αποστολή',
         choose: 'Επιλέξτε...',
-        other: 'Άλλο',
-        whatsapp: 'WhatsApp',
-        serviceOptions: ['Επισκευή υπολογιστή', 'Επισκευή λάπτοπ', 'Επισκευή κινητού', 'Καθαρισμός ιών', 'Ανάκτηση δεδομένων', 'Κατασκευή ιστοσελίδας', 'Άλλο'],
+        phoneLabel: 'Τηλέφωνο',
+        emailLabel: 'Email',
+        areaLabel: 'Περιοχή',
+        hoursLabel: 'Ώρες',
+        options: [
+          { value: 'electronics', label: 'Επισκευή ηλεκτρονικών' },
+          { value: 'website', label: 'Κατασκευή ιστοσελίδας' },
+          { value: 'android-app', label: 'Εφαρμογή Android' },
+          { value: 'android-game', label: 'Παιχνίδι Android' },
+          { value: 'windows-app', label: 'Εφαρμογή Windows / Python' },
+          { value: 'other', label: 'Άλλο' },
+        ],
       };
 ---
 
@@ -54,28 +72,28 @@ const labels =
         <li>
           <span class="info-icon"><Icon name="phone" size={20} /></span>
           <div>
-            <small>{locale === 'en' ? 'Phone' : 'Τηλέφωνο'}</small>
+            <small>{labels.phoneLabel}</small>
             <a href={`tel:${business.phone}`}>{business.phone}</a>
           </div>
         </li>
         <li>
           <span class="info-icon"><Icon name="mail" size={20} /></span>
           <div>
-            <small>Email</small>
+            <small>{labels.emailLabel}</small>
             <a href={`mailto:${business.email}`}>{business.email}</a>
           </div>
         </li>
         <li>
           <span class="info-icon"><Icon name="map-pin" size={20} /></span>
           <div>
-            <small>{locale === 'en' ? 'Area' : 'Περιοχή'}</small>
+            <small>{labels.areaLabel}</small>
             <span>{business.address[locale]}</span>
           </div>
         </li>
         <li>
           <span class="info-icon"><Icon name="clock" size={20} /></span>
           <div>
-            <small>{locale === 'en' ? 'Hours' : 'Ώρες'}</small>
+            <small>{labels.hoursLabel}</small>
             <span>{business.hours[locale]}</span>
           </div>
         </li>
@@ -95,13 +113,9 @@ const labels =
         <label for="service">{labels.service}</label>
         <select id="service" name="service" required>
           <option value="">{labels.choose}</option>
-          <option value="computer">{labels.serviceOptions[0]}</option>
-          <option value="laptop">{labels.serviceOptions[1]}</option>
-          <option value="mobile">{labels.serviceOptions[2]}</option>
-          <option value="virus">{labels.serviceOptions[3]}</option>
-          <option value="data">{labels.serviceOptions[4]}</option>
-          <option value="website">{labels.serviceOptions[5]}</option>
-          <option value="other">{labels.serviceOptions[6]}</option>
+          {labels.options.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
         </select>
       </div>
       <div class="field">
@@ -124,15 +138,24 @@ const labels =
     const locale = form.dataset.locale === 'en' ? 'en' : 'el';
     const whatsapp = form.dataset.whatsapp || '';
 
-    const serviceNames = {
-      computer: locale === 'en' ? 'Computer repair' : 'Επισκευή υπολογιστή',
-      laptop: locale === 'en' ? 'Laptop repair' : 'Επισκευή λάπτοπ',
-      mobile: locale === 'en' ? 'Mobile repair' : 'Επισκευή κινητού',
-      virus: locale === 'en' ? 'Virus removal' : 'Καθαρισμός ιών',
-      data: locale === 'en' ? 'Data recovery' : 'Ανάκτηση δεδομένων',
-      website: locale === 'en' ? 'Website design' : 'Κατασκευή ιστοσελίδας',
-      other: locale === 'en' ? 'Other' : 'Άλλο',
-    };
+    const serviceNames =
+      locale === 'en'
+        ? {
+            electronics: 'Electronics repair',
+            website: 'Website development',
+            'android-app': 'Android app',
+            'android-game': 'Android game',
+            'windows-app': 'Windows / Python app',
+            other: 'Other',
+          }
+        : {
+            electronics: 'Επισκευή ηλεκτρονικών',
+            website: 'Κατασκευή ιστοσελίδας',
+            'android-app': 'Εφαρμογή Android',
+            'android-game': 'Παιχνίδι Android',
+            'windows-app': 'Εφαρμογή Windows / Python',
+            other: 'Άλλο',
+          };
 
     const header = locale === 'en' ? 'New request' : 'Νέο αίτημα';
     const labels =

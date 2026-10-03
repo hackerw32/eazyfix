@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { COOKIE_NAME, isValidSession } from '../../../lib/auth';
-import { getContent, saveContent, type SiteContent } from '../../../lib/content';
+import { getBusiness, saveBusiness } from '../../../lib/content';
+import type { Business } from '../../../data/site';
 
 export const prerender = false;
 
@@ -19,8 +20,8 @@ export const GET: APIRoute = async ({ cookies }) => {
   if (!(await ensureAuthorized(cookies.get(COOKIE_NAME)?.value))) {
     return json({ error: 'unauthorized' }, 401);
   }
-  const content = await getContent();
-  return json(content);
+  const business = await getBusiness();
+  return json(business);
 };
 
 export const PUT: APIRoute = async ({ request, cookies }) => {
@@ -28,13 +29,13 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
     return json({ error: 'unauthorized' }, 401);
   }
 
-  let body: SiteContent;
+  let body: Business;
   try {
-    body = (await request.json()) as SiteContent;
+    body = (await request.json()) as Business;
   } catch {
     return json({ error: 'invalid_json' }, 400);
   }
 
-  await saveContent(body);
+  await saveBusiness(body);
   return json({ ok: true });
 };

@@ -22,53 +22,35 @@ if (!(await isValidSession(Astro.cookies.get(COOKIE_NAME)?.value))) {
     />
   </head>
   <body>
-    <div class="admin">
-      <aside class="admin-side">
-        <div class="admin-logo">
+    <header class="admin-top">
+      <div class="admin-top-inner">
+        <span class="admin-brand">
           <span class="mark">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
             </svg>
           </span>
-          <span>EazyFix<small>Admin panel</small></span>
-        </div>
+          <span>EazyFix<small>Admin</small></span>
+        </span>
 
-        <nav class="admin-nav" id="adminNav"></nav>
-
-        <div class="admin-side-footer">
-          <a href="/" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-            Προβολή site
-          </a>
+        <div class="admin-top-actions">
+          <a href="/" target="_blank" rel="noopener">Προβολή site</a>
+          <span id="save-status"></span>
+          <button id="save-btn" class="abtn abtn--primary">Αποθήκευση</button>
           <form method="POST" action="/api/admin/logout">
-            <button type="submit">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-              Αποσύνδεση
-            </button>
+            <button type="submit" class="abtn abtn--ghost">Αποσύνδεση</button>
           </form>
         </div>
-      </aside>
-
-      <div class="admin-main">
-        <header class="admin-top">
-          <div>
-            <h1 id="adminTitle">Φόρτωση...</h1>
-            <p id="adminSubtitle"></p>
-          </div>
-          <div class="admin-top-actions">
-            <span id="save-status"></span>
-            <button id="save-btn" class="abtn abtn--primary">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
-              Αποθήκευση
-            </button>
-          </div>
-        </header>
-
-        <div id="admin-content" class="admin-content">
-          <div class="loading">Φόρτωση...</div>
-        </div>
       </div>
-    </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="admin-intro">
+        <h1>Στοιχεία επιχείρησης</h1>
+        <p>Εδώ αλλάζεις τηλέφωνο, email, WhatsApp, περιοχή και ωράριο. Τα υπόλοιπα περιεχόμενα της σελίδας τα διαχειρίζεται ο developer.</p>
+      </div>
+      <div id="admin-content"><div class="loading">Φόρτωση...</div></div>
+    </main>
 
     <script>
       import '../../scripts/admin.js';

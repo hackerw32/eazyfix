@@ -1,33 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Hero from '../../components/Hero.astro';
-import Services from '../../components/Services.astro';
-import WebDev from '../../components/WebDev.astro';
-import Process from '../../components/Process.astro';
-import Portfolio from '../../components/Portfolio.astro';
-import Features from '../../components/Features.astro';
-import Testimonials from '../../components/Testimonials.astro';
-import FAQ from '../../components/FAQ.astro';
+import CategoryExplorer from '../../components/CategoryExplorer.astro';
+import About from '../../components/About.astro';
 import Contact from '../../components/Contact.astro';
-import { getContent } from '../../lib/content';
+import { getBusiness } from '../../lib/content';
+import { site } from '../../data/site';
 
 const locale = 'el';
-const site = await getContent();
+const business = await getBusiness();
 ---
 
 <Layout
-  title="EazyFix - Επισκευές Ηλεκτρονικών & Κατασκευή Ιστοσελίδων στη Σαλαμίνα"
-  description={site.business.description.el}
+  title="EazyFix — Λογισμικό, Ιστοσελίδες & Επισκευές"
+  description={business.description.el}
   locale={locale}
-  business={site.business}
+  business={business}
 >
   <Hero hero={site.hero} locale={locale} />
-  <Services services={site.services} locale={locale} />
-  <WebDev webdev={site.webdev} locale={locale} />
-  <Process process={site.process} locale={locale} />
-  <Portfolio portfolio={site.portfolio} locale={locale} />
-  <Features features={site.features} locale={locale} />
-  <Testimonials testimonials={site.testimonials} locale={locale} />
-  <FAQ faq={site.faq} locale={locale} />
-  <Contact business={site.business} contact={site.contact} locale={locale} />
+  <CategoryExplorer locale={locale} />
+  <About about={site.about} social={site.social} locale={locale} />
+  <Contact business={business} contact={site.contact} locale={locale} />
 </Layout>

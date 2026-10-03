@@ -1,9 +1,7 @@
 import { env } from 'cloudflare:workers';
-import defaultContent from '../data/site.json';
+import { site, type Business } from '../data/site';
 
-export type SiteContent = typeof defaultContent;
-
-export const CONTENT_KEY = 'site';
+export const BUSINESS_KEY = 'business';
 
 interface ContentRow {
   value: string;
@@ -32,9 +30,8 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 /**
- * Deep merge so that content saved in the database keeps working when new
- * fields are added to the default schema. Stored values win; missing values
- * fall back to the defaults.
+ * Deep merge so stored business info keeps working when new fields are added
+ * to the defaults. Stored values win; missing values fall back to defaults.
  */
 export function mergeContent<T>(defaults: T, stored: unknown): T {
   if (!isPlainObject(defaults)) {
@@ -56,30 +53,30 @@ export function mergeContent<T>(defaults: T, stored: unknown): T {
   return result as T;
 }
 
-export async function getContent(): Promise<SiteContent> {
+export async function getBusiness(): Promise<Business> {
   const db = getDb();
-  if (!db) return clone(defaultContent);
+  if (!db) return clone(site.business);
 
   try {
     const row = await db
       .prepare('SELECT value FROM content WHERE key = ?')
-      .bind(CONTENT_KEY)
+      .bind(BUSINESS_KEY)
       .first<ContentRow>();
 
     if (!row || !row.value) {
-      const seed = clone(defaultContent);
-      await saveContent(seed);
+      const seed = clone(site.business);
+      await saveBusiness(seed);
       return seed;
     }
 
     const stored = JSON.parse(row.value) as unknown;
-    return mergeContent(defaultContent, stored);
+    return mergeContent(site.business, stored);
   } catch {
-    return clone(defaultContent);
+    return clone(site.business);
   }
 }
 
-export async function saveContent(data: SiteContent): Promise<void> {
+export async function saveBusiness(data: Business): Promise<void> {
   const db = getDb();
   if (!db) throw new Error('CONTENT_DB binding is not configured');
 
@@ -92,6 +89,6 @@ export async function saveContent(data: SiteContent): Promise<void> {
        VALUES (?, ?, ?)
        ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`
     )
-    .bind(CONTENT_KEY, value, updatedAt)
+    .bind(BUSINESS_KEY, value, updatedAt)
     .run();
 }

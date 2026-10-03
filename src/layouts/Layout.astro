@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
 
 interface Props {
   title: string;
@@ -25,24 +26,20 @@ const {
 const t =
   locale === 'en'
     ? {
-        services: 'Services',
-        web: 'Websites',
+        work: 'What I do',
+        about: 'About',
         templates: 'Templates',
-        reviews: 'Reviews',
-        faq: 'FAQ',
         contact: 'Contact',
-        cta: 'Book now',
+        cta: 'Get in touch',
         rights: 'All rights reserved.',
         madeIn: 'Salamina, Greece',
       }
     : {
-        services: 'Υπηρεσίες',
-        web: 'Ιστοσελίδες',
+        work: 'Τι κάνω',
+        about: 'Σχετικά',
         templates: 'Πρότυπα',
-        reviews: 'Μαρτυρίες',
-        faq: 'FAQ',
         contact: 'Επικοινωνία',
-        cta: 'Κλείστε ραντεβού',
+        cta: 'Επικοινωνία',
         rights: 'Με επιφύλαξη παντός δικαιώματος.',
         madeIn: 'Σαλαμίνα, Ελλάδα',
       };
@@ -88,11 +85,10 @@ const year = new Date().getFullYear();
         </a>
 
         <nav class="nav" id="primaryNav">
-          <a href="#services">{t.services}</a>
-          <a href="#webdev">{t.web}</a>
+          <a href="#work">{t.work}</a>
+          <a href="#about">{t.about}</a>
           <a href={locale === 'en' ? '/en/templates' : '/templates'}>{t.templates}</a>
-          <a href="#testimonials">{t.reviews}</a>
-          <a href="#faq">{t.faq}</a>
+          <a href="#contact">{t.contact}</a>
         </nav>
 
         <div class="header-actions">
@@ -125,12 +121,17 @@ const year = new Date().getFullYear();
               <span class="brand-name">{name}</span>
             </div>
             <p class="footer-desc">{business?.description?.[locale] ?? ''}</p>
+            <div class="footer-socials">
+              {site.social.map((item) => (
+                <a href={item.url} target="_blank" rel="noopener">{item.label}</a>
+              ))}
+            </div>
           </div>
 
           <div class="footer-col">
             <h4>{locale === 'en' ? 'Navigation' : 'Πλοήγηση'}</h4>
-            <a href="#services">{t.services}</a>
-            <a href="#webdev">{t.web}</a>
+            <a href="#work">{t.work}</a>
+            <a href="#about">{t.about}</a>
             <a href={locale === 'en' ? '/en/templates' : '/templates'}>{t.templates}</a>
             <a href="#contact">{t.contact}</a>
           </div>
@@ -328,6 +329,28 @@ const year = new Date().getFullYear();
         color: #94a3b8;
         font-size: 0.95rem;
         max-width: 34ch;
+      }
+
+      .footer-socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .footer-socials a {
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        color: #cbd5e1;
+        transition: border-color 0.18s ease, color 0.18s ease;
+      }
+
+      .footer-socials a:hover {
+        border-color: #a5b4fc;
+        color: #fff;
       }
 
       .footer-col h4 {

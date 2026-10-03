@@ -1,6 +1,4 @@
 ---
-import Icon from './Icon.astro';
-
 interface Props {
   hero: {
     badge: Record<string, string>;
@@ -19,70 +17,30 @@ const { hero, locale } = Astro.props;
 
 <section class="hero">
   <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
   <div class="container hero-inner">
-    <div class="hero-copy">
-      <span class="hero-badge">
-        <span class="dot"></span>
-        {hero.badge[locale]}
-      </span>
-      <h1 class="hero-title">
-        {hero.title[locale]}
-        <span class="accent">{hero.titleAccent[locale]}</span>
-      </h1>
-      <p class="hero-sub">{hero.subtitle[locale]}</p>
-      <div class="hero-cta">
-        <a href="#contact" class="btn btn--primary">
-          {hero.primaryCta[locale]}
-          <Icon name="arrow-right" size={18} />
-        </a>
-        <a href={locale === 'en' ? '/en/templates' : '/templates'} class="btn btn--dark">
-          {hero.secondaryCta[locale]}
-        </a>
-      </div>
-
-      <dl class="hero-stats">
-        {hero.stats.map((stat) => (
-          <div class="stat">
-            <dt>{stat.value}</dt>
-            <dd>{stat.label[locale]}</dd>
-          </div>
-        ))}
-      </dl>
+    <span class="hero-badge">
+      <span class="dot"></span>
+      {hero.badge[locale]}
+    </span>
+    <h1 class="hero-title">
+      {hero.title[locale]}
+      <span class="accent">{hero.titleAccent[locale]}</span>
+    </h1>
+    <p class="hero-sub">{hero.subtitle[locale]}</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn--primary">{hero.primaryCta[locale]}</a>
+      <a href="#contact" class="btn btn--ghost-light">{hero.secondaryCta[locale]}</a>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="browser">
-        <div class="browser-bar">
-          <span></span><span></span><span></span>
+    <dl class="hero-stats">
+      {hero.stats.map((stat) => (
+        <div class="stat">
+          <dt>{stat.value}</dt>
+          <dd>{stat.label[locale]}</dd>
         </div>
-        <div class="browser-body">
-          <div class="line line--title"></div>
-          <div class="line"></div>
-          <div class="line line--short"></div>
-          <div class="blocks">
-            <div class="block"></div>
-            <div class="block"></div>
-            <div class="block"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="float-card float-card--repair">
-        <span class="float-icon"><Icon name="wrench" size={20} /></span>
-        <div>
-          <strong>{locale === 'en' ? 'Repairs' : 'Επισκευές'}</strong>
-          <small>{locale === 'en' ? 'On-site service' : 'Επίσκεψη στο χώρο'}</small>
-        </div>
-      </div>
-
-      <div class="float-card float-card--web">
-        <span class="float-icon"><Icon name="code" size={20} /></span>
-        <div>
-          <strong>{locale === 'en' ? 'Websites' : 'Ιστοσελίδες'}</strong>
-          <small>{locale === 'en' ? 'Custom built' : 'Στα μέτρα σας'}</small>
-        </div>
-      </div>
-    </div>
+      ))}
+    </dl>
   </div>
 </section>
 
@@ -92,24 +50,31 @@ const { hero, locale } = Astro.props;
     overflow: hidden;
     background: var(--ink);
     color: #fff;
-    padding: 98px 0 104px;
+    padding: 96px 0 84px;
+    text-align: center;
   }
 
   .hero-glow {
     position: absolute;
-    inset: -30% -10% auto auto;
-    width: 720px;
-    height: 720px;
-    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.42), transparent 62%);
-    filter: blur(10px);
+    inset: -60% 0 auto 0;
+    margin: 0 auto;
+    width: 900px;
+    height: 700px;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.4), transparent 62%);
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 72%);
   }
 
   .hero-inner {
     position: relative;
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 64px;
-    align-items: center;
+    max-width: 860px;
   }
 
   .hero-badge {
@@ -136,13 +101,11 @@ const { hero, locale } = Astro.props;
 
   .hero-title {
     color: #fff;
-    font-size: clamp(2.3rem, 5vw, 3.7rem);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    font-size: clamp(2.3rem, 5.4vw, 3.9rem);
   }
 
   .hero-title .accent {
+    display: block;
     background: linear-gradient(100deg, #a5b4fc, #67e8f9);
     -webkit-background-clip: text;
     background-clip: text;
@@ -150,40 +113,43 @@ const { hero, locale } = Astro.props;
   }
 
   .hero-sub {
-    margin-top: 24px;
+    margin: 24px auto 0;
     color: #cbd5e1;
     font-size: 1.12rem;
-    max-width: 52ch;
+    max-width: 58ch;
   }
 
   .hero-cta {
     display: flex;
     gap: 14px;
+    justify-content: center;
     flex-wrap: wrap;
-    margin-top: 36px;
+    margin-top: 34px;
   }
 
-  .hero-cta .btn--dark {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.18);
+  .btn--ghost-light {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
   }
 
-  .hero-cta .btn--dark:hover {
-    background: rgba(255, 255, 255, 0.16);
+  .btn--ghost-light:hover {
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .hero-stats {
     display: flex;
-    gap: 40px;
-    margin: 52px 0 0;
+    justify-content: center;
+    gap: 56px;
+    margin: 56px 0 0;
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .stat dt {
     font-family: var(--font-head);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.7rem;
+    font-weight: 800;
     color: #fff;
   }
 
@@ -193,160 +159,9 @@ const { hero, locale } = Astro.props;
     font-size: 0.86rem;
   }
 
-  /* Visual */
-  .hero-visual {
-    position: relative;
-    height: 420px;
-  }
-
-  .browser {
-    position: absolute;
-    inset: 24px 40px 60px 0;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-  }
-
-  .browser-bar {
-    display: flex;
-    gap: 7px;
-    padding: 14px 18px;
-    background: #f1f5f9;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .browser-bar span {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: #cbd5e1;
-  }
-
-  .browser-bar span:first-child {
-    background: #fb7185;
-  }
-  .browser-bar span:nth-child(2) {
-    background: #fbbf24;
-  }
-  .browser-bar span:nth-child(3) {
-    background: #4ade80;
-  }
-
-  .browser-body {
-    padding: 26px;
-  }
-
-  .line {
-    height: 10px;
-    border-radius: 6px;
-    background: #e2e8f0;
-    margin-bottom: 12px;
-  }
-
-  .line--title {
-    height: 18px;
-    width: 62%;
-    background: var(--primary);
-    opacity: 0.85;
-  }
-
-  .line--short {
-    width: 44%;
-  }
-
-  .blocks {
-    display: flex;
-    gap: 12px;
-    margin-top: 26px;
-  }
-
-  .block {
-    flex: 1;
-    height: 92px;
-    border-radius: 12px;
-    background: linear-gradient(180deg, #eef2ff, #e0e7ff);
-  }
-
-  .block:nth-child(2) {
-    background: linear-gradient(180deg, #ecfeff, #cffafe);
-  }
-
-  .block:nth-child(3) {
-    background: linear-gradient(180deg, #f0fdf4, #dcfce7);
-  }
-
-  .float-card {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #fff;
-    color: var(--ink);
-    padding: 14px 18px;
-    border-radius: 14px;
-    box-shadow: var(--shadow-md);
-    font-size: 0.9rem;
-  }
-
-  .float-card strong {
-    display: block;
-    font-size: 0.95rem;
-  }
-
-  .float-card small {
-    color: var(--muted);
-  }
-
-  .float-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    display: grid;
-    place-items: center;
-    background: var(--primary-50);
-    color: var(--primary);
-  }
-
-  .float-card--repair {
-    left: -18px;
-    bottom: 96px;
-  }
-
-  .float-card--web {
-    right: 8px;
-    bottom: 0;
-  }
-
-  .float-card--web .float-icon {
-    background: #ecfeff;
-    color: #0891b2;
-  }
-
-  @media (max-width: 940px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-      gap: 48px;
-    }
-
-    .hero-visual {
-      height: 340px;
-      max-width: 520px;
-    }
-
-    .hero-stats {
-      gap: 28px;
-    }
-  }
-
   @media (max-width: 560px) {
     .hero-stats {
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .float-card--repair {
-      left: 0;
+      gap: 28px;
     }
   }
 </style>

@@ -4,7 +4,7 @@ export const prerender = false;
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL('https://eazyfix.vivinails.workers.dev');
-  const pages = ['/', '/el/', '/en/'];
+  const pages = ['/', '/el/', '/en/', '/templates', '/en/templates'];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
