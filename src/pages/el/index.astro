@@ -4,11 +4,12 @@ import Hero from '../../components/Hero.astro';
 import CategoryExplorer from '../../components/CategoryExplorer.astro';
 import About from '../../components/About.astro';
 import Contact from '../../components/Contact.astro';
-import { getBusiness } from '../../lib/content';
+import { getBusiness, getProjects } from '../../lib/content';
 import { site } from '../../data/site';
 
 const locale = 'el';
 const business = await getBusiness();
+const projects = await getProjects();
 ---
 
 <Layout
@@ -18,7 +19,7 @@ const business = await getBusiness();
   business={business}
 >
   <Hero hero={site.hero} locale={locale} />
-  <CategoryExplorer locale={locale} />
+  <CategoryExplorer locale={locale} projects={projects} />
   <About about={site.about} social={site.social} locale={locale} />
   <Contact business={business} contact={site.contact} locale={locale} />
 </Layout>

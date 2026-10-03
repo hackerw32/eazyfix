@@ -9,5 +9,11 @@
       "database_name": "eazyfix-content",
       "database_id": "fcd83c5a-ff8d-4e3a-b7bd-8eb3da9d10a9"
     }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "MEDIA",
+      "id": "0e6254326a8a44eb8bcb829cbc6b5951"
+    }
   ]
 }

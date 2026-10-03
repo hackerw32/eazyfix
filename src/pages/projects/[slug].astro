@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import { getProjects, getBusiness } from '../../lib/content';
+import { getCategoryMeta } from '../../data/portfolio';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const projects = await getProjects();
+const project = projects.find((item) => item.slug === slug && item.enabled);
+
+if (!project) {
+  return new Response('Not found', { status: 404 });
+}
+
+const business = await getBusiness();
+const category = getCategoryMeta(project.category);
+const locale = 'el';
+---
+
+<Layout
+  title={`${project.name} — EazyFix`}
+  description={project.description.el}
+  locale={locale}
+  business={business}
+>
+  <ProjectDetail project={project} category={category} locale={locale} phone={business.phone} />
+</Layout>

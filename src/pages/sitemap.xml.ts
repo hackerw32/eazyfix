@@ -1,10 +1,18 @@
 import type { APIRoute } from 'astro';
+import { getProjects } from '../lib/content';
 
 export const prerender = false;
 
-export const GET: APIRoute = ({ site }) => {
+export const GET: APIRoute = async ({ site }) => {
   const base = site ?? new URL('https://eazyfix.vivinails.workers.dev');
+
   const pages = ['/', '/el/', '/en/', '/templates', '/en/templates'];
+  const projects = await getProjects();
+  projects
+    .filter((project) => project.enabled)
+    .forEach((project) => {
+      pages.push(`/projects/${project.slug}`, `/en/projects/${project.slug}`);
+    });
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

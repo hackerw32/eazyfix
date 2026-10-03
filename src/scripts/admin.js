@@ -1,8 +1,26 @@
 const contentEl = document.getElementById('admin-content');
+const tabsEl = document.getElementById('adminTabs');
 const saveBtn = document.getElementById('save-btn');
 const statusEl = document.getElementById('save-status');
 
-const state = { business: null, dirty: false };
+const CATEGORIES = [
+  { slug: 'repairs', label: 'Service Ηλεκτρονικών' },
+  { slug: 'websites', label: 'Ιστοσελίδες' },
+  { slug: 'android-apps', label: 'Εφαρμογές Android' },
+  { slug: 'android-games', label: 'Παιχνίδια Android' },
+  { slug: 'windows-apps', label: 'Windows & Python' },
+];
+
+const state = {
+  tab: 'business',
+  business: null,
+  projects: [],
+  editing: null,
+  isNew: false,
+  filter: 'all',
+};
+
+/* ---------- helpers ---------- */
 
 function esc(value) {
   return String(value ?? '')
@@ -12,20 +30,98 @@ function esc(value) {
     .replace(/"/g, '&quot;');
 }
 
-function setPath(path, value) {
+const GREEK = {
+  α: 'a', β: 'v', γ: 'g', δ: 'd', ε: 'e', ζ: 'z', η: 'i', θ: 'th', ι: 'i', κ: 'k', λ: 'l',
+  μ: 'm', ν: 'n', ξ: 'x', ο: 'o', π: 'p', ρ: 'r', σ: 's', ς: 's', τ: 't', υ: 'y', φ: 'f',
+  χ: 'ch', ψ: 'ps', ω: 'o', ά: 'a', έ: 'e', ή: 'i', ί: 'i', ό: 'o', ύ: 'y', ώ: 'o',
+  ϊ: 'i', ϋ: 'y', ΐ: 'i', ΰ: 'y',
+};
+
+function slugify(text) {
+  return String(text)
+    .toLowerCase()
+    .split('')
+    .map((char) => GREEK[char] ?? char)
+    .join('')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+}
+
+function setPath(obj, path, value) {
   const keys = path.split('.');
-  let current = state.business;
+  let current = obj;
   for (let i = 0; i < keys.length - 1; i++) current = current[keys[i]];
   current[keys[keys.length - 1]] = value;
-  state.dirty = true;
+}
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function categoryLabel(slug) {
+  return CATEGORIES.find((category) => category.slug === slug)?.label ?? slug;
+}
+
+function setStatus(text, kind) {
+  statusEl.textContent = text;
+  statusEl.className = kind || '';
+}
+
+function markDirty() {
   setStatus('Μη αποθηκευμένες αλλαγές');
 }
 
-function field(label, path, value, type = 'text') {
-  return `<div class="field"><label>${esc(label)}</label><input type="${type}" data-bind="${path}" value="${esc(value)}" /></div>`;
+async function handleResponse(res) {
+  if (res.status === 401) {
+    window.location.href = '/admin/login';
+    throw new Error('unauthorized');
+  }
+  if (!res.ok) throw new Error('request failed');
+  return res;
 }
 
-function bi(label, base, obj, multiline = false) {
+/* ---------- render helpers ---------- */
+
+function field(label, path, value, type = 'text', attrs = '') {
+  return `<div class="field"><label>${esc(label)}</label><input type="${type}" data-path="${path}" value="${esc(value)}" ${attrs} /></div>`;
+}
+
+function bi(label, base, obj, multiline = false, extra = '') {
+  const control = (loc) => {
+    const value = esc(obj?.[loc] ?? '');
+    return multiline
+      ? `<textarea rows="3" data-path="${base}.${loc}" ${extra}>${value}</textarea>`
+      : `<input type="text" data-path="${base}.${loc}" value="${value}" />`;
+  };
+  return `<div class="field"><label>${esc(label)}</label>
+    <div class="bi-row">
+      <div class="bi"><span class="flag">EL</span>${control('el')}</div>
+      <div class="bi"><span class="flag">EN</span>${control('en')}</div>
+    </div></div>`;
+}
+
+/* ---------- business ---------- */
+
+function renderBusiness() {
+  const b = state.business;
+  return `<div class="panel">
+    <h2>Στοιχεία επιχείρησης</h2>
+    <div class="field"><label>Όνομα</label><input type="text" data-bind="name" value="${esc(b.name)}" /></div>
+    <div class="grid-2">
+      <div class="field"><label>Τηλέφωνο</label><input type="text" data-bind="phone" value="${esc(b.phone)}" /></div>
+      <div class="field"><label>Email</label><input type="email" data-bind="email" value="${esc(b.email)}" /></div>
+    </div>
+    <div class="field"><label>WhatsApp (για τη φόρμα)</label><input type="text" data-bind="whatsapp" value="${esc(b.whatsapp)}" /></div>
+    ${biField('business', 'tagline', 'Tagline')}
+    ${biField('business', 'description', 'Περιγραφή', true)}
+    ${biField('business', 'address', 'Περιοχή')}
+    ${biField('business', 'hours', 'Ώρες λειτουργίας', true)}
+  </div>`;
+}
+
+function biField(group, base, label, multiline = false) {
+  const obj = state[group][base];
   const control = (loc) => {
     const value = esc(obj?.[loc] ?? '');
     return multiline
@@ -39,48 +135,223 @@ function bi(label, base, obj, multiline = false) {
     </div></div>`;
 }
 
-function render() {
-  const b = state.business;
-  contentEl.innerHTML = `
-    <div class="panel">
-      <h2>Στοιχεία επιχείρησης</h2>
-      ${field('Όνομα', 'name', b.name)}
-      <div class="grid-2">
-        ${field('Τηλέφωνο', 'phone', b.phone)}
-        ${field('Email', 'email', b.email, 'email')}
-      </div>
-      <div class="grid-2">
-        ${field('WhatsApp (για τη φόρμα)', 'whatsapp', b.whatsapp)}
-      </div>
-      ${bi('Tagline', 'tagline', b.tagline)}
-      ${bi('Περιγραφή', 'description', b.description, true)}
-      ${bi('Περιοχή', 'address', b.address)}
-      ${bi('Ώρες λειτουργίας', 'hours', b.hours, true)}
+/* ---------- projects list ---------- */
+
+function renderProjectsList() {
+  const filtered = state.projects.filter(
+    (project) => state.filter === 'all' || project.category === state.filter
+  );
+
+  const filters = [{ slug: 'all', label: 'Όλα' }, ...CATEGORIES]
+    .map(
+      (category) =>
+        `<button type="button" data-action="filter" data-cat="${category.slug}" class="${state.filter === category.slug ? 'active' : ''}">${esc(category.label)}</button>`
+    )
+    .join('');
+
+  const rows = filtered
+    .map(
+      (project) => `<div class="prow ${project.enabled ? '' : 'prow--off'}">
+        <div class="prow-main">
+          <strong>${esc(project.name || '(χωρίς όνομα)')}</strong>
+          <div class="prow-meta">
+            <span class="badge badge--cat">${esc(categoryLabel(project.category))}</span>
+            <span class="badge ${project.enabled ? 'badge--on' : 'badge--off'}">${project.enabled ? 'Ενεργό' : 'Ανενεργό'}</span>
+            <span>${(project.screenshots || []).length} screenshots</span>
+          </div>
+        </div>
+        <div class="prow-actions">
+          <button type="button" class="abtn abtn--ghost2 abtn--sm" data-action="toggle" data-id="${project.id}">${project.enabled ? 'Απενεργοποίηση' : 'Ενεργοποίηση'}</button>
+          <button type="button" class="abtn abtn--ghost2 abtn--sm" data-action="edit" data-id="${project.id}">Επεξεργασία</button>
+          <button type="button" class="abtn abtn--danger abtn--sm" data-action="delete" data-id="${project.id}">Διαγραφή</button>
+        </div>
+      </div>`
+    )
+    .join('');
+
+  return `<div class="toolbar">
+      <div class="filters">${filters}</div>
+      <button type="button" class="abtn abtn--primary" data-action="new">+ Νέο project</button>
     </div>
-  `;
+    ${rows || '<p class="hint">Δεν υπάρχουν projects σε αυτή την κατηγορία.</p>'}`;
 }
 
-function setStatus(text, kind) {
-  statusEl.textContent = text;
-  statusEl.className = kind || '';
+/* ---------- project editor ---------- */
+
+function renderEditor() {
+  const project = state.editing;
+  const categoryOptions = CATEGORIES.map(
+    (category) =>
+      `<option value="${category.slug}" ${project.category === category.slug ? 'selected' : ''}>${esc(category.label)}</option>`
+  ).join('');
+
+  const shots = (project.screenshots || [])
+    .map(
+      (url, index) => `<div class="shot">
+        <img src="${esc(url)}" alt="" />
+        <button type="button" class="shot-remove" data-action="remove-shot" data-index="${index}" aria-label="Διαγραφή">×</button>
+      </div>`
+    )
+    .join('');
+
+  return `<div class="panel">
+    <div class="editor-head">
+      <h2>${state.isNew ? 'Νέο project' : 'Επεξεργασία project'}</h2>
+      <div class="editor-actions">
+        <button type="button" class="abtn abtn--ghost2" data-action="cancel">Πίσω στη λίστα</button>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      ${field('Όνομα', 'name', project.name)}
+      ${field('Slug (URL)', 'slug', project.slug, 'text', 'placeholder="auto"')}
+    </div>
+
+    <div class="grid-2">
+      <div class="field"><label>Κατηγορία</label><select data-path="category">${categoryOptions}</select></div>
+      <div class="field"><label>Κατάσταση</label>
+        <label class="switch"><input type="checkbox" data-path="enabled" ${project.enabled ? 'checked' : ''} /> Ενεργό στη σελίδα</label>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      ${field('Σύνδεσμος (URL)', 'url', project.url ?? '', 'text', 'placeholder="https:// ή /"')}
+      ${bi('Ετικέτα συνδέσμου', 'linkLabel', project.linkLabel ?? { el: '', en: '' })}
+    </div>
+
+    ${field('Tags (χωρισμένα με κόμμα)', 'tags', (project.tags || []).join(', '), 'text', 'data-type="list"')}
+
+    <div class="field"><label>Σύντομη περιγραφή</label>
+      <div class="bi-row">
+        <div class="bi"><span class="flag">EL</span><textarea rows="3" data-path="description.el">${esc(project.description?.el)}</textarea></div>
+        <div class="bi"><span class="flag">EN</span><textarea rows="3" data-path="description.en">${esc(project.description?.en)}</textarea></div>
+      </div>
+    </div>
+
+    <div class="field"><label>Αναλυτικό κείμενο</label>
+      <div class="bi-row">
+        <div class="bi"><span class="flag">EL</span><textarea rows="5" data-path="body.el">${esc(project.body?.el)}</textarea></div>
+        <div class="bi"><span class="flag">EN</span><textarea rows="5" data-path="body.en">${esc(project.body?.en)}</textarea></div>
+      </div>
+    </div>
+
+    <div class="field"><label>Βασικά σημεία (ένα ανά γραμμή)</label>
+      <div class="bi-row">
+        <div class="bi"><span class="flag">EL</span><textarea rows="4" data-path="features.el" data-type="lines">${esc((project.features?.el || []).join('\n'))}</textarea></div>
+        <div class="bi"><span class="flag">EN</span><textarea rows="4" data-path="features.en" data-type="lines">${esc((project.features?.en || []).join('\n'))}</textarea></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Screenshots</label>
+      ${shots ? `<div class="shots">${shots}</div>` : ''}
+      <div class="upload-row">
+        <label class="file-btn">Ανέβασμα εικόνων
+          <input type="file" accept="image/*" multiple data-action="upload" />
+        </label>
+        <input type="text" id="shot-url" placeholder="https://..." />
+        <button type="button" class="abtn abtn--ghost2" data-action="add-shot">Προσθήκη από URL</button>
+      </div>
+      <p class="hint">Οι εικόνες εμφανίζονται αριστερά στη σελίδα του project. Σύρετε για ταξινόμηση δεν υποστηρίζεται ακόμη — η σειρά είναι αυτή της λίστας.</p>
+    </div>
+  </div>`;
 }
 
-async function save() {
+/* ---------- main render ---------- */
+
+function renderTabs() {
+  tabsEl.querySelectorAll('button').forEach((button) => {
+    button.classList.toggle('active', button.dataset.tab === state.tab);
+  });
+}
+
+function render() {
+  renderTabs();
+  if (state.tab === 'projects') {
+    contentEl.innerHTML = state.editing ? renderEditor() : renderProjectsList();
+  } else {
+    contentEl.innerHTML = renderBusiness();
+  }
+}
+
+/* ---------- actions ---------- */
+
+function newProject() {
+  state.editing = {
+    id: 'p-' + Date.now().toString(36),
+    slug: '',
+    category: state.filter === 'all' ? 'websites' : state.filter,
+    name: '',
+    enabled: true,
+    description: { el: '', en: '' },
+    body: { el: '', en: '' },
+    features: { el: [], en: [] },
+    tags: [],
+    url: '',
+    linkLabel: { el: '', en: '' },
+    screenshots: [],
+  };
+  state.isNew = true;
+  markDirty();
+  render();
+}
+
+function editProject(id) {
+  const project = state.projects.find((item) => item.id === id);
+  if (!project) return;
+  state.editing = clone(project);
+  state.isNew = false;
+  render();
+}
+
+function commitEditing() {
+  if (!state.editing) return;
+  if (!state.editing.slug) state.editing.slug = slugify(state.editing.name) || state.editing.id;
+  const index = state.projects.findIndex((item) => item.id === state.editing.id);
+  if (index === -1) state.projects.push(state.editing);
+  else state.projects[index] = state.editing;
+  state.editing = null;
+  state.isNew = false;
+}
+
+async function saveProjectsOnly() {
+  try {
+    await handleResponse(
+      await fetch('/api/admin/projects', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state.projects),
+      })
+    );
+    setStatus('Αποθηκεύτηκε', 'ok');
+  } catch {
+    setStatus('Σφάλμα αποθήκευσης', 'error');
+  }
+}
+
+async function saveAll() {
   saveBtn.disabled = true;
   setStatus('Αποθήκευση...');
   try {
-    const res = await fetch('/api/admin/content', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(state.business),
+    if (state.editing) commitEditing();
+    const responses = await Promise.all([
+      fetch('/api/admin/content', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state.business),
+      }),
+      fetch('/api/admin/projects', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state.projects),
+      }),
+    ]);
+    responses.forEach((res) => {
+      if (res.status === 401) window.location.href = '/admin/login';
     });
-    if (res.status === 401) {
-      window.location.href = '/admin/login';
-      return;
-    }
-    if (!res.ok) throw new Error('save failed');
-    state.dirty = false;
+    if (responses.some((res) => !res.ok)) throw new Error('save failed');
     setStatus('Αποθηκεύτηκε', 'ok');
+    if (state.tab === 'projects') render();
   } catch {
     setStatus('Σφάλμα αποθήκευσης', 'error');
   } finally {
@@ -88,31 +359,146 @@ async function save() {
   }
 }
 
-contentEl.addEventListener('input', (event) => {
-  const target = event.target;
-  if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
-  const path = target.dataset.bind;
-  if (!path) return;
-  setPath(path, target.value);
+async function uploadImages(files) {
+  if (!files || files.length === 0 || !state.editing) return;
+  setStatus('Ανέβασμα...');
+  try {
+    for (const file of files) {
+      const form = new FormData();
+      form.append('file', file);
+      const res = await handleResponse(await fetch('/api/admin/upload', { method: 'POST', body: form }));
+      const data = await res.json();
+      if (data.url) state.editing.screenshots.push(data.url);
+    }
+    setStatus('Η εικόνα ανέβηκε — πατήστε Αποθήκευση', 'ok');
+    render();
+  } catch {
+    setStatus('Σφάλμα ανεβάσματος', 'error');
+  }
+}
+
+/* ---------- events ---------- */
+
+tabsEl.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-tab]');
+  if (!button) return;
+  state.tab = button.dataset.tab;
+  state.editing = null;
+  render();
 });
 
-saveBtn.addEventListener('click', save);
+contentEl.addEventListener('click', (event) => {
+  const target = event.target.closest('[data-action]');
+  if (!target) return;
+  const action = target.dataset.action;
+
+  if (action === 'new') newProject();
+  else if (action === 'edit') editProject(target.dataset.id);
+  else if (action === 'cancel') {
+    state.editing = null;
+    render();
+  } else if (action === 'filter') {
+    state.filter = target.dataset.cat;
+    render();
+  } else if (action === 'toggle') {
+    const project = state.projects.find((item) => item.id === target.dataset.id);
+    if (project) {
+      project.enabled = !project.enabled;
+      saveProjectsOnly();
+      render();
+    }
+  } else if (action === 'delete') {
+    const project = state.projects.find((item) => item.id === target.dataset.id);
+    if (project && window.confirm(`Διαγραφή του «${project.name}»;`)) {
+      state.projects = state.projects.filter((item) => item.id !== target.dataset.id);
+      saveProjectsOnly();
+      render();
+    }
+  } else if (action === 'remove-shot' && state.editing) {
+    state.editing.screenshots.splice(Number(target.dataset.index), 1);
+    markDirty();
+    render();
+  } else if (action === 'add-shot' && state.editing) {
+    const input = document.getElementById('shot-url');
+    const url = input?.value?.trim();
+    if (url) {
+      state.editing.screenshots.push(url);
+      markDirty();
+      render();
+    }
+  }
+});
+
+contentEl.addEventListener('input', (event) => {
+  const el = event.target;
+  if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)) return;
+
+  if (el.dataset.bind && state.business) {
+    setPath(state.business, el.dataset.bind, el.value);
+    markDirty();
+    return;
+  }
+
+  if (el.dataset.path && state.editing) {
+    let value = el.value;
+    if (el.dataset.type === 'list') {
+      value = value.split(',').map((part) => part.trim()).filter(Boolean);
+    } else if (el.dataset.type === 'lines') {
+      value = value.split('\n').map((part) => part.trim()).filter(Boolean);
+    }
+    setPath(state.editing, el.dataset.path, value);
+    if (el.dataset.path === 'name' && !state.editing.slug) {
+      state.editing.slug = slugify(el.value);
+      const slugInput = contentEl.querySelector('[data-path="slug"]');
+      if (slugInput instanceof HTMLInputElement) slugInput.value = state.editing.slug;
+    }
+    markDirty();
+  }
+});
+
+contentEl.addEventListener('change', (event) => {
+  const el = event.target;
+
+  if (el instanceof HTMLInputElement && el.type === 'file' && el.dataset.action === 'upload') {
+    uploadImages(el.files);
+    el.value = '';
+    return;
+  }
+
+  if (!state.editing) return;
+
+  if (el instanceof HTMLInputElement && el.type === 'checkbox' && el.dataset.path) {
+    setPath(state.editing, el.dataset.path, el.checked);
+    markDirty();
+  } else if (el instanceof HTMLSelectElement && el.dataset.path) {
+    setPath(state.editing, el.dataset.path, el.value);
+    markDirty();
+  }
+});
+
+saveBtn.addEventListener('click', saveAll);
 
 window.addEventListener('beforeunload', (event) => {
-  if (state.dirty) {
+  if (statusEl.textContent === 'Μη αποθηκευμένες αλλαγές') {
     event.preventDefault();
     event.returnValue = '';
   }
 });
 
+/* ---------- load ---------- */
+
 async function load() {
   try {
-    const res = await fetch('/api/admin/content');
-    if (res.status === 401) {
+    const [businessRes, projectsRes] = await Promise.all([
+      fetch('/api/admin/content'),
+      fetch('/api/admin/projects'),
+    ]);
+    if (businessRes.status === 401 || projectsRes.status === 401) {
       window.location.href = '/admin/login';
       return;
     }
-    state.business = await res.json();
+    state.business = await businessRes.json();
+    state.projects = await projectsRes.json();
     render();
   } catch {
     contentEl.innerHTML = '<div class="loading">Σφάλμα φόρτωσης. Ανανεώστε τη σελίδα.</div>';

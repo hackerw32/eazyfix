@@ -1,0 +1,638 @@
+---
+import Icon from './Icon.astro';
+import type { Project } from '../data/projects';
+import type { Category } from '../data/portfolio';
+
+interface Props {
+  project: Project;
+  category: Category | undefined;
+  locale: 'el' | 'en';
+  phone: string;
+}
+
+const { project, category, locale, phone } = Astro.props;
+
+const t =
+  locale === 'en'
+    ? {
+        back: 'All projects',
+        about: 'About this project',
+        features: 'Highlights',
+        links: 'Links',
+        contact: 'Interested? Get in touch',
+        contactCta: 'Contact me',
+        call: 'Call',
+        gallery: 'Screenshots',
+        noShots: 'Screenshots coming soon',
+      }
+    : {
+        back: 'Όλα τα projects',
+        about: 'Σχετικά με το project',
+        features: 'Βασικά σημεία',
+        links: 'Σύνδεσμοι',
+        contact: 'Σας ενδιαφέρει; Επικοινωνήστε',
+        contactCta: 'Επικοινωνία',
+        call: 'Κλήση',
+        gallery: 'Screenshots',
+        noShots: 'Screenshots σύντομα',
+      };
+
+const shots = (project.screenshots ?? []).filter(Boolean);
+const shotsJson = JSON.stringify(shots).replace(/</g, '\\u003c');
+const body = project.body?.[locale] || project.description[locale];
+const features = project.features?.[locale] ?? [];
+const categoryTitle = category?.title[locale] ?? '';
+---
+
+<div class="detail-page">
+  <div class="container">
+    <nav class="crumbs">
+      <a href={locale === 'en' ? '/en/' : '/el/'}>{locale === 'en' ? 'Home' : 'Αρχική'}</a>
+      <span>/</span>
+      <a href={locale === 'en' ? '/en/' : '/el/'}>#work</a>
+      <span>/</span>
+      <a href={`${locale === 'en' ? '/en/' : '/el/'}#work`}>{categoryTitle}</a>
+      <span>/</span>
+      <span class="crumb-current">{project.name}</span>
+    </nav>
+
+    <div class="detail-grid">
+      <div class="gallery">
+        <div class="main">
+          {shots.length > 0 && (
+            <div class="main-bar">
+              <span id="shot-counter">1 / {shots.length}</span>
+              <span class="main-title">{project.name}</span>
+            </div>
+          )}
+          <div class="main-frame">
+            {shots.length > 0 ? (
+              <button type="button" id="main-open" class="main-btn" aria-label="Gallery">
+                <img id="main-image" src={shots[0]} alt={project.name} />
+              </button>
+            ) : (
+              <div class="placeholder">
+                <span class="ph-icon"><Icon name={category?.icon ?? 'image'} size={44} /></span>
+                <span class="ph-text">{t.noShots}</span>
+              </div>
+            )}
+            {shots.length > 1 && (
+              <>
+                <button type="button" id="main-prev" class="nav-arrow nav-arrow--left" aria-label="Previous">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <button type="button" id="main-next" class="nav-arrow nav-arrow--right" aria-label="Next">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+
+        {shots.length > 1 && (
+          <div class="thumbs" id="thumbs">
+            {shots.map((shot, index) => (
+              <button type="button" class:list={['thumb', { active: index === 0 }]} data-thumb={index} aria-label={`Screenshot ${index + 1}`}>
+                <img src={shot} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <aside class="info">
+        <div class="info-card">
+          {category && (
+            <span class="cat-pill">
+              <Icon name={category.icon} size={15} />
+              {categoryTitle}
+            </span>
+          )}
+          <h1>{project.name}</h1>
+          <p class="lead">{project.description[locale]}</p>
+
+          <div class="tags">
+            {project.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+
+          {body && (
+            <div class="block">
+              <h2>{t.about}</h2>
+              <p class="body-text">{body}</p>
+            </div>
+          )}
+
+          {features.length > 0 && (
+            <div class="block">
+              <h2>{t.features}</h2>
+              <ul class="features">
+                {features.map((feature) => (
+                  <li>
+                    <span class="check"><Icon name="check" size={13} /></span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="actions">
+            {project.url && (
+              <a class="btn btn--primary btn--block" href={project.url} target="_blank" rel="noopener">
+                {project.linkLabel?.[locale] ?? (locale === 'en' ? 'Open' : 'Άνοιγμα')}
+                <Icon name="external-link" size={17} />
+              </a>
+            )}
+            <a class="btn btn--outline btn--block" href={locale === 'en' ? '/en/#contact' : '/#contact'}>
+              {t.contactCta}
+              <Icon name="arrow-right" size={17} />
+            </a>
+          </div>
+
+          <a class="back" href={`${locale === 'en' ? '/en/' : '/el/'}#work`}>
+            <Icon name="arrow-right" size={15} />
+            {t.back}
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lb-backdrop" data-lb-backdrop></div>
+    <div class="lb-inner">
+      <img id="lb-image" src="" alt="" />
+      <button type="button" id="lb-prev" class="lb-arrow lb-arrow--left" aria-label="Previous">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+      </button>
+      <button type="button" id="lb-next" class="lb-arrow lb-arrow--right" aria-label="Next">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+      </button>
+      <button type="button" id="lb-close" class="lb-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="project-shots" set:html={shotsJson}></script>
+
+<script>
+  (() => {
+    const dataEl = document.getElementById('project-shots');
+    if (!dataEl) return;
+    let shots: string[] = [];
+    try {
+      shots = JSON.parse(dataEl.textContent || '[]');
+    } catch {
+      shots = [];
+    }
+    if (!Array.isArray(shots) || shots.length === 0) return;
+
+    const mainImage = document.getElementById('main-image') as HTMLImageElement | null;
+    const counter = document.getElementById('shot-counter');
+    const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-thumb]'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImage = document.getElementById('lb-image') as HTMLImageElement | null;
+
+    let mainIndex = 0;
+    let lbIndex = 0;
+
+    const setMain = (index: number) => {
+      mainIndex = (index + shots.length) % shots.length;
+      if (mainImage) mainImage.src = shots[mainIndex];
+      if (counter) counter.textContent = `${mainIndex + 1} / ${shots.length}`;
+      thumbs.forEach((thumb, i) => thumb.classList.toggle('active', i === mainIndex));
+    };
+
+    const openLb = (index: number) => {
+      lbIndex = index;
+      if (lightbox) lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      renderLb();
+    };
+    const closeLb = () => {
+      if (lightbox) lightbox.hidden = true;
+      document.body.style.overflow = '';
+      setMain(lbIndex);
+    };
+    const renderLb = () => {
+      if (lbImage) lbImage.src = shots[lbIndex];
+    };
+    const nextLb = () => {
+      lbIndex = (lbIndex + 1) % shots.length;
+      renderLb();
+    };
+    const prevLb = () => {
+      lbIndex = (lbIndex - 1 + shots.length) % shots.length;
+      renderLb();
+    };
+
+    thumbs.forEach((thumb) => thumb.addEventListener('click', () => setMain(Number(thumb.dataset.thumb))));
+    document.getElementById('main-prev')?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setMain(mainIndex - 1);
+    });
+    document.getElementById('main-next')?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setMain(mainIndex + 1);
+    });
+    document.getElementById('main-open')?.addEventListener('click', () => openLb(mainIndex));
+    document.getElementById('lb-next')?.addEventListener('click', nextLb);
+    document.getElementById('lb-prev')?.addEventListener('click', prevLb);
+    document.getElementById('lb-close')?.addEventListener('click', closeLb);
+    document.querySelector('[data-lb-backdrop]')?.addEventListener('click', closeLb);
+
+    document.addEventListener('keydown', (event) => {
+      if (!lightbox || lightbox.hidden) return;
+      if (event.key === 'Escape') closeLb();
+      else if (event.key === 'ArrowRight') nextLb();
+      else if (event.key === 'ArrowLeft') prevLb();
+    });
+
+    setMain(0);
+  })();
+</script>
+
+<style>
+  .detail-page {
+    padding: 32px 0 96px;
+    background: var(--bg-soft);
+    min-height: 60vh;
+  }
+
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .crumbs a:hover {
+    color: var(--primary);
+  }
+
+  .crumb-current {
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 30px;
+    align-items: start;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .main {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .main-bar {
+    display: grid;
+    grid-template-columns: 4rem 1fr 4rem;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+
+  .main-bar #shot-counter {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .main-title {
+    text-align: center;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .main-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #eef1f6;
+  }
+
+  .main-btn {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+
+  .main-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #0b1120;
+  }
+
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 12px;
+    background: linear-gradient(150deg, var(--primary-50), #fff);
+    color: var(--primary);
+  }
+
+  .ph-text {
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav-arrow:hover {
+    background: #fff;
+  }
+
+  .nav-arrow--left {
+    left: 12px;
+  }
+
+  .nav-arrow--right {
+    right: 12px;
+  }
+
+  .thumbs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .thumb {
+    width: 132px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: #e2e8f0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .thumb.active {
+    border-color: var(--primary);
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Info */
+  .info-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 96px;
+  }
+
+  .cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--primary-50);
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .info-card h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 14px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .tag {
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .block {
+    margin-top: 26px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .block h2 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .body-text {
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    white-space: pre-line;
+  }
+
+  .features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.94rem;
+    font-weight: 500;
+  }
+
+  .check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--primary-50);
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .back svg {
+    transform: rotate(180deg);
+  }
+
+  .back:hover {
+    color: var(--primary);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 10, 20, 0.92);
+  }
+
+  .lb-inner {
+    position: relative;
+    max-width: 92vw;
+    max-height: 90vh;
+  }
+
+  .lb-inner img {
+    max-width: 92vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  .lb-arrow,
+  .lb-close {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+  }
+
+  .lb-arrow:hover,
+  .lb-close:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .lb-arrow--left {
+    left: -64px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .lb-arrow--right {
+    right: -64px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .lb-close {
+    top: -56px;
+    right: 0;
+  }
+
+  @media (max-width: 1000px) {
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .info-card {
+      position: static;
+    }
+
+    .lb-arrow--left {
+      left: 8px;
+    }
+
+    .lb-arrow--right {
+      right: 8px;
+    }
+
+    .lb-close {
+      top: 8px;
+      right: 8px;
+    }
+  }
+</style>

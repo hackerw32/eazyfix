@@ -33,6 +33,11 @@ if (!(await isValidSession(Astro.cookies.get(COOKIE_NAME)?.value))) {
           <span>EazyFix<small>Admin</small></span>
         </span>
 
+        <nav class="admin-tabs" id="adminTabs">
+          <button type="button" data-tab="business" class="active">Επιχείρηση</button>
+          <button type="button" data-tab="projects">Projects</button>
+        </nav>
+
         <div class="admin-top-actions">
           <a href="/" target="_blank" rel="noopener">Προβολή site</a>
           <span id="save-status"></span>
@@ -45,10 +50,6 @@ if (!(await isValidSession(Astro.cookies.get(COOKIE_NAME)?.value))) {
     </header>
 
     <main class="admin-main">
-      <div class="admin-intro">
-        <h1>Στοιχεία επιχείρησης</h1>
-        <p>Εδώ αλλάζεις τηλέφωνο, email, WhatsApp, περιοχή και ωράριο. Τα υπόλοιπα περιεχόμενα της σελίδας τα διαχειρίζεται ο developer.</p>
-      </div>
       <div id="admin-content"><div class="loading">Φόρτωση...</div></div>
     </main>
 

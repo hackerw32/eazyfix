@@ -1,12 +1,14 @@
 ---
 import Icon from './Icon.astro';
 import { categories } from '../data/portfolio';
+import type { Project } from '../data/projects';
 
 interface Props {
   locale: 'el' | 'en';
+  projects: Project[];
 }
 
-const { locale } = Astro.props;
+const { locale, projects } = Astro.props;
 
 const t =
   locale === 'en'
@@ -14,18 +16,21 @@ const t =
         eyebrow: 'What I do',
         title: 'Choose a field, see the work',
         lead: 'Five areas, one person. Click a category to see what I offer and real projects I have built.',
-        view: 'Open',
-        more: 'Details',
+        details: 'Details',
+        empty: 'New projects coming soon.',
       }
     : {
         eyebrow: 'Τι κάνω',
         title: 'Διάλεξε τομέα, δες τη δουλειά',
         lead: 'Πέντε τομείς, ένας άνθρωπος. Πάτησε μια κατηγορία για να δεις τι προσφέρω και πραγματικά projects που έχω φτιάξει.',
-        view: 'Άνοιγμα',
-        more: 'Λεπτομέρειες',
+        details: 'Λεπτομέρειες',
+        empty: 'Νέα projects έρχονται σύντομα.',
       };
 
-function linkHref(href: string, locale: 'el' | 'en'): string {
+const enabled = projects.filter((project) => project.enabled);
+const base = locale === 'en' ? '/en/projects/' : '/projects/';
+
+function linkHref(href: string): string {
   if (locale === 'en' && href === '/templates') return '/en/templates';
   return href;
 }
@@ -55,76 +60,76 @@ function linkHref(href: string, locale: 'el' | 'en'): string {
         ))}
       </div>
 
-      {categories.map((category, index) => (
-        <div class:list={['panel', { active: index === 0 }]} data-panel={category.slug}>
-          <div class="panel-head">
-            <div class="panel-title">
-              <span class="panel-icon"><Icon name={category.icon} /></span>
-              <div>
-                <h3>{category.title[locale]}</h3>
-                <p class="panel-short">{category.short[locale]}</p>
+      {categories.map((category, index) => {
+        const items = enabled.filter((project) => project.category === category.slug);
+        return (
+          <div class:list={['panel', { active: index === 0 }]} data-panel={category.slug}>
+            <div class="panel-head">
+              <div class="panel-title">
+                <span class="panel-icon"><Icon name={category.icon} /></span>
+                <div>
+                  <h3>{category.title[locale]}</h3>
+                  <p class="panel-short">{category.short[locale]}</p>
+                </div>
+              </div>
+              <div class="panel-desc">
+                <p>{category.description[locale]}</p>
+                <div class="chips">
+                  {category.tech.map((tech) => (
+                    <span class="chip">{tech}</span>
+                  ))}
+                </div>
               </div>
             </div>
-            <div class="panel-desc">
-              <p>{category.description[locale]}</p>
-              <div class="chips">
-                {category.tech.map((tech) => (
-                  <span class="chip">{tech}</span>
+
+            <ul class="highlights">
+              {category.highlights[locale].map((highlight) => (
+                <li>
+                  <span class="check"><Icon name="check" size={13} /></span>
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+
+            {items.length > 0 ? (
+              <div class="projects">
+                {items.map((project) => (
+                  <article class="project">
+                    <a class="project-overlay" href={`${base}${project.slug}`} aria-label={project.name} />
+                    <div class="project-head">
+                      <h4>{project.name}</h4>
+                      {project.url && (
+                        <a class="project-open" href={project.url} target="_blank" rel="noopener" aria-label={`${project.linkLabel?.[locale] ?? t.details} ${project.name}`}>
+                          <Icon name="external-link" size={16} />
+                        </a>
+                      )}
+                    </div>
+                    <p>{project.description[locale]}</p>
+                    <div class="project-foot">
+                      {project.tags.map((tag) => (
+                        <span class="tag">{tag}</span>
+                      ))}
+                      <span class="project-more">
+                        {t.details}
+                        <Icon name="chevron-right" size={14} />
+                      </span>
+                    </div>
+                  </article>
                 ))}
               </div>
-            </div>
+            ) : (
+              <p class="empty">{t.empty}</p>
+            )}
+
+            {category.extraLink && (
+              <a class="panel-cta" href={linkHref(category.extraLink.href)}>
+                {category.extraLink.label[locale]}
+                <Icon name="arrow-right" size={17} />
+              </a>
+            )}
           </div>
-
-          <ul class="highlights">
-            {category.highlights[locale].map((highlight) => (
-              <li>
-                <span class="check"><Icon name="check" size={13} /></span>
-                {highlight}
-              </li>
-            ))}
-          </ul>
-
-          <div class="projects">
-            {category.projects.map((project) => (
-              <article class="project">
-                <div class="project-head">
-                  <h4>{project.name}</h4>
-                  {project.url && (
-                    <a
-                      class="project-open"
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label={`${t.view} ${project.name}`}
-                    >
-                      <Icon name="external-link" size={16} />
-                    </a>
-                  )}
-                </div>
-                <p>{project.description[locale]}</p>
-                <div class="project-foot">
-                  {project.tags.map((tag) => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                  {project.url && (
-                    <a class="project-link" href={project.url} target="_blank" rel="noopener">
-                      {project.linkLabel?.[locale] ?? t.view}
-                      <Icon name="arrow-up-right" size={14} />
-                    </a>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {category.extraLink && (
-            <a class="panel-cta" href={linkHref(category.extraLink.href, locale)}>
-              {category.extraLink.label[locale]}
-              <Icon name="arrow-right" size={17} />
-            </a>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>
@@ -310,6 +315,12 @@ function linkHref(href: string, locale: 'el' | 'en'): string {
     flex-shrink: 0;
   }
 
+  .empty {
+    color: var(--muted);
+    font-style: italic;
+    padding: 10px 0;
+  }
+
   .projects {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -317,6 +328,7 @@ function linkHref(href: string, locale: 'el' | 'en'): string {
   }
 
   .project {
+    position: relative;
     border: 1px solid var(--line);
     border-radius: 12px;
     padding: 22px;
@@ -333,6 +345,13 @@ function linkHref(href: string, locale: 'el' | 'en'): string {
     box-shadow: var(--shadow-md);
   }
 
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 12px;
+  }
+
   .project-head {
     display: flex;
     align-items: center;
@@ -346,6 +365,8 @@ function linkHref(href: string, locale: 'el' | 'en'): string {
   }
 
   .project-open {
+    position: relative;
+    z-index: 2;
     color: var(--muted);
     flex-shrink: 0;
   }
@@ -378,18 +399,14 @@ function linkHref(href: string, locale: 'el' | 'en'): string {
     color: var(--muted);
   }
 
-  .project-link {
+  .project-more {
     margin-left: auto;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
     font-size: 0.82rem;
     font-weight: 700;
     color: var(--primary);
-  }
-
-  .project-link:hover {
-    text-decoration: underline;
   }
 
   .panel-cta {

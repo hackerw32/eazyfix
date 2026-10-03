@@ -1,7 +1,9 @@
 import { env } from 'cloudflare:workers';
 import { site, type Business } from '../data/site';
+import { defaultProjects, type Project } from '../data/projects';
 
 export const BUSINESS_KEY = 'business';
+export const PROJECTS_KEY = 'projects';
 
 interface ContentRow {
   value: string;
@@ -76,7 +78,31 @@ export async function getBusiness(): Promise<Business> {
   }
 }
 
-export async function saveBusiness(data: Business): Promise<void> {
+export async function getProjects(): Promise<Project[]> {
+  const db = getDb();
+  if (!db) return clone(defaultProjects);
+
+  try {
+    const row = await db
+      .prepare('SELECT value FROM content WHERE key = ?')
+      .bind(PROJECTS_KEY)
+      .first<ContentRow>();
+
+    if (!row || !row.value) {
+      const seed = clone(defaultProjects);
+      await saveProjects(seed);
+      return seed;
+    }
+
+    const stored = JSON.parse(row.value) as unknown;
+    if (!Array.isArray(stored) || stored.length === 0) return clone(defaultProjects);
+    return stored as Project[];
+  } catch {
+    return clone(defaultProjects);
+  }
+}
+
+async function writeKey(key: string, data: unknown): Promise<void> {
   const db = getDb();
   if (!db) throw new Error('CONTENT_DB binding is not configured');
 
@@ -89,6 +115,14 @@ export async function saveBusiness(data: Business): Promise<void> {
        VALUES (?, ?, ?)
        ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`
     )
-    .bind(BUSINESS_KEY, value, updatedAt)
+    .bind(key, value, updatedAt)
     .run();
+}
+
+export async function saveBusiness(data: Business): Promise<void> {
+  await writeKey(BUSINESS_KEY, data);
+}
+
+export async function saveProjects(projects: Project[]): Promise<void> {
+  await writeKey(PROJECTS_KEY, projects);
 }
