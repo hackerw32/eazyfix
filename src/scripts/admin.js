@@ -1,5 +1,7 @@
 const contentEl = document.getElementById('admin-content');
-const tabsEl = document.getElementById('adminTabs');
+const navEl = document.getElementById('adminNav');
+const pageTitle = document.getElementById('pageTitle');
+const pageSubtitle = document.getElementById('pageSubtitle');
 const saveBtn = document.getElementById('save-btn');
 const statusEl = document.getElementById('save-status');
 const storageFill = document.getElementById('storage-fill');
@@ -298,17 +300,26 @@ function renderEditor() {
 
 /* ---------- main render ---------- */
 
-function renderTabs() {
-  tabsEl.querySelectorAll('button').forEach((button) => {
+function renderNav() {
+  navEl.querySelectorAll('button').forEach((button) => {
     button.classList.toggle('active', button.dataset.tab === state.tab);
   });
 }
 
 function render() {
-  renderTabs();
+  renderNav();
   if (state.tab === 'projects') {
+    if (state.editing) {
+      pageTitle.textContent = state.isNew ? 'Νέο project' : 'Επεξεργασία project';
+      pageSubtitle.textContent = 'Συμπληρώστε τα στοιχεία, ανεβάστε screenshots και πατήστε Αποθήκευση.';
+    } else {
+      pageTitle.textContent = 'Projects';
+      pageSubtitle.textContent = 'Διαχείριση projects ανά κατηγορία — προσθήκη, επεξεργασία, ενεργοποίηση.';
+    }
     contentEl.innerHTML = state.editing ? renderEditor() : renderProjectsList();
   } else {
+    pageTitle.textContent = 'Στοιχεία επιχείρησης';
+    pageSubtitle.textContent = 'Τηλέφωνο, email, WhatsApp, περιοχή και ωράριο.';
     contentEl.innerHTML = renderBusiness();
   }
 }
@@ -448,7 +459,7 @@ async function uploadDownload(file) {
 
 /* ---------- events ---------- */
 
-tabsEl.addEventListener('click', (event) => {
+navEl.addEventListener('click', (event) => {
   const button = event.target.closest('[data-tab]');
   if (!button) return;
   state.tab = button.dataset.tab;
