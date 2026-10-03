@@ -2,6 +2,28 @@ const contentEl = document.getElementById('admin-content');
 const tabsEl = document.getElementById('adminTabs');
 const saveBtn = document.getElementById('save-btn');
 const statusEl = document.getElementById('save-status');
+const storageFill = document.getElementById('storage-fill');
+const storageText = document.getElementById('storage-text');
+
+function formatBytes(bytes) {
+  if (!bytes) return '0 MB';
+  const mb = bytes / 1048576;
+  if (mb < 1024) return `${mb.toFixed(mb < 10 ? 1 : 0)} MB`;
+  return `${(mb / 1024).toFixed(2)} GB`;
+}
+
+async function refreshStorage() {
+  try {
+    const res = await fetch('/api/admin/storage');
+    if (!res.ok) return;
+    const data = await res.json();
+    const pct = Math.min(100, (data.used / data.limit) * 100);
+    if (storageFill) storageFill.style.width = `${pct.toFixed(2)}%`;
+    if (storageText) storageText.textContent = `${formatBytes(data.used)} / ${formatBytes(data.limit)}`;
+  } catch {
+    /* ignore */
+  }
+}
 
 const CATEGORIES = [
   { slug: 'repairs', label: 'Service Ηλεκτρονικών' },
@@ -252,8 +274,25 @@ function renderEditor() {
         <input type="text" id="shot-url" placeholder="https://..." />
         <button type="button" class="abtn abtn--ghost2" data-action="add-shot">Προσθήκη από URL</button>
       </div>
-      <p class="hint">Οι εικόνες εμφανίζονται αριστερά στη σελίδα του project. Σύρετε για ταξινόμηση δεν υποστηρίζεται ακόμη — η σειρά είναι αυτή της λίστας.</p>
+      <p class="hint">Οι εικόνες εμφανίζονται αριστερά στη σελίδα του project.</p>
     </div>
+
+    <div class="field">
+      <label>Αρχείο λήψης (π.χ. APK)</label>
+      <div class="upload-row">
+        <input type="text" data-path="downloadUrl" value="${esc(project.downloadUrl ?? '')}" placeholder="https://... ή ανέβασε αρχείο" />
+        ${project.downloadUrl ? `<a class="abtn abtn--ghost2" href="${esc(project.downloadUrl)}" target="_blank" rel="noopener">Άνοιγμα</a><button type="button" class="abtn abtn--danger abtn--sm" data-action="clear-download">Καθαρισμός</button>` : ''}
+      </div>
+      <div class="upload-row" style="margin-top:10px">
+        <label class="file-btn">Ανέβασμα αρχείου
+          <input type="file" data-action="upload-file" />
+        </label>
+        <span class="hint" style="margin:0">Μέγιστο 24 MB ανά αρχείο</span>
+      </div>
+      ${project.downloadName ? `<p class="hint">${esc(project.downloadName)}${project.downloadSize ? ` · ${(project.downloadSize / 1048576).toFixed(2)} MB` : ''}</p>` : ''}
+    </div>
+
+    ${bi('Ετικέτα λήψης', 'downloadLabel', project.downloadLabel ?? { el: '', en: '' })}
   </div>`;
 }
 
@@ -372,6 +411,36 @@ async function uploadImages(files) {
     }
     setStatus('Η εικόνα ανέβηκε — πατήστε Αποθήκευση', 'ok');
     render();
+    refreshStorage();
+  } catch {
+    setStatus('Σφάλμα ανεβάσματος', 'error');
+  }
+}
+
+async function uploadDownload(file) {
+  if (!file || !state.editing) return;
+  setStatus('Ανέβασμα...');
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('kind', 'file');
+    const res = await fetch('/api/admin/upload', { method: 'POST', body: form });
+    if (res.status === 401) {
+      window.location.href = '/admin/login';
+      return;
+    }
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 413 || data.error === 'too_large') {
+      setStatus(`Το αρχείο είναι μεγαλύτερο από ${formatBytes(data.max ?? 25165824)}`, 'error');
+      return;
+    }
+    if (!res.ok || !data.url) throw new Error('upload failed');
+    state.editing.downloadUrl = data.url;
+    state.editing.downloadName = data.name;
+    state.editing.downloadSize = data.size;
+    setStatus('Το αρχείο ανέβηκε — πατήστε Αποθήκευση', 'ok');
+    render();
+    refreshStorage();
   } catch {
     setStatus('Σφάλμα ανεβάσματος', 'error');
   }
@@ -414,6 +483,12 @@ contentEl.addEventListener('click', (event) => {
       saveProjectsOnly();
       render();
     }
+  } else if (action === 'clear-download' && state.editing) {
+    state.editing.downloadUrl = '';
+    state.editing.downloadName = '';
+    state.editing.downloadSize = 0;
+    markDirty();
+    render();
   } else if (action === 'remove-shot' && state.editing) {
     state.editing.screenshots.splice(Number(target.dataset.index), 1);
     markDirty();
@@ -465,6 +540,12 @@ contentEl.addEventListener('change', (event) => {
     return;
   }
 
+  if (el instanceof HTMLInputElement && el.type === 'file' && el.dataset.action === 'upload-file') {
+    uploadDownload(el.files?.[0]);
+    el.value = '';
+    return;
+  }
+
   if (!state.editing) return;
 
   if (el instanceof HTMLInputElement && el.type === 'checkbox' && el.dataset.path) {
@@ -500,6 +581,7 @@ async function load() {
     state.business = await businessRes.json();
     state.projects = await projectsRes.json();
     render();
+    refreshStorage();
   } catch {
     contentEl.innerHTML = '<div class="loading">Σφάλμα φόρτωσης. Ανανεώστε τη σελίδα.</div>';
   }

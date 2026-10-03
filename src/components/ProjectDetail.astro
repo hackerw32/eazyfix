@@ -145,6 +145,13 @@ const categoryTitle = category?.title[locale] ?? '';
                 <Icon name="external-link" size={17} />
               </a>
             )}
+            {project.downloadUrl && (
+              <a class="btn btn--dark btn--block" href={project.downloadUrl} download>
+                {project.downloadLabel?.[locale] ?? (locale === 'en' ? 'Download APK' : 'Λήψη APK')}
+                {project.downloadSize ? ` (${(project.downloadSize / 1048576).toFixed(1)} MB)` : ''}
+                <Icon name="hard-drive" size={17} />
+              </a>
+            )}
             <a class="btn btn--outline btn--block" href={locale === 'en' ? '/en/#contact' : '/#contact'}>
               {t.contactCta}
               <Icon name="arrow-right" size={17} />

@@ -40,6 +40,10 @@ if (!(await isValidSession(Astro.cookies.get(COOKIE_NAME)?.value))) {
 
         <div class="admin-top-actions">
           <a href="/" target="_blank" rel="noopener">Προβολή site</a>
+          <div class="storage" id="storage" title="Χώρος αρχείων (σύνολο)">
+            <div class="storage-bar"><span id="storage-fill"></span></div>
+            <span id="storage-text">—</span>
+          </div>
           <span id="save-status"></span>
           <button id="save-btn" class="abtn abtn--primary">Αποθήκευση</button>
           <form method="POST" action="/api/admin/logout">

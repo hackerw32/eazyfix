@@ -10,6 +10,10 @@ export interface Project {
   tags: string[];
   url?: string;
   linkLabel?: { el: string; en: string };
+  downloadUrl?: string;
+  downloadLabel?: { el: string; en: string };
+  downloadName?: string;
+  downloadSize?: number;
   screenshots: string[];
 }
 
