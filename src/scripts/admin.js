@@ -38,6 +38,7 @@ const CATEGORIES = [
 const state = {
   tab: 'business',
   business: null,
+  site: null,
   projects: [],
   editing: null,
   isNew: false,
@@ -154,6 +155,71 @@ function renderBusiness() {
     ${biField('business', 'address', 'Περιοχή')}
     ${biField('business', 'hours', 'Ώρες λειτουργίας', true)}
   </div>`;
+}
+
+function siteField(label, path, value, type = 'text') {
+  return `<div class="field"><label>${esc(label)}</label><input type="${type}" data-site="${path}" value="${esc(value)}" /></div>`;
+}
+
+function siteBi(label, base, obj, multiline = false, rows = 3) {
+  const control = (loc) => {
+    const value = esc(obj?.[loc] ?? '');
+    return multiline
+      ? `<textarea rows="${rows}" data-site="${base}.${loc}">${value}</textarea>`
+      : `<input type="text" data-site="${base}.${loc}" value="${value}" />`;
+  };
+  return `<div class="field"><label>${esc(label)}</label>
+    <div class="bi-row">
+      <div class="bi"><span class="flag">EL</span>${control('el')}</div>
+      <div class="bi"><span class="flag">EN</span>${control('en')}</div>
+    </div></div>`;
+}
+
+function renderContent() {
+  const c = state.site;
+  const stats = c.hero.stats
+    .map(
+      (stat, index) => `<div class="mini-card">
+        <div class="mini-card-head"><strong>Στατιστικό ${index + 1}</strong>
+          <button type="button" class="icon-btn icon-btn--danger" data-action="remove-stat" data-index="${index}" title="Διαγραφή">${icon('trash')}</button>
+        </div>
+        ${siteField('Τιμή', `hero.stats.${index}.value`, stat.value)}
+        ${siteBi('Ετικέτα', `hero.stats.${index}.label`, stat.label)}
+      </div>`
+    )
+    .join('');
+
+  return `<div class="panel">
+      <h2>Hero (αρχική ενότητα)</h2>
+      ${siteBi('Ετικέτα (badge)', 'hero.badge', c.hero.badge)}
+      ${siteBi('Τίτλος', 'hero.title', c.hero.title)}
+      ${siteBi('Τίτλος — τονισμένη γραμμή', 'hero.titleAccent', c.hero.titleAccent)}
+      ${siteBi('Υπότιτλος', 'hero.subtitle', c.hero.subtitle, true)}
+      <div class="grid-2">
+        ${siteBi('Κουμπί 1', 'hero.primaryCta', c.hero.primaryCta)}
+        ${siteBi('Κουμπί 2', 'hero.secondaryCta', c.hero.secondaryCta)}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="editor-head"><h2>Στατιστικά Hero</h2>
+        <button type="button" class="abtn abtn--ghost2 abtn--sm" data-action="add-stat">+ Προσθήκη</button>
+      </div>
+      ${stats}
+    </div>
+    <div class="panel">
+      <h2>Σχετικά με εμένα</h2>
+      ${siteBi('Τίτλος', 'about.title', c.about.title)}
+      ${siteBi('Υπότιτλος (όνομα & ιδιότητα)', 'about.lead', c.about.lead)}
+      ${siteBi('Κείμενο', 'about.text', c.about.text, true, 8)}
+      <div class="field"><label>Τεχνολογίες (μία ανά γραμμή)</label>
+        <textarea rows="7" data-site="about.skills" data-site-type="lines">${esc((c.about.skills || []).join('\n'))}</textarea>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Επικοινωνία (τίτλοι)</h2>
+      ${siteBi('Τίτλος', 'contact.title', c.contact.title)}
+      ${siteBi('Υπότιτλος', 'contact.subtitle', c.contact.subtitle, true)}
+    </div>`;
 }
 
 function biField(group, base, label, multiline = false) {
@@ -329,6 +395,10 @@ function render() {
       pageSubtitle.textContent = 'Διαχείριση projects ανά κατηγορία — προσθήκη, επεξεργασία, ενεργοποίηση.';
     }
     contentEl.innerHTML = state.editing ? renderEditor() : renderProjectsList();
+  } else if (state.tab === 'content') {
+    pageTitle.textContent = 'Περιεχόμενο σελίδας';
+    pageSubtitle.textContent = 'Hero και ενότητα «Σχετικά με εμένα».';
+    contentEl.innerHTML = renderContent();
   } else {
     pageTitle.textContent = 'Στοιχεία επιχείρησης';
     pageSubtitle.textContent = 'Τηλέφωνο, email, WhatsApp, περιοχή και ωράριο.';
@@ -406,6 +476,11 @@ async function saveAll() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(state.projects),
+      }),
+      fetch('/api/admin/site', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state.site),
       }),
     ]);
     responses.forEach((res) => {
@@ -524,12 +599,30 @@ contentEl.addEventListener('click', (event) => {
       markDirty();
       render();
     }
+  } else if (action === 'add-stat' && state.site) {
+    state.site.hero.stats.push({ value: '', label: { el: '', en: '' } });
+    markDirty();
+    render();
+  } else if (action === 'remove-stat' && state.site) {
+    state.site.hero.stats.splice(Number(target.dataset.index), 1);
+    markDirty();
+    render();
   }
 });
 
 contentEl.addEventListener('input', (event) => {
   const el = event.target;
   if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)) return;
+
+  if (el.dataset.site && state.site) {
+    let value = el.value;
+    if (el.dataset.siteType === 'lines') {
+      value = value.split('\n').map((part) => part.trim()).filter(Boolean);
+    }
+    setPath(state.site, el.dataset.site, value);
+    markDirty();
+    return;
+  }
 
   if (el.dataset.bind && state.business) {
     setPath(state.business, el.dataset.bind, el.value);
@@ -593,16 +686,18 @@ window.addEventListener('beforeunload', (event) => {
 
 async function load() {
   try {
-    const [businessRes, projectsRes] = await Promise.all([
+    const [businessRes, projectsRes, siteRes] = await Promise.all([
       fetch('/api/admin/content'),
       fetch('/api/admin/projects'),
+      fetch('/api/admin/site'),
     ]);
-    if (businessRes.status === 401 || projectsRes.status === 401) {
+    if (businessRes.status === 401 || projectsRes.status === 401 || siteRes.status === 401) {
       window.location.href = '/admin/login';
       return;
     }
     state.business = await businessRes.json();
     state.projects = await projectsRes.json();
+    state.site = await siteRes.json();
     render();
     refreshStorage();
   } catch {

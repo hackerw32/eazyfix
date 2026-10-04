@@ -19,12 +19,15 @@ export const site = {
     },
   },
   hero: {
-    badge: { el: 'Freelance developer & τεχνικός', en: 'Freelance developer & technician' },
-    title: { el: 'Φτιάχνω πράγματα που δουλεύουν.', en: 'I build things that work.' },
-    titleAccent: { el: 'Από υπολογιστές, μέχρι παιχνίδια.', en: 'From computers to games.' },
+    badge: { el: 'Full-Stack Developer & Τεχνικός Υπολογιστών', en: 'Full-Stack Developer & IT Technician' },
+    title: { el: 'Αξιόπιστες τεχνολογικές λύσεις.', en: 'Reliable technology solutions.' },
+    titleAccent: {
+      el: 'Από το service υπολογιστών μέχρι custom εφαρμογές.',
+      en: 'From computer service to custom apps.',
+    },
     subtitle: {
-      el: 'Είμαι ο άνθρωπος πίσω από το EazyFix. Επισκευάζω υπολογιστές, κατασκευάζω ιστοσελίδες, εφαρμογές Android και παιχνίδια, καθώς και εργαλεία για Windows.',
-      en: 'I am the person behind EazyFix. I repair computers, build websites, Android apps and games, and Windows tools.',
+      el: 'Πίσω από το EazyFix προσφέρω εξειδικευμένες υπηρεσίες επισκευής υπολογιστών, ανάπτυξη σύγχρονων ιστοσελίδων, εφαρμογών και παιχνιδιών Android, καθώς και custom εργαλείων για Windows.',
+      en: 'Behind EazyFix I provide specialised computer repair services, modern website development, Android apps and games, and custom Windows tools.',
     },
     primaryCta: { el: 'Δείτε τις δουλειές μου', en: 'See my work' },
     secondaryCta: { el: 'Επικοινωνία', en: 'Contact' },
@@ -35,14 +38,14 @@ export const site = {
     ],
   },
   about: {
-    title: { el: 'Ποιος είμαι', en: 'Who I am' },
+    title: { el: 'Σχετικά με εμένα', en: 'About me' },
     lead: {
-      el: 'Πολυπράγμων developer & τεχνικός, με έδρα τη Σαλαμίνα.',
-      en: 'A hands-on developer & technician based in Salamina, Greece.',
+      el: 'Γεώργιος Τσουχνικάς, Software Developer & Τεχνικός Πληροφορικής',
+      en: 'Georgios Tsouchnikas, Software Developer & IT Technician',
     },
     text: {
-      el: 'Ξεκίνησα από τις επισκευές υπολογιστών και σιγά-σιγά επεκτάθηκα στην ανάπτυξη λογισμικού. Σήμερα σχεδιάζω και κατασκευάζω ιστοσελίδες, εφαρμογές Android και παιχνίδια, καθώς και εργαλεία για Windows και Python. Μου αρέσει να λύνω πραγματικά προβλήματα με απλές, γρήγορες λύσεις — και να παραδίδω δουλειές που λειτουργούν σωστά.',
-      en: 'I started with computer repairs and gradually expanded into software development. Today I design and build websites, Android apps and games, as well as Windows and Python tools. I enjoy solving real problems with simple, fast solutions — and delivering work that actually works.',
+      el: 'Ξεκινώντας από την τεχνική υποστήριξη και επισκευή υπολογιστών, εξέλιξα την πορεία μου στην ανάπτυξη λογισμικού.\n\nΣήμερα σχεδιάζω και υλοποιώ σύγχρονες ιστοσελίδες, native εφαρμογές και mobile games για Android, καθώς και αυτοματισμούς ή εργαλεία σε Windows και Python.\n\nΣτόχος μου είναι να δίνω ουσιαστικές, γρήγορες και αποδοτικές λύσεις σε πραγματικές ανάγκες — παραδίδοντας πάντα έργα υψηλής ποιότητας και λειτουργικότητας.',
+      en: 'Starting from IT support and computer repair, I grew into software development.\n\nToday I design and build modern websites, native apps and mobile games for Android, as well as automation and tools for Windows and Python.\n\nMy goal is to deliver practical, fast and efficient solutions for real needs — always with high quality and functionality.',
     },
     skills: [
       'HTML / CSS / JavaScript',
@@ -67,9 +70,17 @@ export const site = {
     },
   },
   social: [
-    { label: 'GitHub', url: 'https://github.com/hackerw32' },
+    { label: 'GitHub', url: 'https://github.com/eazyfixgr' },
     { label: 'Chook Games', url: 'https://github.com/chook-games' },
   ],
 };
 
 export type Business = typeof site.business;
+export type Hero = typeof site.hero;
+export type About = typeof site.about;
+export type Contact = typeof site.contact;
+export type SiteContentDefaults = {
+  hero: Hero;
+  about: About;
+  contact: Contact;
+};

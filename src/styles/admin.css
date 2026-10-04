@@ -740,6 +740,27 @@ body {
   margin-top: 8px;
 }
 
+.mini-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fbfcfe;
+}
+
+.mini-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.mini-card-head strong {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+}
+
 .loading {
   text-align: center;
   color: var(--muted);

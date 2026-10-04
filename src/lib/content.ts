@@ -1,9 +1,12 @@
 import { env } from 'cloudflare:workers';
-import { site, type Business } from '../data/site';
+import { site, type Business, type SiteContentDefaults } from '../data/site';
 import { defaultProjects, type Project } from '../data/projects';
 
 export const BUSINESS_KEY = 'business';
 export const PROJECTS_KEY = 'projects';
+export const SITE_KEY = 'site';
+
+const siteDefaults: SiteContentDefaults = { hero: site.hero, about: site.about, contact: site.contact };
 
 interface ContentRow {
   value: string;
@@ -125,4 +128,27 @@ export async function saveBusiness(data: Business): Promise<void> {
 
 export async function saveProjects(projects: Project[]): Promise<void> {
   await writeKey(PROJECTS_KEY, projects);
+}
+
+export async function getSiteContent(): Promise<SiteContentDefaults> {
+  const db = getDb();
+  if (!db) return clone(siteDefaults);
+
+  try {
+    const row = await db
+      .prepare('SELECT value FROM content WHERE key = ?')
+      .bind(SITE_KEY)
+      .first<ContentRow>();
+
+    if (!row || !row.value) return clone(siteDefaults);
+
+    const stored = JSON.parse(row.value) as unknown;
+    return mergeContent(siteDefaults, stored);
+  } catch {
+    return clone(siteDefaults);
+  }
+}
+
+export async function saveSiteContent(data: SiteContentDefaults): Promise<void> {
+  await writeKey(SITE_KEY, data);
 }
