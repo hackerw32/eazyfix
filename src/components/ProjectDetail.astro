@@ -42,6 +42,20 @@ const shotsJson = JSON.stringify(shots).replace(/</g, '\\u003c');
 const body = project.body?.[locale] || project.description[locale];
 const features = project.features?.[locale] ?? [];
 const categoryTitle = category?.title[locale] ?? '';
+
+const downloadExt = (project.downloadName ?? project.downloadUrl ?? '').toLowerCase();
+const downloadDefault =
+  downloadExt.endsWith('.exe')
+    ? locale === 'en'
+      ? 'Download EXE'
+      : 'Λήψη EXE'
+    : downloadExt.endsWith('.zip')
+      ? locale === 'en'
+        ? 'Download ZIP'
+        : 'Λήψη ZIP'
+      : locale === 'en'
+        ? 'Download APK'
+        : 'Λήψη APK';
 ---
 
 <div class="detail-page">
@@ -147,7 +161,7 @@ const categoryTitle = category?.title[locale] ?? '';
             )}
             {project.downloadUrl && (
               <a class="btn btn--dark btn--block" href={project.downloadUrl} download>
-                {project.downloadLabel?.[locale] ?? (locale === 'en' ? 'Download APK' : 'Λήψη APK')}
+                {project.downloadLabel?.[locale] ?? downloadDefault}
                 {project.downloadSize ? ` (${(project.downloadSize / 1048576).toFixed(1)} MB)` : ''}
                 <Icon name="hard-drive" size={17} />
               </a>
