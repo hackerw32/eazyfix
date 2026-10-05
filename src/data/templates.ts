@@ -16,7 +16,7 @@ export const templates: Template[] = [
     category: { el: 'Ακίνητα', en: 'Real Estate' },
     short: { el: 'Μόνο αγγελίες ακινήτων.', en: 'Property listings only.' },
     style: 'minimal-listing',
-    built: false,
+    built: true,
   },
   {
     slug: 'techniko-mesitiko',
@@ -25,7 +25,7 @@ export const templates: Template[] = [
     category: { el: 'Ακίνητα & Τεχνικά', en: 'Real Estate & Technical' },
     short: { el: 'Αγγελίες, τοπογραφικά, ΚΥΔ/τακτοποιήσεις.', en: 'Listings, surveys, permits.' },
     style: 'corporate-technical',
-    built: false,
+    built: true,
   },
   {
     slug: 'dikigoriko',
