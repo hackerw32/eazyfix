@@ -6,7 +6,12 @@ export const BUSINESS_KEY = 'business';
 export const PROJECTS_KEY = 'projects';
 export const SITE_KEY = 'site';
 
-const siteDefaults: SiteContentDefaults = { hero: site.hero, about: site.about, contact: site.contact };
+const siteDefaults: SiteContentDefaults = {
+  hero: site.hero,
+  about: site.about,
+  contact: site.contact,
+  branding: site.branding,
+};
 
 interface ContentRow {
   value: string;

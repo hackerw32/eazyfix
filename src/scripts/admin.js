@@ -219,6 +219,26 @@ function renderContent() {
       <h2>Επικοινωνία (τίτλοι)</h2>
       ${siteBi('Τίτλος', 'contact.title', c.contact.title)}
       ${siteBi('Υπότιτλος', 'contact.subtitle', c.contact.subtitle, true)}
+    </div>
+    <div class="panel">
+      <h2>Εμφάνιση &amp; κοινοποίηση</h2>
+      <div class="field">
+        <label>Favicon — εικονίδιο σελίδας (SVG ή PNG)</label>
+        <div class="upload-row">
+          <img class="brand-preview" src="${esc(c.branding?.favicon || '/favicon.svg')}" alt="" />
+          <input type="text" data-site="branding.favicon" value="${esc(c.branding?.favicon ?? '')}" placeholder="/favicon.svg ή /media/..." />
+          <label class="file-btn">Ανέβασμα<input type="file" accept="image/*" data-action="upload-brand" data-target="branding.favicon" /></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Εικόνα κοινοποίησης (Open Graph, 1200×630)</label>
+        <div class="upload-row">
+          <img class="brand-preview brand-preview--wide" src="${esc(c.branding?.ogImage || '/og.png')}" alt="" />
+          <input type="text" data-site="branding.ogImage" value="${esc(c.branding?.ogImage ?? '')}" placeholder="/og.png ή /media/..." />
+          <label class="file-btn">Ανέβασμα<input type="file" accept="image/*" data-action="upload-brand" data-target="branding.ogImage" /></label>
+        </div>
+      </div>
+      <p class="hint">Το favicon είναι το εικονίδιο στην καρτέλα του browser. Η εικόνα κοινοποίησης εμφανίζεται σε Viber / Messenger / WhatsApp / Facebook όταν στέλνεις το link.</p>
     </div>`;
 }
 
@@ -544,6 +564,29 @@ async function uploadDownload(file) {
   }
 }
 
+async function uploadBrand(file, path) {
+  if (!file || !state.site || !path) return;
+  setStatus('Ανέβασμα...');
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('kind', 'image');
+    const res = await fetch('/api/admin/upload', { method: 'POST', body: form });
+    if (res.status === 401) {
+      window.location.href = '/admin/login';
+      return;
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.url) throw new Error('upload failed');
+    setPath(state.site, path, data.url);
+    setStatus('Η εικόνα ανέβηκε — πατήστε Αποθήκευση', 'ok');
+    render();
+    refreshStorage();
+  } catch {
+    setStatus('Σφάλμα ανεβάσματος', 'error');
+  }
+}
+
 /* ---------- events ---------- */
 
 navEl.addEventListener('click', (event) => {
@@ -658,6 +701,12 @@ contentEl.addEventListener('change', (event) => {
 
   if (el instanceof HTMLInputElement && el.type === 'file' && el.dataset.action === 'upload-file') {
     uploadDownload(el.files?.[0]);
+    el.value = '';
+    return;
+  }
+
+  if (el instanceof HTMLInputElement && el.type === 'file' && el.dataset.action === 'upload-brand') {
+    uploadBrand(el.files?.[0], el.dataset.target);
     el.value = '';
     return;
   }

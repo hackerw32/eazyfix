@@ -734,6 +734,22 @@ body {
   display: none;
 }
 
+.brand-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.brand-preview--wide {
+  width: 104px;
+  height: 55px;
+  object-fit: cover;
+}
+
 .hint {
   color: var(--muted);
   font-size: 0.82rem;

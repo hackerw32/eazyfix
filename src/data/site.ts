@@ -73,14 +73,20 @@ export const site = {
     { label: 'GitHub', url: 'https://github.com/eazyfixgr' },
     { label: 'Chook Games', url: 'https://github.com/chook-games' },
   ],
+  branding: {
+    favicon: '/favicon.svg',
+    ogImage: '/og.png',
+  },
 };
 
 export type Business = typeof site.business;
 export type Hero = typeof site.hero;
 export type About = typeof site.about;
 export type Contact = typeof site.contact;
+export type Branding = typeof site.branding;
 export type SiteContentDefaults = {
   hero: Hero;
   about: About;
   contact: Contact;
+  branding: Branding;
 };
