@@ -43,7 +43,7 @@ export const templates: Template[] = [
     category: { el: 'Υγεία', en: 'Health' },
     short: { el: 'Υπηρεσίες & online ραντεβού.', en: 'Services & online booking.' },
     style: 'clean-medical',
-    built: false,
+    built: true,
   },
   {
     slug: 'kallopismos',
@@ -61,7 +61,7 @@ export const templates: Template[] = [
     category: { el: 'Λιανική', en: 'Retail' },
     short: { el: 'Συλλογές & e-shop ρούχων.', en: 'Collections & clothing e-shop.' },
     style: 'fashion-grid',
-    built: false,
+    built: true,
   },
   {
     slug: 'keri',

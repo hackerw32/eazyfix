@@ -1,0 +1,933 @@
+---
+const brand = 'VESTIS';
+const categories = [
+  { name: 'Γυναικεία', items: '120+ προϊόντα', tone: 'w' },
+  { name: 'Ανδρικά', items: '90+ προϊόντα', tone: 'm' },
+  { name: 'Αξεσουάρ', items: '60+ προϊόντα', tone: 'a' },
+];
+const products = [
+  { name: 'Oversized Φούτερ', cat: 'Γυναικεία', price: '49€', old: '59€', sale: true, tone: 't1' },
+  { name: 'Βαμβακερό T-Shirt', cat: 'Unisex', price: '25€', old: '', sale: false, tone: 't2' },
+  { name: 'Τζιν Straight', cat: 'Ανδρικά', price: '59€', old: '', sale: false, tone: 't3' },
+  { name: 'Πλεκτή Ζακέτα', cat: 'Γυναικεία', price: '65€', old: '79€', sale: true, tone: 't4' },
+  { name: 'Φόρεμα Midi', cat: 'Γυναικεία', price: '69€', old: '', sale: false, tone: 't5' },
+  { name: 'Λινό Πουκάμισο', cat: 'Ανδρικά', price: '45€', old: '', sale: false, tone: 't6' },
+  { name: 'Δερμάτινο Μπουφάν', cat: 'Ανδρικά', price: '129€', old: '159€', sale: true, tone: 't7' },
+  { name: 'Πλισέ Φούστα', cat: 'Γυναικεία', price: '39€', old: '', sale: false, tone: 't8' },
+];
+const benefits = [
+  { title: 'Δωρεάν αποστολή', text: 'Για παραγγελίες άνω των 50€' },
+  { title: 'Αλλαγές 30 ημερών', text: 'Εύκολες επιστροφές & αλλαγές' },
+  { title: 'Ασφαλείς πληρωμές', text: 'Κάρτα, αντικαταβολή, PayPal' },
+  { title: 'Προσωπικό styling', text: 'Δωρεάν συμβουλή στο κατάστημα' },
+];
+const reviews = [
+  { name: 'Αναστασία Κ.', text: 'Ποιότητα υφασμάτων που δεν βρίσκεις εύκολα. Έγινε το αγαπημένο μου μαγαζί.' },
+  { name: 'Πέτρος Μ.', text: 'Τέλεια εξυπηρέτηση και γρήγορη αποστολή. Το μπουφάν είναι εξαιρετικό.' },
+  { name: 'Δέσποινα Λ.', text: 'Μου πρότειναν styling δωρεάν και πήρα το ιδανικό σύνολο.' },
+];
+---
+
+<div class="vestis">
+  <!-- Announcement -->
+  <div class="announce">
+    <div class="wrap announce-inner">
+      <span>Νέα συλλογή Φθινόπωρο/Χειμώνας '26</span>
+      <span class="announce-sep">•</span>
+      <span>Δωρεάν αποστολή άνω των 50€</span>
+      <span class="announce-sep">•</span>
+      <span>-20% στο πρώτο σου αίτημα newsletter</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <nav class="nav-left">
+        <a href="#categories">Γυναικεία</a>
+        <a href="#categories">Ανδρικά</a>
+        <a href="#categories">Αξεσουάρ</a>
+      </nav>
+      <a class="brand" href="#top">{brand}</a>
+      <div class="nav-right">
+        <a href="#" class="icon-link" aria-label="Αναζήτηση">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+        </a>
+        <a href="#" class="icon-link cart">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-count">2</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="hero-media" aria-hidden="true">
+      <span class="hm-label">Lookbook '26</span>
+    </div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">Νέα Συλλογή</span>
+      <h1>Φθινόπωρο / Χειμώνας 2026</h1>
+      <p>Βασικά κομμάτια, φυσικά υφάσματα και διαχρονικές γραμμές — σε ένα limited drop.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-solid">Δες τη συλλογή</a>
+        <a href="#categories" class="btn btn-line">Κατηγορίες</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section" id="categories">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Κατηγορίες</span>
+        <h2>Διάλεξε το στυλ σου</h2>
+      </div>
+      <div class="cat-grid">
+        {categories.map((c) => (
+          <a href="#products" class={`cat-tile ct-${c.tone}`}>
+            <span class="cat-name">{c.name}</span>
+            <span class="cat-items">{c.items}</span>
+            <span class="cat-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section section--soft" id="products">
+    <div class="wrap">
+      <div class="prod-head">
+        <div>
+          <span class="eyebrow">Προϊόντα</span>
+          <h2>Επιλεγμένα κομμάτια</h2>
+        </div>
+        <a href="#newsletter" class="prod-link">Δες όλα →</a>
+      </div>
+      <div class="prod-grid">
+        {products.map((p) => (
+          <article class="pcard">
+            <div class={`pimg ${p.tone}`}>
+              {p.sale && <span class="sale">Sale</span>}
+              <button type="button" class="wish" aria-label="Wishlist">♡</button>
+            </div>
+            <div class="pbody">
+              <span class="pcat">{p.cat}</span>
+              <h3>{p.name}</h3>
+              <div class="prow">
+                <span class="pprice">{p.old && <s>{p.old}</s>}{p.price}</span>
+                <button type="button" class="add">Προσθήκη</button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Lookbook -->
+  <section class="lookbook">
+    <div class="wrap look-grid">
+      <div class="look-img" aria-hidden="true"></div>
+      <div class="look-copy">
+        <span class="eyebrow">Lookbook</span>
+        <h2>Φτιαγμένα για να τα φοράς κάθε μέρα</h2>
+        <p>
+          Κάθε κομμάτι επιλέγεται για την ποιότητα και την άνεσή του. Στόχος μας: ρούχα που
+          συνδυάζονται μεταξύ τους και κρατούν στον χρόνο.
+        </p>
+        <a href="#products" class="btn btn-solid">Δες το lookbook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="benefits">
+    <div class="wrap benefits-grid">
+      {benefits.map((b) => (
+        <div class="benefit">
+          <strong>{b.title}</strong>
+          <span>{b.text}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Πελάτες</span>
+        <h2>Τι λένε για εμάς</h2>
+      </div>
+      <div class="rev-grid">
+        {reviews.map((r) => (
+          <figure class="rev">
+            <div class="stars">★★★★★</div>
+            <blockquote>{r.text}</blockquote>
+            <figcaption>{r.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter" id="newsletter">
+    <div class="wrap news-inner">
+      <div>
+        <span class="eyebrow eyebrow--light">Newsletter</span>
+        <h2>−20% στην πρώτη σου παραγγελία</h2>
+        <p>Εγγράψου και μάθε πρώτος για νέες συλλογές και προσφορές.</p>
+      </div>
+      <form class="news-form" onsubmit="event.preventDefault(); this.reset();">
+        <input type="email" placeholder="Το email σου" required />
+        <button type="submit" class="btn btn-solid">Εγγραφή</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <span class="brand-name">{brand}</span>
+        <p>Fashion store στη Σαλαμίνα. Διαχρονικά κομμάτια, επιλεγμένα με φροντίδα.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Κατάστημα</h4>
+        <span>Ακτή Μιαούλη 12, Σαλαμίνα</span>
+        <span>Δευ–Σάβ · 10:00–21:00</span>
+        <span>210 000 0000</span>
+      </div>
+      <div class="foot-col">
+        <h4>Εξυπηρέτηση</h4>
+        <a href="#">Αποστολές &amp; επιστροφές</a>
+        <a href="#">Οδηγός μεγεθών</a>
+        <a href="#">Επικοινωνία</a>
+      </div>
+      <div class="foot-col">
+        <h4>Ακολούθησέ μας</h4>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">
+      <span>© 2026 {brand}. Με επιφύλαξη παντός δικαιώματος.</span>
+      <span>Ασφαλείς πληρωμές · Visa · Mastercard · PayPal</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .vestis {
+    --bg: #faf9f6;
+    --paper: #ffffff;
+    --ink: #111111;
+    --muted: #767676;
+    --beige: #ece4d8;
+    --rust: #c2410c;
+    --line: #e7e2d9;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.65;
+  }
+
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .vestis h1,
+  .vestis h2,
+  .vestis h3,
+  .vestis h4 {
+    font-family: 'Syne', system-ui, sans-serif;
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .vestis h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+  }
+
+  .vestis h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 10px 0 12px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .eyebrow--light {
+    color: #d8cdbf;
+  }
+
+  /* Announcement */
+  .announce {
+    background: var(--ink);
+    color: #f0ece4;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+  }
+
+  .announce-inner {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 24px;
+    flex-wrap: wrap;
+    text-transform: uppercase;
+  }
+
+  .announce-sep {
+    color: var(--rust);
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+    height: 76px;
+  }
+
+  .nav-left {
+    display: flex;
+    gap: 24px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-left a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-left a:hover {
+    color: var(--rust);
+  }
+
+  .brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.28em;
+    text-decoration: none;
+    color: var(--ink);
+    text-align: center;
+    padding-left: 0.28em;
+  }
+
+  .nav-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+  }
+
+  .icon-link {
+    position: relative;
+    color: var(--ink);
+    display: inline-flex;
+  }
+
+  .icon-link:hover {
+    color: var(--rust);
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: var(--rust);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    min-width: 17px;
+    height: 17px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    color: #fff;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(60% 80% at 75% 20%, rgba(194, 65, 12, 0.35), transparent 60%),
+      linear-gradient(160deg, #1b1b1b, #0a0a0a);
+  }
+
+  .hm-label {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    writing-mode: vertical-rl;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #5c5348;
+  }
+
+  .hero-inner {
+    position: relative;
+    padding: 130px 24px 120px;
+    max-width: 760px;
+  }
+
+  .hero h1 {
+    color: #fff;
+    margin: 18px 0 20px;
+  }
+
+  .hero p {
+    color: #c9c2b6;
+    font-size: 1.1rem;
+    max-width: 46ch;
+    margin-bottom: 32px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+
+  .btn-solid {
+    background: #fff;
+    color: var(--ink);
+  }
+
+  .btn-solid:hover {
+    background: var(--rust);
+    color: #fff;
+  }
+
+  .btn-line {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+
+  .btn-line:hover {
+    background: #fff;
+    color: var(--ink);
+  }
+
+  /* Sections */
+  .section {
+    padding: 84px 0;
+  }
+
+  .section--soft {
+    background: var(--bg);
+  }
+
+  .head {
+    max-width: 620px;
+    margin-bottom: 40px;
+  }
+
+  .head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Categories */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .cat-tile {
+    position: relative;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+    color: #fff;
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .ct-w { background: linear-gradient(160deg, #b9a99a, #6d5d4f); }
+  .ct-m { background: linear-gradient(160deg, #4c5158, #22262b); }
+  .ct-a { background: linear-gradient(160deg, #8a6f5c, #4a382c); }
+
+  .cat-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.08);
+    transition: background 0.25s ease;
+  }
+
+  .cat-tile:hover::after {
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  .cat-name {
+    position: relative;
+    z-index: 1;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+  }
+
+  .cat-items {
+    position: relative;
+    z-index: 1;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: #ece4d8;
+  }
+
+  .cat-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 26px;
+    right: 28px;
+    font-size: 1.4rem;
+    transition: transform 0.2s ease;
+  }
+
+  .cat-tile:hover .cat-arrow {
+    transform: translateX(6px);
+  }
+
+  /* Products */
+  .prod-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .prod-link {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .prod-link:hover {
+    color: var(--rust);
+  }
+
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+  .pcard {
+    background: #fff;
+  }
+
+  .pimg {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  .t1 { background: linear-gradient(160deg, #d8cfc2, #a89a88); }
+  .t2 { background: linear-gradient(160deg, #e6e2db, #bcb6ab); }
+  .t3 { background: linear-gradient(160deg, #8f9aa6, #4d5866); }
+  .t4 { background: linear-gradient(160deg, #cbb8a6, #8a6f58); }
+  .t5 { background: linear-gradient(160deg, #caa9a9, #8a5f5f); }
+  .t6 { background: linear-gradient(160deg, #d7d2c4, #a49c88); }
+  .t7 { background: linear-gradient(160deg, #5f6469, #2c3034); }
+  .t8 { background: linear-gradient(160deg, #b7b0bd, #6f6678); }
+
+  .sale {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--rust);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  .wish {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--ink);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .wish:hover {
+    background: #fff;
+    color: var(--rust);
+  }
+
+  .pbody {
+    padding: 16px 2px;
+  }
+
+  .pcat {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pbody h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 6px 0 10px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .prow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .pprice {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .pprice s {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.84rem;
+    margin-right: 8px;
+  }
+
+  .add {
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+
+  .add:hover {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  /* Lookbook */
+  .lookbook {
+    padding: 20px 0 84px;
+  }
+
+  .look-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .look-img {
+    height: 460px;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.15), transparent 50%),
+      linear-gradient(150deg, #6d5d4f, #2b2119);
+  }
+
+  .look-copy p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin: 14px 0 26px;
+    max-width: 48ch;
+  }
+
+  /* Benefits */
+  .benefits {
+    background: var(--ink);
+    color: #cfc7ba;
+    padding: 36px 0;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .benefit strong {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .benefit span {
+    font-size: 0.82rem;
+  }
+
+  /* Reviews */
+  .rev-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .rev {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 30px;
+    margin: 0;
+  }
+
+  .stars {
+    color: var(--rust);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .rev blockquote {
+    margin: 0 0 14px;
+    color: #3a3733;
+    font-size: 0.98rem;
+  }
+
+  .rev figcaption {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+  }
+
+  /* Newsletter */
+  .newsletter {
+    background: var(--beige);
+    padding: 70px 0;
+  }
+
+  .news-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .newsletter h2 {
+    margin: 10px 0 8px;
+  }
+
+  .newsletter p {
+    color: #6b6257;
+  }
+
+  .news-form {
+    display: flex;
+    gap: 10px;
+  }
+
+  .news-form input {
+    flex: 1;
+    padding: 15px 16px;
+    border: 1.5px solid var(--ink);
+    background: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+
+  .news-form input:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+
+  .news-form .btn-solid {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .news-form .btn-solid:hover {
+    background: var(--rust);
+  }
+
+  /* Footer */
+  .footer {
+    background: #0d0d0d;
+    color: #9a9186;
+    padding: 60px 0 24px;
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 34px;
+  }
+
+  .foot-brand .brand-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.24em;
+    color: #fff;
+  }
+
+  .foot-brand p {
+    margin-top: 14px;
+    font-size: 0.86rem;
+    max-width: 34ch;
+  }
+
+  .foot-col h4 {
+    color: #fff;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .foot-col a,
+  .foot-col span {
+    display: block;
+    font-size: 0.86rem;
+    color: #9a9186;
+    text-decoration: none;
+    margin-bottom: 9px;
+  }
+
+  .foot-col a:hover {
+    color: #fff;
+  }
+
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 44px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.76rem;
+    color: #6f675d;
+  }
+
+  @media (max-width: 1000px) {
+    .nav-left {
+      display: none;
+    }
+
+    .nav-inner {
+      grid-template-columns: 1fr auto 1fr;
+    }
+
+    .cat-grid,
+    .prod-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .look-grid,
+    .news-inner {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+
+    .benefits-grid,
+    .rev-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .foot-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .cat-grid,
+    .prod-grid,
+    .benefits-grid,
+    .rev-grid,
+    .foot-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .news-form {
+      flex-direction: column;
+    }
+
+    .hero-inner {
+      padding: 90px 24px 80px;
+    }
+  }
+</style>

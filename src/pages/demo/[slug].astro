@@ -7,6 +7,8 @@ import BeautyStudio from '../../components/templates/BeautyStudio.astro';
 import Restaurant from '../../components/templates/Restaurant.astro';
 import RealEstate from '../../components/templates/RealEstate.astro';
 import TechnicalRealEstate from '../../components/templates/TechnicalRealEstate.astro';
+import Dentist from '../../components/templates/Dentist.astro';
+import ClothingStore from '../../components/templates/ClothingStore.astro';
 import { getTemplate } from '../../data/templates';
 
 export const prerender = false;
@@ -26,6 +28,8 @@ const components: Record<string, any> = {
   estiatorio: Restaurant,
   mesitiko: RealEstate,
   'techniko-mesitiko': TechnicalRealEstate,
+  odontiatreio: Dentist,
+  rouxa: ClothingStore,
 };
 
 const Demo = components[template.slug];
