@@ -1,6 +1,4 @@
 ---
-import Icon from './Icon.astro';
-import TemplateCard from './TemplateCard.astro';
 import { templates } from '../data/templates';
 
 interface Props {
@@ -12,18 +10,18 @@ const { locale } = Astro.props;
 const copy =
   locale === 'en'
     ? {
-        eyebrow: 'Templates & Portfolio',
-        title: 'Choose a profession, open a live demo',
-        lead: 'Each template is a fully functional page with realistic placeholder content. Click one to browse it as a real visitor would.',
-        note: 'Need something different? I build every website from scratch, exactly to your needs.',
-        cta: 'Request a custom website',
+        eyebrow: 'Templates',
+        title: 'Nine website templates, nine different styles',
+        lead: 'Each template is designed from scratch with its own identity. They are being built one by one — new ones will appear here as they are ready.',
+        soon: 'Coming soon',
+        count: 'templates',
       }
     : {
-        eyebrow: 'Πρότυπα & Portfolio',
-        title: 'Διάλεξε επάγγελμα, άνοιξε ένα live demo',
-        lead: 'Κάθε πρότυπο είναι μια πλήρως λειτουργική σελίδα με ρεαλιστικό περιεχόμενο. Πατήστε σε ένα για να το περιηγηθείτε όπως ένας πραγματικός επισκέπτης.',
-        note: 'Χρειάζεστε κάτι διαφορετικό; Κάθε ιστοσελίδα χτίζεται από το μηδέν, ακριβώς στα μέτρα σας.',
-        cta: 'Ζητήστε στα μέτρα σας',
+        eyebrow: 'Πρότυπα',
+        title: 'Εννέα πρότυπα ιστοσελίδων, εννέα διαφορετικά στιλ',
+        lead: 'Κάθε πρότυπο σχεδιάζεται από την αρχή με τη δική του ταυτότητα. Χτίζονται ένα-ένα — όσα είναι έτοιμα θα εμφανίζονται εδώ.',
+        soon: 'Σύντομα κοντά σας',
+        count: 'πρότυπα',
       };
 ---
 
@@ -40,16 +38,21 @@ const copy =
   <div class="container">
     <div class="gallery-grid">
       {templates.map((template) => (
-        <TemplateCard template={template} locale={locale} />
+        <article class="tcard">
+          <div class="tcard-top">
+            <span class="tcard-num">{String(template.number).padStart(2, '0')}</span>
+            <span class="tcard-cat">{template.category[locale]}</span>
+          </div>
+          <div class="tcard-body">
+            <h3>{template.name[locale]}</h3>
+            <p>{template.short[locale]}</p>
+          </div>
+          <span class="tcard-soon">
+            <span class="dot"></span>
+            {copy.soon}
+          </span>
+        </article>
       ))}
-    </div>
-
-    <div class="gallery-note">
-      <p>{copy.note}</p>
-      <a href="/#contact" class="btn btn--primary">
-        {copy.cta}
-        <Icon name="arrow-right" size={18} />
-      </a>
     </div>
   </div>
 </section>
@@ -85,28 +88,103 @@ const copy =
     color: #cbd5e1;
     font-size: 1.1rem;
     margin-top: 20px;
-    max-width: 60ch;
+    max-width: 62ch;
   }
 
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 24px;
   }
 
-  .gallery-note {
-    margin-top: 64px;
-    text-align: center;
-    background: var(--bg-soft);
+  .tcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
+    background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 40px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
-  .gallery-note p {
-    font-size: 1.1rem;
+  .tcard::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #22d3ee);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .tcard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+  }
+
+  .tcard:hover::before {
+    opacity: 1;
+  }
+
+  .tcard-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .tcard-num {
     font-family: var(--font-head);
-    margin-bottom: 22px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--line);
+    line-height: 1;
+  }
+
+  .tcard-cat {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-50);
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+
+  .tcard-body h3 {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .tcard-body p {
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  .tcard-soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .tcard-soon .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
   }
 
   @media (max-width: 980px) {
