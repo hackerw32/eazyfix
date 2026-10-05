@@ -1,0 +1,1022 @@
+---
+const brand = 'Κερί & Πηλός';
+const products = [
+  { name: 'Κερί σόγιας «Λεβάντα»', meta: '180ml · 35 ώρες', price: '12€', tone: 'a' },
+  { name: 'Κερί σόγιας «Βανίλια & Καρύδα»', meta: '180ml · 35 ώρες', price: '12€', tone: 'b' },
+  { name: 'Κερί σε βάζο «Κανέλα»', meta: '250ml · 50 ώρες', price: '16€', tone: 'c' },
+  { name: 'Χειροποίητο κηροπήγιο (πηλός)', meta: 'Χειροποίητο, μοναδικό', price: '22€', tone: 'd' },
+  { name: 'Gift Set «Ζεστασιά»', meta: '2 κεριά + κηροπήγιο', price: '34€', tone: 'e' },
+  { name: 'Διακοσμητικό πιάτο πηλού', meta: 'Χειροποίητο, 20cm', price: '18€', tone: 'f' },
+];
+const steps = [
+  { title: 'Επιλογή υλικών', text: 'Φυσικό κερί σόγιας και βαμβακερό φυτίλι, χωρίς περιττά.' },
+  { title: 'Χύτευση στο χέρι', text: 'Κάθε κερί φτιάχνεται σε μικρές παρτίδες, ένα-ένα.' },
+  { title: 'Ωρίμανση', text: 'Αφήνουμε το άρωμα να «δέσει» για μέρες πριν το συσκευάσουμε.' },
+  { title: 'Συσκευασία & παράδοση', text: 'Με προσοχή, έτοιμο να χαρίσεις — ή να κρατήσεις.' },
+];
+const gallery = ['Χύτευση', 'Κεριά σε βάζο', 'Κηροπήγια', 'Gift sets', 'Το εργαστήρι', 'Συσκευασία'];
+const reviews = [
+  { name: 'Μαρία Κ.', text: 'Το άρωμα κρατάει απίστευτα και είναι πανέμορφο στο σπίτι μου.' },
+  { name: 'Γιώργος Π.', text: 'Πήρα ένα gift set δώρο και ενθουσιάστηκαν όλοι.' },
+  { name: 'Ελένη Δ.', text: 'Χειροποίητη ποιότητα, φαίνεται η φροντίδα σε κάθε λεπτομέρεια.' },
+];
+---
+
+<div class="candles">
+  <!-- Announcement -->
+  <div class="announce">
+    <div class="wrap announce-inner">
+      <span>100% χειροποίητα</span>
+      <span class="dot">·</span>
+      <span>Φυσικό κερί σόγιας</span>
+      <span class="dot">·</span>
+      <span>Δωρεάν αποστολή άνω των 40€</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-flame" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3 4 4 4 7a4 4 0 0 1-8 0c0-1 .4-1.8 1-2.5"/><path d="M12 22a5 5 0 0 0 5-5c0-2.5-2-4-5-7-3 3-5 4.5-5 7a5 5 0 0 0 5 5z"/></svg>
+        </span>
+        {brand}
+      </a>
+      <nav class="links">
+        <a href="#collection">Συλλογή</a>
+        <a href="#story">Η ιστορία μας</a>
+        <a href="#process">Διαδικασία</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#order" class="cart">Καλάθι <span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="hand">χειροποίητα, με αγάπη</span>
+        <h1>Κεριά από φυσικό κερί, φτιαγμένα στο εργαστήρι μας</h1>
+        <p>
+          Μικρές παρτίδες, φυσικά αρώματα και πήλινες κατασκευές. Κάθε κομμάτι περνά από τα χέρια μας,
+          για να φέρει ζεστασιά στον χώρο σου.
+        </p>
+        <div class="hero-cta">
+          <a href="#collection" class="btn btn-fill">Δείτε τη συλλογή</a>
+          <a href="#order" class="btn btn-line">Παραγγελία στα μέτρα σου</a>
+        </div>
+        <ul class="hero-facts">
+          <li><strong>100%</strong> φυσικά υλικά</li>
+          <li><strong>Από 12€</strong> η συλλογή</li>
+          <li><strong>Χειροποίητο</strong> ένα-ένα</li>
+        </ul>
+      </div>
+      <div class="hero-art">
+        <div class="art-frame">
+          <div class="flame-glow"></div>
+          <div class="candle c1"><span></span></div>
+          <div class="candle c2"><span></span></div>
+          <div class="candle c3"><span></span></div>
+        </div>
+        <div class="art-badge">
+          <span>Φυσικό κερί</span>
+          <strong>σόγιας</strong>
+        </div>
+        <span class="art-note hand">φτιαγμένο στο χέρι</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strip -->
+  <section class="strip">
+    <div class="wrap strip-grid">
+      <div><strong>Φυσικά υλικά</strong><span>Κερί σόγιας & βαμβακερό φυτίλι</span></div>
+      <div><strong>Αρωματικά</strong><span>Αιθέρια έλαια, σταθερό άρωμα</span></div>
+      <div><strong>Χειροποίητα</strong><span>Κάθε κομμάτι είναι μοναδικό</span></div>
+      <div><strong>Έτοιμα για δώρο</strong><span>Προσεγμένη συσκευασία</span></div>
+    </div>
+  </section>
+
+  <!-- Collection -->
+  <section class="section" id="collection">
+    <div class="wrap">
+      <div class="head">
+        <span class="hand">η συλλογή</span>
+        <h2>Διαλέξτε το κερί σας</h2>
+        <p>Φυσικά αρώματα και πήλινες κατασκευές, φτιαγμένα σε μικρές παρτίδες.</p>
+      </div>
+      <div class="products">
+        {products.map((p) => (
+          <article class="product">
+            <div class={`pimg tone-${p.tone}`}>
+              <span class="pflame" aria-hidden="true"></span>
+              <span class="plabel">Χειροποίητο</span>
+            </div>
+            <div class="pbody">
+              <h3>{p.name}</h3>
+              <span class="pmeta">{p.meta}</span>
+              <div class="prow">
+                <span class="pprice">{p.price}</span>
+                <button type="button" class="add">Προσθήκη</button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="section story" id="story">
+    <div class="wrap story-grid">
+      <div class="story-art">
+        <div class="story-img"></div>
+        <span class="hand story-note">από το εργαστήρι</span>
+      </div>
+      <div class="story-copy">
+        <span class="hand">η ιστορία μας</span>
+        <h2>Ξεκίνησε από ένα τραπέζι γεμάτο κερί</h2>
+        <p>
+          Η <strong>{brand}</strong> γεννήθηκε από την αγάπη για το χειροποίητο. Ξεκινήσαμε φτιάχνοντας κεριά
+          για φίλους και σύντομα γεμίσαμε το εργαστήρι μας με αρώματα, πηλό και ιδέες.
+        </p>
+        <p>
+          Σήμερα, κάθε κερί και κάθε κατασκευή περνά από τα χέρια μας — χωρίς μαζική παραγωγή, με
+          προσοχή στη λεπτομέρεια.
+        </p>
+        <a href="#order" class="btn btn-fill">Θέλω κάτι στα μέτρα μου</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section process" id="process">
+    <div class="wrap">
+      <div class="head center">
+        <span class="hand">πώς φτιάχνονται</span>
+        <h2>Από το κερί στο σπίτι σου</h2>
+      </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li>
+            <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section gallery" id="gallery">
+    <div class="wrap">
+      <div class="head center">
+        <span class="hand">gallery</span>
+        <h2>Λίγες στιγμές από το εργαστήρι</h2>
+      </div>
+      <div class="gal-grid">
+        {gallery.map((g, i) => (
+          <div class={`gal g${i}`}><span>{g}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section reviews">
+    <div class="wrap">
+      <div class="head center">
+        <span class="hand">τι λένε</span>
+        <h2>Όμορφα λόγια από πελάτες</h2>
+      </div>
+      <div class="rev-grid">
+        {reviews.map((r) => (
+          <figure class="rev">
+            <div class="stars">★★★★★</div>
+            <blockquote>{r.text}</blockquote>
+            <figcaption>{r.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Order -->
+  <section class="section order" id="order">
+    <div class="wrap order-grid">
+      <div class="order-copy">
+        <span class="hand">παραγγελία</span>
+        <h2>Θέλεις κάτι στα μέτρα σου;</h2>
+        <p>
+          Γάμος, βάπτιση, δώρα για επιχείρηση ή ένα ξεχωριστό άρωμα; Πες μας τι έχεις στο μυαλό σου
+          και θα το φτιάξουμε μαζί.
+        </p>
+        <ul class="contact-list">
+          <li>Τηλέφωνο <a href="tel:6970000000">697 000 0000</a></li>
+          <li>Email <a href="mailto:hello@kerikaipilos.gr">hello@kerikaipilos.gr</a></li>
+          <li>Εργαστήρι <span>Σαλαμίνα, Αττική</span></li>
+        </ul>
+      </div>
+      <form class="order-form" onsubmit="event.preventDefault(); this.reset();">
+        <input type="text" placeholder="Όνομα" required />
+        <input type="email" placeholder="Email" required />
+        <select required>
+          <option value="">Τι σε ενδιαφέρει;</option>
+          <option>Κεριά σόγιας</option>
+          <option>Πήλινες κατασκευές</option>
+          <option>Gift sets</option>
+          <option>Παραγγελία στα μέτρα μου</option>
+        </select>
+        <textarea rows="4" placeholder="Πες μας λίγα λόγια..." required></textarea>
+        <button type="submit" class="btn btn-fill btn-block">Στείλε το αίτημα</button>
+        <small>Ενδεικτική φόρμα demo — δεν αποστέλλει δεδομένα.</small>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap foot-inner">
+      <span class="brand brand-foot">
+        <span class="brand-flame" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a5 5 0 0 0 5-5c0-2.5-2-4-5-7-3 3-5 4.5-5 7a5 5 0 0 0 5 5z"/></svg>
+        </span>
+        {brand}
+      </span>
+      <span>© 2026 {brand}. Χειροποίητα κεριά & πήλινες κατασκευές.</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .candles {
+    --cream: #fbf6ef;
+    --cream-2: #f3e9dc;
+    --terra: #b5673b;
+    --terra-d: #8f4f2c;
+    --coffee: #3b2a20;
+    --sage: #7e8c6a;
+    --gold: #c9932e;
+    --ink: #2c211a;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Nunito', system-ui, sans-serif;
+    line-height: 1.65;
+  }
+
+  .wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .hand {
+    font-family: 'Caveat', cursive;
+    font-size: 1.7rem;
+    color: var(--terra);
+    display: inline-block;
+    line-height: 1;
+  }
+
+  .candles h1,
+  .candles h2,
+  .candles h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    color: var(--coffee);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .candles h1 {
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    line-height: 1.1;
+    margin: 14px 0 18px;
+  }
+
+  .candles h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    line-height: 1.15;
+    margin: 12px 0 14px;
+  }
+
+  .candles p {
+    margin: 0;
+  }
+
+  /* Announce */
+  .announce {
+    background: var(--coffee);
+    color: #f3e6d6;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+  }
+
+  .announce-inner {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 24px;
+    flex-wrap: wrap;
+  }
+
+  .announce .dot {
+    color: var(--gold);
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(251, 246, 239, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(59, 42, 32, 0.1);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 74px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--coffee);
+    text-decoration: none;
+  }
+
+  .brand-flame {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--terra);
+    color: #fff;
+  }
+
+  .links {
+    display: flex;
+    gap: 26px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .links a {
+    color: #5a4638;
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    color: var(--terra);
+  }
+
+  .nav-actions .cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(59, 42, 32, 0.2);
+    color: var(--coffee);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+  }
+
+  .cart-count {
+    background: var(--terra);
+    color: #fff;
+    border-radius: 999px;
+    min-width: 20px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+  }
+
+  /* Hero */
+  .hero {
+    background: radial-gradient(120% 120% at 90% 0%, #f6e7d5 0%, var(--cream) 55%);
+    padding: 70px 0 80px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-copy p {
+    color: #5f4c3d;
+    font-size: 1.1rem;
+    margin-bottom: 28px;
+    max-width: 50ch;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+
+  .btn-fill {
+    background: var(--terra);
+    color: #fff;
+  }
+
+  .btn-fill:hover {
+    background: var(--terra-d);
+    transform: translateY(-2px);
+  }
+
+  .btn-line {
+    border-color: rgba(59, 42, 32, 0.25);
+    color: var(--coffee);
+    background: transparent;
+  }
+
+  .btn-line:hover {
+    background: rgba(59, 42, 32, 0.05);
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  .hero-facts {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 34px 0 0;
+    border-top: 1px solid rgba(59, 42, 32, 0.12);
+    padding-top: 22px;
+    flex-wrap: wrap;
+  }
+
+  .hero-facts li {
+    color: #6b5849;
+    font-size: 0.9rem;
+  }
+
+  .hero-facts strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    color: var(--coffee);
+  }
+
+  /* Hero art */
+  .hero-art {
+    position: relative;
+  }
+
+  .art-frame {
+    position: relative;
+    height: 420px;
+    border-radius: 200px 200px 28px 28px;
+    background: linear-gradient(170deg, #f0d9bf, #d9a878);
+    overflow: hidden;
+    box-shadow: 0 40px 80px -50px rgba(59, 42, 32, 0.7);
+  }
+
+  .flame-glow {
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(255, 214, 140, 0.75), transparent 65%);
+  }
+
+  .candle {
+    position: absolute;
+    bottom: 0;
+    border-radius: 14px 14px 8px 8px;
+    background: linear-gradient(180deg, #fff6ea, #f0dcc4);
+    box-shadow: inset 0 -20px 30px rgba(180, 130, 80, 0.18);
+  }
+
+  .candle span {
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 26px;
+    border-radius: 50% 50% 45% 45%;
+    background: radial-gradient(circle at 50% 75%, #fff3b0, #f59e0b 60%, #ea580c);
+    box-shadow: 0 0 22px rgba(245, 158, 11, 0.9);
+  }
+
+  .c1 {
+    left: 22%;
+    width: 74px;
+    height: 150px;
+  }
+  .c2 {
+    left: 43%;
+    width: 96px;
+    height: 210px;
+  }
+  .c3 {
+    left: 66%;
+    width: 66px;
+    height: 120px;
+  }
+
+  .art-badge {
+    position: absolute;
+    left: -18px;
+    bottom: 34px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 20px;
+    box-shadow: 0 20px 40px -24px rgba(59, 42, 32, 0.6);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .art-badge span {
+    font-size: 0.78rem;
+    color: #8a7566;
+  }
+
+  .art-badge strong {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    color: var(--terra);
+  }
+
+  .art-note {
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    color: #7a6555;
+    transform: rotate(-6deg);
+  }
+
+  /* Strip */
+  .strip {
+    background: var(--coffee);
+    color: #ecdfd0;
+    padding: 34px 0;
+  }
+
+  .strip-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .strip-grid div strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    color: #fff;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+
+  .strip-grid div span {
+    font-size: 0.86rem;
+    color: #c9b7a5;
+  }
+
+  /* Sections */
+  .section {
+    padding: 88px 0;
+  }
+
+  .head {
+    margin-bottom: 44px;
+    max-width: 640px;
+  }
+
+  .head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .head p {
+    color: #6b5849;
+    font-size: 1.02rem;
+    margin-top: 6px;
+  }
+
+  /* Products */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+
+  .product {
+    background: #fff;
+    border: 1px solid rgba(59, 42, 32, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 50px -34px rgba(59, 42, 32, 0.6);
+  }
+
+  .pimg {
+    position: relative;
+    height: 210px;
+    display: grid;
+    place-items: center;
+  }
+
+  .tone-a { background: linear-gradient(160deg, #efe0cd, #d9b98d); }
+  .tone-b { background: linear-gradient(160deg, #f3e4d3, #e3b7a0); }
+  .tone-c { background: linear-gradient(160deg, #eddfd0, #c98f5e); }
+  .tone-d { background: linear-gradient(160deg, #e7e2d6, #b9a888); }
+  .tone-e { background: linear-gradient(160deg, #f1e3d2, #d8a672); }
+  .tone-f { background: linear-gradient(160deg, #e9e6db, #bfae90); }
+
+  .pflame {
+    width: 46px;
+    height: 46px;
+    border-radius: 50% 50% 45% 45%;
+    background: radial-gradient(circle at 50% 75%, #fff3b0, #f59e0b 60%, #ea580c);
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
+  }
+
+  .plabel {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--terra);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+
+  .pbody {
+    padding: 20px 22px 24px;
+  }
+
+  .pbody h3 {
+    font-size: 1.08rem;
+    margin-bottom: 4px;
+  }
+
+  .pmeta {
+    color: #8a7566;
+    font-size: 0.85rem;
+  }
+
+  .prow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .pprice {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    color: var(--terra);
+    font-weight: 600;
+  }
+
+  .add {
+    border: none;
+    background: var(--cream-2);
+    color: var(--coffee);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .add:hover {
+    background: var(--terra);
+    color: #fff;
+  }
+
+  /* Story */
+  .story {
+    background: var(--cream-2);
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .story-art {
+    position: relative;
+  }
+
+  .story-img {
+    height: 380px;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.6), transparent 45%),
+      linear-gradient(160deg, #c98f5e, #8f4f2c);
+    box-shadow: 0 40px 70px -46px rgba(59, 42, 32, 0.8);
+  }
+
+  .story-note {
+    position: absolute;
+    bottom: -14px;
+    left: 22px;
+    background: var(--cream);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 1.3rem;
+  }
+
+  .story-copy p {
+    color: #5f4c3d;
+    font-size: 1.04rem;
+    margin-bottom: 16px;
+    max-width: 56ch;
+  }
+
+  .story-copy .btn {
+    margin-top: 10px;
+  }
+
+  /* Process */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .steps li {
+    border-top: 2px solid rgba(181, 103, 59, 0.3);
+    padding-top: 22px;
+  }
+
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    color: var(--terra);
+  }
+
+  .steps h3 {
+    font-size: 1.12rem;
+    margin: 8px 0 8px;
+  }
+
+  .steps p {
+    color: #6b5849;
+    font-size: 0.93rem;
+  }
+
+  /* Gallery */
+  .gal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 160px;
+    gap: 16px;
+  }
+
+  .gal {
+    border-radius: 18px;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(160deg, #c98f5e, #8f4f2c);
+  }
+
+  .gal.g0 { grid-column: span 2; grid-row: span 2; background: linear-gradient(160deg, #d9a878, #8f4f2c); }
+  .gal.g1 { background: linear-gradient(160deg, #e3b7a0, #b5673b); }
+  .gal.g2 { background: linear-gradient(160deg, #b9a888, #7e8c6a); }
+  .gal.g3 { background: linear-gradient(160deg, #d8a672, #a65a32); }
+  .gal.g4 { grid-column: span 2; background: linear-gradient(160deg, #e7d3ba, #b5673b); }
+  .gal.g5 { background: linear-gradient(160deg, #cbb89a, #7e8c6a); }
+
+  /* Reviews */
+  .reviews {
+    background: var(--coffee);
+  }
+
+  .reviews .head h2 {
+    color: #fff;
+  }
+
+  .rev-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .rev {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 26px;
+    margin: 0;
+  }
+
+  .stars {
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .rev blockquote {
+    margin: 0 0 14px;
+    color: #eee1d2;
+    font-size: 0.98rem;
+  }
+
+  .rev figcaption {
+    color: #c9b7a5;
+    font-weight: 700;
+  }
+
+  /* Order */
+  .order-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .order-copy p {
+    color: #5f4c3d;
+    font-size: 1.04rem;
+    margin-bottom: 20px;
+  }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .contact-list li {
+    color: #6b5849;
+  }
+
+  .contact-list strong {
+    color: var(--coffee);
+  }
+
+  .contact-list a {
+    color: var(--terra);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .order-form {
+    background: #fff;
+    border: 1px solid rgba(59, 42, 32, 0.1);
+    border-radius: 22px;
+    padding: 30px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 30px 60px -44px rgba(59, 42, 32, 0.7);
+  }
+
+  .order-form input,
+  .order-form select,
+  .order-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid rgba(59, 42, 32, 0.15);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.96rem;
+    color: var(--ink);
+    background: var(--cream);
+  }
+
+  .order-form input:focus,
+  .order-form select:focus,
+  .order-form textarea:focus {
+    outline: none;
+    border-color: var(--terra);
+  }
+
+  .order-form small {
+    color: #9a8778;
+    text-align: center;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--coffee);
+    color: #c9b7a5;
+    padding: 34px 0;
+  }
+
+  .foot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .brand-foot {
+    color: #fff;
+  }
+
+  .brand-foot .brand-flame {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Responsive */
+  @media (max-width: 940px) {
+    .hero-grid,
+    .story-grid,
+    .order-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .strip-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .products {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps,
+    .rev-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .links {
+      display: none;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .products,
+    .steps,
+    .rev-grid,
+    .strip-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gal-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gal.g0 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .gal.g4 {
+      grid-column: span 2;
+    }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+import DemoLayout from '../../layouts/DemoLayout.astro';
+import HandmadeCandles from '../../components/templates/HandmadeCandles.astro';
+import { getTemplate } from '../../data/templates';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const template = getTemplate(slug ?? '');
+
+if (!template || !template.built) {
+  return new Response('Not found', { status: 404 });
+}
+
+const components: Record<string, any> = {
+  keri: HandmadeCandles,
+};
+
+const Demo = components[template.slug];
+if (!Demo) {
+  return new Response('Not found', { status: 404 });
+}
+
+const from = Astro.url.searchParams.get('from') === 'en' ? 'en' : 'el';
+---
+
+<DemoLayout
+  title={`${template.name.el} — Demo`}
+  brand={template.name.el}
+  industry={template.category.el}
+  from={from}
+>
+  <Demo />
+</DemoLayout>

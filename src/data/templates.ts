@@ -70,7 +70,7 @@ export const templates: Template[] = [
     category: { el: 'Χειροποίητα', en: 'Handmade' },
     short: { el: 'Χειροποίητα προϊόντα & παραγγελίες.', en: 'Handmade products & orders.' },
     style: 'warm-artisanal',
-    built: false,
+    built: true,
   },
   {
     slug: 'enoikiasi-autokiniton',

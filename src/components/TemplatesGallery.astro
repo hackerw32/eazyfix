@@ -12,16 +12,16 @@ const copy =
     ? {
         eyebrow: 'Templates',
         title: 'Nine website templates, nine different styles',
-        lead: 'Each template is designed from scratch with its own identity. They are being built one by one — new ones will appear here as they are ready.',
+        lead: 'Each template is designed from scratch with its own identity. They are being built one by one — open the ones marked as ready to explore a live demo.',
         soon: 'Coming soon',
-        count: 'templates',
+        view: 'View live demo',
       }
     : {
         eyebrow: 'Πρότυπα',
         title: 'Εννέα πρότυπα ιστοσελίδων, εννέα διαφορετικά στιλ',
-        lead: 'Κάθε πρότυπο σχεδιάζεται από την αρχή με τη δική του ταυτότητα. Χτίζονται ένα-ένα — όσα είναι έτοιμα θα εμφανίζονται εδώ.',
+        lead: 'Κάθε πρότυπο σχεδιάζεται από την αρχή με τη δική του ταυτότητα. Χτίζονται ένα-ένα — άνοιξε όποιο είναι έτοιμο για να δεις ζωντανό demo.',
         soon: 'Σύντομα κοντά σας',
-        count: 'πρότυπα',
+        view: 'Δείτε το demo',
       };
 ---
 
@@ -37,22 +37,33 @@ const copy =
 <section class="section">
   <div class="container">
     <div class="gallery-grid">
-      {templates.map((template) => (
-        <article class="tcard">
-          <div class="tcard-top">
-            <span class="tcard-num">{String(template.number).padStart(2, '0')}</span>
-            <span class="tcard-cat">{template.category[locale]}</span>
-          </div>
-          <div class="tcard-body">
-            <h3>{template.name[locale]}</h3>
-            <p>{template.short[locale]}</p>
-          </div>
-          <span class="tcard-soon">
-            <span class="dot"></span>
-            {copy.soon}
-          </span>
-        </article>
-      ))}
+      {templates.map((template) => {
+        const href = template.built ? `/demo/${template.slug}?from=${locale}` : null;
+        return (
+          <article class:list={['tcard', { 'tcard--live': template.built }]}>
+            {href && <a class="tcard-overlay" href={href} aria-label={template.name[locale]} />}
+            <div class="tcard-top">
+              <span class="tcard-num">{String(template.number).padStart(2, '0')}</span>
+              <span class="tcard-cat">{template.category[locale]}</span>
+            </div>
+            <div class="tcard-body">
+              <h3>{template.name[locale]}</h3>
+              <p>{template.short[locale]}</p>
+            </div>
+            {template.built ? (
+              <span class="tcard-live">
+                {copy.view}
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </span>
+            ) : (
+              <span class="tcard-soon">
+                <span class="dot" />
+                {copy.soon}
+              </span>
+            )}
+          </article>
+        );
+      })}
     </div>
   </div>
 </section>
@@ -131,6 +142,12 @@ const copy =
     opacity: 1;
   }
 
+  .tcard-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
   .tcard-top {
     display: flex;
     align-items: center;
@@ -169,13 +186,17 @@ const copy =
     font-size: 0.93rem;
   }
 
-  .tcard-soon {
+  .tcard-soon,
+  .tcard-live {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     margin-top: 22px;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 700;
+  }
+
+  .tcard-soon {
     color: var(--muted);
   }
 
@@ -185,6 +206,14 @@ const copy =
     border-radius: 50%;
     background: #f59e0b;
     box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+  }
+
+  .tcard-live {
+    color: var(--primary);
+  }
+
+  .tcard--live:hover .tcard-live {
+    text-decoration: underline;
   }
 
   @media (max-width: 980px) {
