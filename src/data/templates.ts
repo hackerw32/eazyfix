@@ -34,7 +34,7 @@ export const templates: Template[] = [
     category: { el: 'Νομικές Υπηρεσίες', en: 'Legal' },
     short: { el: 'Τομείς πρακτικής & επικοινωνία.', en: 'Practice areas & contact.' },
     style: 'formal-editorial',
-    built: false,
+    built: true,
   },
   {
     slug: 'odontiatreio',
