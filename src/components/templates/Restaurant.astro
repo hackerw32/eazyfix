@@ -1,0 +1,1028 @@
+---
+const brand = 'Φλόγα';
+const menu = {
+  Ωρεκτικά: [
+    { name: 'Τζατζίκι', desc: 'Στραγγιστό γιαούρτι, αγγούρι, σκόρδο', price: '4,50€' },
+    { name: 'Τυροκαυτερή', desc: 'Φέτα, πιπεριά, ελαιόλαδο', price: '5,50€' },
+    { name: 'Χωριάτικη σαλάτα', desc: 'Ντομάτα, φέτα, ελιές, ρίγανη', price: '7,50€' },
+    { name: 'Σαγανάκι', desc: 'Τηγανιτό τυρί, λεμόνι', price: '8,00€' },
+  ],
+  Κυρίως: [
+    { name: 'Μουσακάς', desc: 'Μελιτζάνα, κιμάς, μπεσαμέλ', price: '11,00€' },
+    { name: 'Παστίτσιο', desc: 'Μακαρόνια, κιμάς, μπεσαμέλ', price: '11,00€' },
+    { name: 'Σουτζουκάκια', desc: 'Σμυρνέικα, με πιλάφι', price: '12,50€' },
+    { name: 'Κοτόπουλο σχάρας', desc: 'Με πατάτες & σάλτσα λεμονιού', price: '12,00€' },
+  ],
+  Ψητά: [
+    { name: 'Παϊδάκια αρνίσια', desc: 'Σχάρας, με πατάτες', price: '14,00€' },
+    { name: 'Μπριζόλα', desc: 'Χοιρινή, με ρίγανη', price: '16,00€' },
+    { name: 'Σουβλάκι μερίδα', desc: 'Χοιρινό ή κοτόπουλο, με πίτα', price: '10,00€' },
+    { name: 'Μπιφτέκι', desc: 'Με πατάτες τηγανητές', price: '9,00€' },
+  ],
+  Πίτσες: [
+    { name: 'Μαργαρίτα', desc: 'Σάλτσα, μοτσαρέλα, βασιλικός', price: '9,00€' },
+    { name: 'Special', desc: 'Ζαμπόν, μπέικον, πιπεριά, μανιτάρια', price: '12,00€' },
+    { name: 'Vegetarian', desc: 'Λαχανικά εποχής, φέτα', price: '10,50€' },
+  ],
+  Γλυκά: [
+    { name: 'Γαλακτομπούρεκο', desc: 'Σπιτικό, με σιρόπι', price: '5,50€' },
+    { name: 'Πορτοκαλόπιτα', desc: 'Ζεστή, με παγωτό', price: '5,00€' },
+    { name: 'Παγωτό', desc: 'Δύο μπάλες, διάφορες γεύσεις', price: '4,00€' },
+  ],
+  Ποτά: [
+    { name: 'Αναψυκτικό', desc: '330ml', price: '2,50€' },
+    { name: 'Μπύρα', desc: 'Draft ή μπουκάλι', price: '3,50€' },
+    { name: 'Κρασί ποτήρι', desc: 'Ερυθρό ή λευκό', price: '4,00€' },
+    { name: 'Νερό', desc: '500ml', price: '1,00€' },
+  ],
+};
+const categories = Object.keys(menu);
+const features = [
+  { title: 'Delivery 30–45\'' , text: 'Στη Σαλαμίνα, ζεστό στο σπίτι σου.' },
+  { title: 'Take away', text: 'Παραγγέλνεις, περνάς και παίρνεις.' },
+  { title: 'Φρέσκα υλικά', text: 'Καθημερινή προμήθεια, τοπικά προϊόντα.' },
+  { title: 'Online παραγγελία', text: 'Παραγγελία σε 1 λεπτό, χωρίς τηλέφωνο.' },
+];
+const reviews = [
+  { name: 'Δημήτρης Κ.', text: 'Τα καλύτερα παϊδάκια στη Σαλαμίνα. Delivery πάντα ζεστό.' },
+  { name: 'Ελένη Μ.', text: 'Ο μουσακάς ήταν καταπληκτικός. Παραγγείλαμε online, ήρθε σε 30 λεπτά.' },
+  { name: 'Νίκος Π.', text: 'Φρέσκα υλικά, καθαρή γεύση. Το έχουμε κάνει στέκι.' },
+];
+---
+
+<div class="floga">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <span>🛵 Delivery στη Σαλαμίνα · 30–45'</span>
+      <span class="topbar-right">
+        <a href="tel:2100000000">210 000 0000</a>
+        <span class="sep">·</span>
+        <span>Καθημερινά 12:00–00:30</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3 4 4 4 7a4 4 0 0 1-8 0c0-1 .4-1.8 1-2.5"/><path d="M12 22a5 5 0 0 0 5-5c0-2.5-2-4-5-7-3 3-5 4.5-5 7a5 5 0 0 0 5 5z"/></svg>
+        </span>
+        {brand}
+      </a>
+      <nav class="links">
+        <a href="#menu">Μενού</a>
+        <a href="#order">Παραγγελία</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#reserve">Κρατήσεις</a>
+      </nav>
+      <a href="#order" class="nav-cta">Παραγγείλε τώρα</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Ψητά & Ελληνική κουζίνα</span>
+        <h1>Ζεστό φαγητό, στη πόρτα σου.</h1>
+        <p>
+          Μεσογειακές γεύσεις, ψητά στη σχάρα και σπιτικές συνταγές — με delivery και take away
+          στη Σαλαμίνα. Παραγγέλνεις online σε ένα λεπτό.
+        </p>
+        <div class="hero-cta">
+          <a href="#order" class="btn btn-solid">Παραγγείλε online</a>
+          <a href="#menu" class="btn btn-ghost">Δες το μενού</a>
+        </div>
+        <div class="hero-meta">
+          <span><strong>30–45'</strong> παράδοση</span>
+          <span><strong>Δωρεάν</strong> delivery &gt; 20€</span>
+          <span><strong>4,8★</strong> 600+ κριτικές</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="plate">
+          <span class="plate-line"></span>
+          <span class="steam s1"></span>
+          <span class="steam s2"></span>
+          <span class="steam s3"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="wrap features-grid">
+      {features.map((f) => (
+        <div class="feature">
+          <strong>{f.title}</strong>
+          <span>{f.text}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section class="section" id="menu">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Το μενού μας</span>
+        <h2>Διάλεξε και απόλαυσε</h2>
+      </div>
+      <div class="menu-tabs" role="tablist">
+        {categories.map((c, i) => (
+          <button type="button" class:list={['tab', { active: i === 0 }]} data-cat={c}>{c}</button>
+        ))}
+      </div>
+      {categories.map((c, ci) => (
+        <div class:list={['menu-panel', { active: ci === 0 }]} data-panel={c}>
+          <ul class="menu-list">
+            {menu[c].map((item) => (
+              <li>
+                <div class="mi">
+                  <span class="mi-name">{item.name}</span>
+                  <span class="mi-desc">{item.desc}</span>
+                </div>
+                <span class="mi-price">{item.price}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Order -->
+  <section class="section section--dark" id="order">
+    <div class="wrap order-grid">
+      <div>
+        <span class="eyebrow eyebrow--light">Παραγγελία</span>
+        <h2>Παραγγείλε σε 1 λεπτό</h2>
+        <p class="order-lead">
+          Διάλεξε delivery ή take away, συμπλήρωσε τα στοιχεία σου και τι θέλεις. Θα σε καλέσουμε
+          για επιβεβαίωση.
+        </p>
+        <div class="order-info">
+          <div><strong>Delivery</strong><span>Σαλαμίνα · 30–45' · min. 12€</span></div>
+          <div><strong>Take away</strong><span>Έτοιμο σε 15–20' · -10%</span></div>
+          <div><strong>Πληρωμή</strong><span>Μετρητά ή κάρτα στην παράδοση</span></div>
+        </div>
+      </div>
+      <form class="order-form" onsubmit="event.preventDefault(); this.reset();">
+        <div class="seg">
+          <label class="seg-opt"><input type="radio" name="mode" value="delivery" checked /> Delivery</label>
+          <label class="seg-opt"><input type="radio" name="mode" value="takeaway" /> Take away</label>
+        </div>
+        <div class="form-2">
+          <input type="text" placeholder="Όνομα" required />
+          <input type="tel" placeholder="Τηλέφωνο" required />
+        </div>
+        <input type="text" placeholder="Διεύθυνση (για delivery)" />
+        <textarea rows="3" placeholder="Τι θέλεις να παραγγείλεις; π.χ. 1 μουσακά, 2 σουβλάκια, 1 χωριάτικη"></textarea>
+        <button type="submit" class="btn btn-solid btn-block">Αποστολή παραγγελίας</button>
+        <small>Ενδεικτική φόρμα demo — δεν αποστέλλει δεδομένα.</small>
+      </form>
+    </div>
+  </section>
+
+  <!-- Delivery -->
+  <section class="section section--soft" id="delivery">
+    <div class="wrap delivery-grid">
+      <div>
+        <span class="eyebrow">Delivery</span>
+        <h2>Παραδίνουμε στη Σαλαμίνα</h2>
+        <p class="delivery-lead">Καλύπτουμε όλη τη Σαλαμίνα. Δωρεάν μεταφορικά για παραγγελίες άνω των 20€.</p>
+        <ul class="zones">
+          <li><span>Σαλαμίνα — Κέντρο</span><strong>30'</strong></li>
+          <li><span>Παλούκια</span><strong>30–40'</strong></li>
+          <li><span>Αμπελάκια</span><strong>40'</strong></li>
+          <li><span>Αιάντειο</span><strong>40–45'</strong></li>
+          <li><span>Σελήνια</span><strong>45'</strong></li>
+        </ul>
+      </div>
+      <div class="delivery-card">
+        <div class="dc-row"><span>Χρόνος παράδοσης</span><strong>30–45 λεπτά</strong></div>
+        <div class="dc-row"><span>Ελάχιστη παραγγελία</span><strong>12€</strong></div>
+        <div class="dc-row"><span>Μεταφορικά</span><strong>2€ (δωρεάν &gt; 20€)</strong></div>
+        <div class="dc-row"><span>Τρόπος πληρωμής</span><strong>Μετρητά / Κάρτα</strong></div>
+        <div class="dc-cta"><a href="#order" class="btn btn-solid btn-block">Παραγγείλε τώρα</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reserve -->
+  <section class="section" id="reserve">
+    <div class="wrap reserve-grid">
+      <div>
+        <span class="eyebrow">Κρατήσεις</span>
+        <h2>Κλείσε τραπέζι</h2>
+        <p class="reserve-lead">
+          Για παρέα, γιορτές ή οικογενειακό τραπέζι, κλείσε τραπέζι και θα σε περιμένουμε.
+        </p>
+        <ul class="hours">
+          <li><span>Δευτέρα – Πέμπτη</span><strong>12:00 – 00:00</strong></li>
+          <li><span>Παρασκευή – Σάββατο</span><strong>12:00 – 00:30</strong></li>
+          <li><span>Κυριακή</span><strong>12:00 – 23:00</strong></li>
+        </ul>
+      </div>
+      <form class="reserve-form" onsubmit="event.preventDefault(); this.reset();">
+        <div class="form-2">
+          <input type="text" placeholder="Όνομα" required />
+          <input type="tel" placeholder="Τηλέφωνο" required />
+        </div>
+        <div class="form-3">
+          <input type="number" min="1" placeholder="Άτομα" required />
+          <input type="date" required />
+          <input type="time" required />
+        </div>
+        <textarea rows="2" placeholder="Σχόλια (προαιρετικό)"></textarea>
+        <button type="submit" class="btn btn-solid btn-block">Κράτηση τραπεζιού</button>
+        <small>Ενδεικτική φόρμα demo — δεν αποστέλλει δεδομένα.</small>
+      </form>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Κριτικές</span>
+        <h2>Τι λένε οι πελάτες μας</h2>
+      </div>
+      <div class="rev-grid">
+        {reviews.map((r) => (
+          <figure class="rev">
+            <div class="stars">★★★★★</div>
+            <blockquote>{r.text}</blockquote>
+            <figcaption>{r.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap foot-inner">
+      <span class="brand brand-foot">{brand}</span>
+      <span>© 2026 {brand}. Ψητά & Ελληνική κουζίνα · Σαλαμίνα. | Delivery & Take away.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab[data-cat]');
+  const panels = document.querySelectorAll('.menu-panel[data-panel]');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const cat = tab.getAttribute('data-cat');
+      tabs.forEach((t) => t.classList.toggle('active', t === tab));
+      panels.forEach((p) => p.classList.toggle('active', p.getAttribute('data-panel') === cat));
+    });
+  });
+</script>
+
+<style>
+  .floga {
+    --night: #16201a;
+    --night-2: #1f2c24;
+    --cream: #fbf7ef;
+    --paper: #fffdf8;
+    --terra: #c0562e;
+    --terra-d: #a3451f;
+    --gold: #d9a441;
+    --muted: #7d8a80;
+    --meat: #e9ddc8;
+    --line: #e7e0d2;
+    background: var(--paper);
+    color: #223028;
+    font-family: 'Karla', system-ui, sans-serif;
+    line-height: 1.7;
+  }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .floga h1,
+  .floga h2,
+  .floga h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    color: var(--night);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  .floga h1 {
+    font-size: clamp(2.3rem, 5vw, 3.5rem);
+    line-height: 1.08;
+  }
+
+  .floga h2 {
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+    margin: 10px 0 14px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--terra);
+  }
+
+  .eyebrow--light {
+    color: #e6b877;
+  }
+
+  /* Topbar */
+  .topbar {
+    background: var(--night);
+    color: #c9c2b2;
+    font-size: 0.8rem;
+  }
+
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 24px;
+    flex-wrap: wrap;
+  }
+
+  .topbar a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .topbar .sep {
+    margin: 0 8px;
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 253, 248, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 80px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--night);
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--terra);
+    color: #fff;
+  }
+
+  .links {
+    display: flex;
+    gap: 26px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .links a {
+    color: #3c4a41;
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    color: var(--terra);
+  }
+
+  .nav-cta {
+    background: var(--terra);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 12px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    background: var(--terra-d);
+  }
+
+  /* Hero */
+  .hero {
+    background:
+      radial-gradient(90% 100% at 85% 0%, rgba(192, 86, 46, 0.35), transparent 58%),
+      linear-gradient(180deg, #16201a, #1f2c24);
+    color: #fff;
+    padding: 76px 0;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    color: #fff;
+    margin: 16px 0 18px;
+  }
+
+  .hero-copy p {
+    color: #cdd6ce;
+    font-size: 1.1rem;
+    max-width: 50ch;
+    margin-bottom: 28px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    font-family: inherit;
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+
+  .btn-solid {
+    background: var(--terra);
+    color: #fff;
+  }
+
+  .btn-solid:hover {
+    background: var(--terra-d);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 26px;
+    margin-top: 32px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    flex-wrap: wrap;
+    color: #b9c4bb;
+    font-size: 0.88rem;
+  }
+
+  .hero-meta strong {
+    color: #fff;
+    margin-right: 4px;
+  }
+
+  .hero-art {
+    position: relative;
+    height: 380px;
+    display: grid;
+    place-items: center;
+  }
+
+  .plate {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #f4ead7, #d9c6a3 70%, #b79f76);
+    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8), inset 0 0 0 14px #fdfaf2, inset 0 0 0 18px #e6d8bd;
+  }
+
+  .plate-line {
+    position: absolute;
+    inset: 60px 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192, 86, 46, 0.35), transparent 70%);
+  }
+
+  .steam {
+    position: absolute;
+    top: -30px;
+    width: 10px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.5));
+    filter: blur(4px);
+    animation: rise 3s ease-in-out infinite;
+  }
+
+  .s1 { left: 40%; }
+  .s2 { left: 50%; animation-delay: 0.6s; }
+  .s3 { left: 60%; animation-delay: 1.2s; }
+
+  @keyframes rise {
+    0%, 100% { opacity: 0.2; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(-14px); }
+  }
+
+  /* Features */
+  .features {
+    background: var(--night-2);
+    color: #c9c2b2;
+    padding: 32px 0;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .feature strong {
+    display: block;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .feature span {
+    font-size: 0.85rem;
+  }
+
+  /* Sections */
+  .section {
+    padding: 84px 0;
+  }
+
+  .section--soft {
+    background: var(--cream);
+  }
+
+  .section--dark {
+    background: var(--night);
+    color: #cdd6ce;
+  }
+
+  .section--dark h2 {
+    color: #fff;
+  }
+
+  .head {
+    max-width: 620px;
+    margin-bottom: 40px;
+  }
+
+  .head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Menu */
+  .menu-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 34px;
+  }
+
+  .tab {
+    padding: 11px 22px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    color: #4a5a50;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.18s ease;
+  }
+
+  .tab:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+  }
+
+  .tab.active {
+    background: var(--night);
+    border-color: var(--night);
+    color: #fff;
+  }
+
+  .menu-panel {
+    display: none;
+  }
+
+  .menu-panel.active {
+    display: block;
+    animation: fade 0.25s ease;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .menu-list {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 780px;
+  }
+
+  .menu-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .mi-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--night);
+    display: block;
+  }
+
+  .mi-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .mi-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--terra);
+    white-space: nowrap;
+  }
+
+  /* Order */
+  .order-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .order-lead {
+    color: #b9c4bb;
+    font-size: 1.05rem;
+    margin: 10px 0 24px;
+  }
+
+  .order-info {
+    display: grid;
+    gap: 14px;
+  }
+
+  .order-info div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .order-info strong {
+    color: #fff;
+  }
+
+  .order-info span {
+    color: #b9c4bb;
+    text-align: right;
+  }
+
+  .order-form {
+    background: var(--paper);
+    border-radius: 20px;
+    padding: 30px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 40px 80px -50px rgba(0, 0, 0, 0.9);
+  }
+
+  .order-form input,
+  .order-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid var(--line);
+    border-radius: 11px;
+    background: var(--cream);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--night);
+  }
+
+  .order-form input:focus,
+  .order-form textarea:focus {
+    outline: none;
+    border-color: var(--terra);
+  }
+
+  .form-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .seg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: var(--cream);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 6px;
+  }
+
+  .seg-opt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #4a5a50;
+  }
+
+  .seg-opt:has(input:checked) {
+    background: var(--terra);
+    color: #fff;
+  }
+
+  .seg-opt input {
+    accent-color: #fff;
+    width: auto;
+  }
+
+  .order-form small,
+  .reserve-form small {
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align: center;
+  }
+
+  /* Delivery */
+  .delivery-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .delivery-lead {
+    color: var(--muted);
+    font-size: 1.03rem;
+    margin: 8px 0 22px;
+  }
+
+  .zones {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .zones li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .zones li strong {
+    color: var(--terra);
+  }
+
+  .delivery-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 30px 60px -50px rgba(22, 32, 26, 0.8);
+  }
+
+  .dc-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .dc-row span {
+    color: var(--muted);
+  }
+
+  .dc-row strong {
+    color: var(--night);
+    text-align: right;
+  }
+
+  .dc-cta {
+    margin-top: 18px;
+  }
+
+  /* Reserve */
+  .reserve-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .reserve-lead {
+    color: var(--muted);
+    font-size: 1.03rem;
+    margin: 8px 0 22px;
+  }
+
+  .hours {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hours li strong {
+    color: var(--night);
+  }
+
+  .reserve-form {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 30px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 30px 60px -50px rgba(22, 32, 26, 0.8);
+  }
+
+  .reserve-form input,
+  .reserve-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid var(--line);
+    border-radius: 11px;
+    background: var(--cream);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--night);
+  }
+
+  .reserve-form input:focus,
+  .reserve-form textarea:focus {
+    outline: none;
+    border-color: var(--terra);
+  }
+
+  .form-3 {
+    display: grid;
+    grid-template-columns: 0.6fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Reviews */
+  .rev-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .rev {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 30px;
+    margin: 0;
+  }
+
+  .stars {
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .rev blockquote {
+    margin: 0 0 14px;
+    color: #3c4a41;
+    font-size: 0.98rem;
+  }
+
+  .rev figcaption {
+    font-weight: 700;
+    color: var(--night);
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--night);
+    color: #9aa79d;
+    padding: 34px 0;
+  }
+
+  .foot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .brand-foot {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-grid,
+    .order-grid,
+    .delivery-grid,
+    .reserve-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .features-grid,
+    .rev-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .links {
+      display: none;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .features-grid,
+    .rev-grid,
+    .form-2,
+    .form-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .seg {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-art {
+      display: none;
+    }
+  }
+</style>

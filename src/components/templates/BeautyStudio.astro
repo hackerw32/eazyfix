@@ -1,0 +1,975 @@
+---
+const brand = 'Aura Beauty Studio';
+const features = [
+  { title: 'Πτυχιούχοι stylists', text: 'Έμπειρη ομάδα με συνεχή εκπαίδευση.' },
+  { title: 'Premium προϊόντα', text: 'Επαγγελματικά προϊόντα που σέβονται τα μαλλιά & τα νύχια.' },
+  { title: 'Online ραντεβού', text: 'Κλείσε τη μέρα και την ώρα που σε βολεύει, 24/7.' },
+  { title: 'Καθαρός χώρος', text: 'Αυστηρή απολύμανση εργαλείων, ήρεμο περιβάλλον.' },
+];
+const nails = [
+  { name: 'Κλασικό Μανικιούρ', time: '45λ', price: '20€' },
+  { name: 'Ημιμόνιμο', time: '1ω 15λ', price: '28€' },
+  { name: 'Επέκταση νυχιών (Gel/Acrylic)', time: '2ω', price: '45€' },
+  { name: 'Nail Art', time: '30λ', price: 'από 12€' },
+  { name: 'Πεντικιούρ Spa', time: '1ω', price: '30€' },
+];
+const hair = [
+  { name: 'Κούρεμα & styling', time: '45λ', price: 'από 22€' },
+  { name: 'Βαφή', time: '1ω 30λ', price: 'από 45€' },
+  { name: 'Balayage / Highlights', time: '3ω', price: 'από 70€' },
+  { name: 'Keratin treatment', time: '2ω', price: 'από 90€' },
+  { name: 'Χτένισμα / Αναχτένισμα', time: '1ω', price: 'από 30€' },
+];
+const packages = [
+  { name: 'Glow', items: 'Ημιμόνιμο + φρύδια', price: '35€', note: 'Ιδανικό για κάθε εβδομάδα', featured: false },
+  { name: 'Full Beauty', items: 'Ημιμόνιμο + Κούρεμα + styling', price: '55€', note: 'Το πιο δημοφιλές', featured: true },
+  { name: 'Bridal', items: 'Δοκιμή + χτένισμα + μακιγιάζ', price: 'από 120€', note: 'Για τη μεγάλη μέρα', featured: false },
+];
+const gallery = ['Ημιμόνιμο', 'Nail Art', 'Gel Νύχια', 'Balayage', 'Χτένισμα', 'Keratin'];
+const team = [
+  { name: 'Ελένη Μ.', role: 'Nail Artist', field: 'Νύχια & Nail Art' },
+  { name: 'Ναταλία Κ.', role: 'Hair Stylist', field: 'Κοπή & Χρώμα' },
+  { name: 'Σοφία Δ.', role: 'Beauty Expert', field: 'Χτενίσματα & Bridal' },
+];
+const reviews = [
+  { name: 'Μαρία Κ.', text: 'Το καλύτερο ημιμόνιμο που έχω κάνει — κρατάει απίστευτα.' },
+  { name: 'Ελένη Π.', text: 'Φοβερό balayage, φυσικό αποτέλεσμα. Ήρεμος, όμορφος χώρος.' },
+  { name: 'Σοφία Δ.', text: 'Το online ραντεβού είναι ό,τι καλύτερο. Πάντα στην ώρα τους.' },
+];
+---
+
+<div class="aura">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <span>Online ραντεβού · 24/7</span>
+      <span class="topbar-right">
+        <a href="tel:2100000000">210 000 0000</a>
+        <span class="sep">·</span>
+        <span>Τρι–Σάβ · 10:00–20:00</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark">A</span>
+        <span class="brand-name">{brand}<small>Nails & Hair</small></span>
+      </a>
+      <nav class="links">
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#packages">Πακέτα</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#team">Ομάδα</a>
+      </nav>
+      <a href="#booking" class="nav-cta">Κλείσε ραντεβού</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Beauty Studio</span>
+        <h1>Τα νύχια και τα μαλλιά σου, το καλύτερό σου κόσμημα.</h1>
+        <p>
+          Ένα σύγχρονο studio αφιερωμένο στην περιποίηση. Με αγάπη στη λεπτομέρεια και υψηλής
+          ποιότητας προϊόντα, φροντίζουμε ώστε να φύγεις με χαμόγελο.
+        </p>
+        <div class="hero-cta">
+          <a href="#booking" class="btn btn-solid">Κλείσε ραντεβού</a>
+          <a href="#services" class="btn btn-ghost">Δες τις υπηρεσίες</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-card hc1"><span>Nails</span></div>
+        <div class="hero-card hc2"><span>Hair</span></div>
+        <div class="hero-badge">★ 4,9 · 320+ κριτικές</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="wrap features-grid">
+      {features.map((f) => (
+        <div class="feature">
+          <strong>{f.title}</strong>
+          <span>{f.text}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Υπηρεσίες & τιμές</span>
+        <h2>Περιποίηση που ξεχωρίζει</h2>
+        <p>Επιμελημένες υπηρεσίες με προϊόντα υψηλής ποιότητας. Διάλεξε αυτό που σου ταιριάζει.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-col">
+          <h3>Νύχια</h3>
+          <ul class="price-list">
+            {nails.map((s) => (
+              <li>
+                <span class="sname">{s.name}<small>{s.time}</small></span>
+                <span class="sprice">{s.price}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="service-col">
+          <h3>Μαλλιά</h3>
+          <ul class="price-list">
+            {hair.map((s) => (
+              <li>
+                <span class="sname">{s.name}<small>{s.time}</small></span>
+                <span class="sprice">{s.price}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section class="section section--soft" id="packages">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Πακέτα</span>
+        <h2>Έτοιμες προτάσεις για σένα</h2>
+      </div>
+      <div class="pkg-grid">
+        {packages.map((p) => (
+          <article class:list={['pkg', { 'pkg--featured': p.featured }]}>
+            {p.featured && <span class="pkg-tag">Δημοφιλές</span>}
+            <h3>{p.name}</h3>
+            <p class="pkg-items">{p.items}</p>
+            <span class="pkg-price">{p.price}</span>
+            <span class="pkg-note">{p.note}</span>
+            <a href="#booking" class="btn btn-solid btn-block">Κλείσε ραντεβού</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section" id="gallery">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Gallery</span>
+        <h2>Λίγες από τις δημιουργίες μας</h2>
+      </div>
+      <div class="gal-grid">
+        {gallery.map((g, i) => (
+          <div class={`gal g${i}`}><span>{g}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section section--soft" id="team">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Η ομάδα</span>
+        <h2>Γνωρίστε τις stylists μας</h2>
+      </div>
+      <div class="team-grid">
+        {team.map((m) => (
+          <article class="member">
+            <div class="member-avatar" aria-hidden="true">{m.name.charAt(0)}</div>
+            <h3>{m.name}</h3>
+            <span class="member-role">{m.role}</span>
+            <span class="member-field">{m.field}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section class="section" id="booking">
+    <div class="wrap booking-grid">
+      <div class="booking-copy">
+        <span class="eyebrow">Ραντεβού</span>
+        <h2>Κλείσε σε λίγα δευτερόλεπτα</h2>
+        <p>Διάλεξε υπηρεσία, ημέρα και ώρα. Θα λάβεις επιβεβαίωση άμεσα.</p>
+        <ul class="booking-info">
+          <li><span>Τηλέφωνο</span><a href="tel:2100000000">210 000 0000</a></li>
+          <li><span>Email</span><a href="mailto:hello@aurabeauty.gr">hello@aurabeauty.gr</a></li>
+          <li><span>Διεύθυνση</span><strong>Σωτήρος 5, Σαλαμίνα</strong></li>
+          <li><span>Ώρες</span><strong>Τρι–Σάβ · 10:00–20:00</strong></li>
+        </ul>
+      </div>
+      <form class="booking-form" onsubmit="event.preventDefault(); this.reset();">
+        <div class="form-2">
+          <input type="text" placeholder="Όνομα" required />
+          <input type="tel" placeholder="Τηλέφωνο" required />
+        </div>
+        <select required>
+          <option value="">Υπηρεσία</option>
+          <option>Μανικιούρ / Ημιμόνιμο</option>
+          <option>Επέκταση νυχιών</option>
+          <option>Κούρεμα & styling</option>
+          <option>Βαφή / Balayage</option>
+          <option>Πακέτο Full Beauty</option>
+        </select>
+        <div class="form-2">
+          <input type="date" required />
+          <input type="time" required />
+        </div>
+        <select>
+          <option>Οποιαδήποτε stylist</option>
+          <option>Ελένη Μ.</option>
+          <option>Ναταλία Κ.</option>
+          <option>Σοφία Δ.</option>
+        </select>
+        <button type="submit" class="btn btn-solid btn-block">Ζήτα ραντεβού</button>
+        <small>Ενδεικτική φόρμα demo — δεν αποστέλλει δεδομένα.</small>
+      </form>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Αξιολογήσεις</span>
+        <h2>Τι λένε οι πελάτισσές μας</h2>
+      </div>
+      <div class="rev-grid">
+        {reviews.map((r) => (
+          <figure class="rev">
+            <div class="stars">★★★★★</div>
+            <blockquote>{r.text}</blockquote>
+            <figcaption>{r.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap foot-inner">
+      <span class="brand brand-foot"><span class="brand-mark brand-mark--foot">A</span>{brand}</span>
+      <span>© 2026 {brand}. Nails & Hair στη Σαλαμίνα.</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .aura {
+    --cream: #fbf6f4;
+    --paper: #fffdfd;
+    --rose: #c97b8e;
+    --rose-d: #a95e72;
+    --plum: #4a2c3a;
+    --gold: #c9a227;
+    --muted: #8a7480;
+    --line: #efe2e6;
+    background: var(--paper);
+    color: var(--plum);
+    font-family: 'Poppins', system-ui, sans-serif;
+    line-height: 1.65;
+  }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .aura h1,
+  .aura h2,
+  .aura h3 {
+    font-family: 'Marcellus', 'Playfair Display', serif;
+    color: var(--plum);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  .aura h1 {
+    font-size: clamp(2.2rem, 4.8vw, 3.4rem);
+    line-height: 1.12;
+  }
+
+  .aura h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    margin: 10px 0 12px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+
+  /* Topbar */
+  .topbar {
+    background: var(--plum);
+    color: #e8d7de;
+    font-size: 0.8rem;
+  }
+
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 24px;
+    flex-wrap: wrap;
+  }
+
+  .topbar a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .topbar .sep {
+    margin: 0 8px;
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 253, 253, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 80px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: 'Marcellus', serif;
+    font-size: 1.2rem;
+    color: #fff;
+    background: linear-gradient(140deg, var(--rose), var(--plum));
+  }
+
+  .brand-name {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Marcellus', serif;
+    font-size: 1.28rem;
+    color: var(--plum);
+    line-height: 1.1;
+  }
+
+  .brand-name small {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+
+  .links {
+    display: flex;
+    gap: 26px;
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+
+  .links a {
+    color: #6b5560;
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    color: var(--rose);
+  }
+
+  .nav-cta {
+    background: var(--rose);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 12px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    background: var(--rose-d);
+  }
+
+  /* Hero */
+  .hero {
+    background:
+      radial-gradient(90% 90% at 100% 0%, #f9e6ec, transparent 60%),
+      var(--cream);
+    padding: 76px 0;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-copy p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin: 20px 0 30px;
+    max-width: 48ch;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.94rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    font-family: inherit;
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+
+  .btn-solid {
+    background: var(--rose);
+    color: #fff;
+  }
+
+  .btn-solid:hover {
+    background: var(--rose-d);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    border-color: rgba(74, 44, 58, 0.25);
+    color: var(--plum);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(74, 44, 58, 0.05);
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  .hero-art {
+    position: relative;
+    height: 420px;
+  }
+
+  .hero-card {
+    position: absolute;
+    border-radius: 26px;
+    box-shadow: 0 40px 70px -46px rgba(74, 44, 58, 0.6);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    color: #fff;
+    font-family: 'Marcellus', serif;
+    font-size: 1.2rem;
+  }
+
+  .hc1 {
+    width: 62%;
+    height: 74%;
+    left: 0;
+    top: 0;
+    background: linear-gradient(160deg, #e7bcc8, #a95e72);
+  }
+
+  .hc2 {
+    width: 52%;
+    height: 56%;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(160deg, #d9b7d0, #7a4a63);
+  }
+
+  .hero-badge {
+    position: absolute;
+    left: 34%;
+    bottom: 6%;
+    background: #fff;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--plum);
+    box-shadow: 0 18px 36px -22px rgba(74, 44, 58, 0.6);
+  }
+
+  /* Features */
+  .features {
+    background: var(--plum);
+    color: #e8d7de;
+    padding: 34px 0;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .feature strong {
+    display: block;
+    font-family: 'Marcellus', serif;
+    font-size: 1.08rem;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .feature span {
+    font-size: 0.85rem;
+    color: #cdb6c0;
+  }
+
+  /* Sections */
+  .section {
+    padding: 84px 0;
+  }
+
+  .section--soft {
+    background: var(--cream);
+  }
+
+  .head {
+    max-width: 620px;
+    margin-bottom: 44px;
+  }
+
+  .head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .head p {
+    color: var(--muted);
+    font-size: 1.03rem;
+    margin-top: 6px;
+  }
+
+  /* Services */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .service-col {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 32px;
+  }
+
+  .service-col h3 {
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+    color: var(--rose);
+  }
+
+  .price-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .price-list li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 15px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .price-list li:last-child {
+    border-bottom: 0;
+  }
+
+  .sname {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: var(--plum);
+  }
+
+  .sname small {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .sprice {
+    font-family: 'Marcellus', serif;
+    font-size: 1.2rem;
+    color: var(--rose);
+    white-space: nowrap;
+  }
+
+  /* Packages */
+  .pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    align-items: stretch;
+  }
+
+  .pkg {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .pkg--featured {
+    border-color: var(--rose);
+    box-shadow: 0 30px 60px -44px rgba(201, 123, 142, 0.9);
+  }
+
+  .pkg-tag {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--rose);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+
+  .pkg h3 {
+    font-size: 1.5rem;
+    color: var(--plum);
+  }
+
+  .pkg-items {
+    color: var(--muted);
+    font-size: 0.92rem;
+    flex: 1;
+  }
+
+  .pkg-price {
+    font-family: 'Marcellus', serif;
+    font-size: 2rem;
+    color: var(--rose);
+  }
+
+  .pkg-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* Gallery */
+  .gal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 170px;
+    gap: 16px;
+  }
+
+  .gal {
+    border-radius: 20px;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    color: #fff;
+    font-weight: 600;
+    background: linear-gradient(160deg, #e7bcc8, #a95e72);
+  }
+
+  .gal.g0 { grid-column: span 2; grid-row: span 2; background: linear-gradient(160deg, #d9b7d0, #7a4a63); }
+  .gal.g1 { background: linear-gradient(160deg, #f0d3db, #c97b8e); }
+  .gal.g2 { background: linear-gradient(160deg, #dcc6de, #9b6b8a); }
+  .gal.g3 { background: linear-gradient(160deg, #eec9cf, #b06b7e); }
+  .gal.g4 { grid-column: span 2; background: linear-gradient(160deg, #e6cdd8, #a95e72); }
+  .gal.g5 { background: linear-gradient(160deg, #d5bcd6, #7a4a63); }
+
+  /* Team */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+
+  .member {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 34px;
+    text-align: center;
+  }
+
+  .member-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: 'Marcellus', serif;
+    font-size: 1.8rem;
+    color: #fff;
+    background: linear-gradient(140deg, var(--rose), var(--plum));
+  }
+
+  .member h3 {
+    font-size: 1.35rem;
+  }
+
+  .member-role {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin: 8px 0 4px;
+  }
+
+  .member-field {
+    display: block;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* Booking */
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .booking-copy p {
+    color: var(--muted);
+    font-size: 1.04rem;
+    margin: 10px 0 24px;
+  }
+
+  .booking-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .booking-info li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .booking-info span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .booking-info a,
+  .booking-info strong {
+    color: var(--plum);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .booking-form {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 32px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 30px 60px -48px rgba(74, 44, 58, 0.7);
+  }
+
+  .booking-form input,
+  .booking-form select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    background: var(--cream);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--plum);
+  }
+
+  .booking-form input:focus,
+  .booking-form select:focus {
+    outline: none;
+    border-color: var(--rose);
+  }
+
+  .form-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .booking-form small {
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align: center;
+  }
+
+  /* Reviews */
+  .rev-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .rev {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 0;
+  }
+
+  .stars {
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .rev blockquote {
+    margin: 0 0 14px;
+    color: #5a414c;
+    font-size: 0.98rem;
+  }
+
+  .rev figcaption {
+    font-weight: 700;
+    color: var(--plum);
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--plum);
+    color: #cdb6c0;
+    padding: 34px 0;
+  }
+
+  .foot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .brand-foot {
+    color: #fff;
+    font-family: 'Marcellus', serif;
+    font-size: 1.2rem;
+  }
+
+  .brand-mark--foot {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-grid,
+    .services-grid,
+    .booking-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .features-grid,
+    .pkg-grid,
+    .team-grid,
+    .rev-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .links {
+      display: none;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .features-grid,
+    .pkg-grid,
+    .team-grid,
+    .rev-grid,
+    .form-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .gal-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gal.g0 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .gal.g4 {
+      grid-column: span 2;
+    }
+  }
+</style>

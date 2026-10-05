@@ -52,7 +52,7 @@ export const templates: Template[] = [
     category: { el: 'Ομορφιά', en: 'Beauty' },
     short: { el: 'Νύχια ή κομμωτήριο, με ραντεβού.', en: 'Nails or hair salon, with booking.' },
     style: 'elegant-beauty',
-    built: false,
+    built: true,
   },
   {
     slug: 'rouxa',
@@ -88,7 +88,7 @@ export const templates: Template[] = [
     category: { el: 'Εστίαση', en: 'Food' },
     short: { el: 'Μενού & online παραγγελίες.', en: 'Menu & online orders.' },
     style: 'appetite-ordering',
-    built: false,
+    built: true,
   },
 ];
 
