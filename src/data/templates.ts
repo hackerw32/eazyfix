@@ -79,7 +79,7 @@ export const templates: Template[] = [
     category: { el: 'Αυτοκίνητα', en: 'Automotive' },
     short: { el: 'Στόλος, τιμές & online κρατήσεις.', en: 'Fleet, pricing & online booking.' },
     style: 'bold-booking',
-    built: false,
+    built: true,
   },
   {
     slug: 'estiatorio',

@@ -1,0 +1,1172 @@
+---
+const brand = 'AutoGo';
+const fleet = [
+  { name: 'Fiat Panda', cat: 'Οικονομικό', price: '29€', gear: 'Χειροκίνητο', seats: '5', fuel: 'Βενζίνη', doors: '5', tone: 'a' },
+  { name: 'Toyota Yaris', cat: 'Compact', price: '35€', gear: 'Αυτόματο', seats: '5', fuel: 'Βενζίνη', doors: '5', tone: 'b' },
+  { name: 'VW Golf', cat: 'Compact', price: '39€', gear: 'Χειροκίνητο', seats: '5', fuel: 'Diesel', doors: '5', tone: 'c' },
+  { name: 'Nissan Qashqai', cat: 'SUV', price: '55€', gear: 'Αυτόματο', seats: '5', fuel: 'Diesel', doors: '5', tone: 'd' },
+  { name: 'Mercedes A-Class', cat: 'Premium', price: '75€', gear: 'Αυτόματο', seats: '5', fuel: 'Βενζίνη', doors: '5', tone: 'e' },
+  { name: 'Ford Transit 9 θέσεις', cat: 'Van', price: '89€', gear: 'Χειροκίνητο', seats: '9', fuel: 'Diesel', doors: '4', tone: 'f' },
+];
+const benefits = [
+  { title: 'Άμεση παράδοση', text: 'Παραλαβή στο σημείο σου, χωρίς ουρές.' },
+  { title: 'Χωρίς κρυφές χρεώσεις', text: 'Καθαρές τιμές, ό,τι βλέπεις πληρώνεις.' },
+  { title: 'Πλήρης ασφάλεια', text: 'Όλα τα οχήματα ασφαλισμένα και ελεγμένα.' },
+  { title: 'Υποστήριξη 24/7', text: 'Πάντα κάποιος διαθέσιμος στο τηλέφωνο.' },
+];
+const steps = [
+  { title: 'Κάνε κράτηση', text: 'Διάλεξε όχημα, ημερομηνίες και σημείο παραλαβής online.' },
+  { title: 'Παραλαβή', text: 'Σου φέρνουμε το αυτοκίνητο ή το παραλαμβάνεις από εμάς.' },
+  { title: 'Οδήγησε', text: 'Απεριόριστα χιλιόμετρα, με βοήθεια όποτε τη χρειαστείς.' },
+  { title: 'Επιστροφή', text: 'Το επιστρέφεις όπως το πήρες — απλά και γρήγορα.' },
+];
+const locations = [
+  { name: 'Σαλαμίνα — Κέντρο', hours: 'Δευ–Κυρ · 08:00–21:00' },
+  { name: 'Λιμάνι Παλουκίων', hours: 'Καθημερινά · 07:00–22:00' },
+  { name: 'Αεροδρόμιο Αθηνών', hours: 'Παράδοση κατόπιν κράτησης' },
+  { name: 'Πειραιάς', hours: 'Καθημερινά · 08:00–20:00' },
+];
+const extras = [
+  { name: 'GPS πλοήγησης', price: '5€ / ημέρα' },
+  { name: 'Παιδικό κάθισμα', price: '5€ / ημέρα' },
+  { name: 'Επιπλέον οδηγός', price: '8€ / ημέρα' },
+  { name: 'Πλήρης ασφάλεια', price: '12€ / ημέρα' },
+];
+const requirements = ['Δίπλωμα άνω του 1 έτους', 'Ηλικία 21 ετών και άνω', 'Ταυτότητα ή διαβατήριο', 'Χρεωστική ή πιστωτική κάρτα'];
+const reviews = [
+  { name: 'Αντώνης Μ.', text: 'Παρέλαβα στο λιμάνι σε 10 λεπτά. Καθαρό αυτοκίνητο, καμία έκπληξη στην τιμή.' },
+  { name: 'Σοφία Ρ.', text: 'Κλείσαμε SUV για οικογένεια — άνετο και οικονομικό. Τους προτιμώ ξανά.' },
+  { name: 'Kostas D.', text: 'Επαγγελματίες, ευγενικοί και άμεσοι. Το van για 9 άτομα έσωσε την εκδρομή μας.' },
+];
+const faq = [
+  { q: 'Χρειάζομαι πιστωτική κάρτα;', a: 'Δεκτή χρεωστική ή πιστωτική για την εγγύηση. Δεν χρειάζεται να έχεις πιστωτική αν δεν θέλεις.' },
+  { q: 'Μπορώ να παραλάβω στο αεροδρόμιο;', a: 'Ναι, με μικρή χρέωση παράδοσης, κατόπιν κράτησης.' },
+  { q: 'Ποιο είναι το όριο χιλιομέτρων;', a: 'Τα περισσότερα οχήματα έχουν απεριόριστα χιλιόμετρα.' },
+  { q: 'Τι γίνεται με το καύσιμο;', a: 'Παραλαμβάνεις και επιστρέφεις με το ίδιο επίπεδο καυσίμου.' },
+  { q: 'Μπορώ να ακυρώσω;', a: 'Δωρεάν ακύρωση έως 48 ώρες πριν την παραλαβή.' },
+];
+---
+
+<div class="car">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <span>Σαλαμίνα · Πειραιάς · Αεροδρόμιο</span>
+      <span class="topbar-right">
+        <a href="tel:6970000000">697 000 0000</a>
+        <span class="sep">·</span>
+        <span>Καθημερινά 07:00–22:00</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/></svg>
+        </span>
+        {brand}<span class="brand-sub">Rentals</span>
+      </a>
+      <nav class="links">
+        <a href="#fleet">Στόλος</a>
+        <a href="#how">Πώς λειτουργεί</a>
+        <a href="#locations">Τοποθεσίες</a>
+        <a href="#faq">Συχνές ερωτήσεις</a>
+      </nav>
+      <a href="#booking" class="nav-cta">Κράτηση</a>
+    </div>
+  </header>
+
+  <!-- Hero + search -->
+  <section class="hero" id="top">
+    <div class="wrap hero-copy">
+      <span class="hero-tag">Ενοικιάσεις αυτοκινήτων</span>
+      <h1>Νοίκιασέ το εύκολα. Οδήγησέ το ελεύθερα.</h1>
+      <p>Αυτοκίνητα κάθε κατηγορίας, με καθαρές τιμές και παράδοση εκεί που σε βολεύει — στη Σαλαμίνα, στον Πειραιά ή στο αεροδρόμιο.</p>
+    </div>
+
+    <div class="wrap">
+      <form class="search" id="booking" onsubmit="event.preventDefault();">
+        <div class="search-field">
+          <label>Παραλαβή σε</label>
+          <select>
+            <option>Σαλαμίνα — Κέντρο</option>
+            <option>Λιμάνι Παλουκίων</option>
+            <option>Αεροδρόμιο Αθηνών</option>
+            <option>Πειραιάς</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Ημερομηνία</label>
+          <input type="date" />
+        </div>
+        <div class="search-field">
+          <label>Ώρα</label>
+          <input type="time" value="10:00" />
+        </div>
+        <div class="search-field">
+          <label>Επιστροφή σε</label>
+          <select>
+            <option>Σαλαμίνα — Κέντρο</option>
+            <option>Λιμάνι Παλουκίων</option>
+            <option>Αεροδρόμιο Αθηνών</option>
+            <option>Πειραιάς</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Επιστροφή</label>
+          <input type="date" />
+        </div>
+        <button type="submit" class="search-btn">Αναζήτηση</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="benefits">
+    <div class="wrap benefits-grid">
+      {benefits.map((b) => (
+        <div class="benefit">
+          <span class="benefit-dot" aria-hidden="true"></span>
+          <strong>{b.title}</strong>
+          <span>{b.text}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Fleet -->
+  <section class="section" id="fleet">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Ο στόλος μας</span>
+        <h2>Διάλεξε όχημα για κάθε ανάγκη</h2>
+        <p>Από μικρά οικονομικά μέχρι premium και van 9 θέσεων. Τιμές ανά ημέρα, με ΦΠΑ.</p>
+      </div>
+      <div class="fleet-grid">
+        {fleet.map((car) => (
+          <article class="car-card">
+            <div class={`car-img tone-${car.tone}`}>
+              <span class="car-cat">{car.cat}</span>
+              <span class="car-sil" aria-hidden="true">
+                <svg viewBox="0 0 120 48" width="120" height="48" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 36h104M14 36V20l10-10h44l14 10h24v16"/><circle cx="34" cy="36" r="6"/><circle cx="90" cy="36" r="6"/></svg>
+              </span>
+            </div>
+            <div class="car-body">
+              <h3>{car.name}</h3>
+              <div class="specs">
+                <span>{car.gear}</span>
+                <span>{car.seats} θέσεις</span>
+                <span>{car.fuel}</span>
+                <span>{car.doors} πόρτες</span>
+                <span>A/C</span>
+              </div>
+              <div class="car-foot">
+                <span class="car-price">{car.price}<small>/ημέρα</small></span>
+                <a href="#booking" class="car-book">Κράτηση</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Requirements -->
+  <section class="section section--soft">
+    <div class="wrap req-grid">
+      <div>
+        <span class="eyebrow">Απαιτήσεις</span>
+        <h2>Τι χρειάζεσαι για να νοικιάσεις</h2>
+        <p class="req-lead">Γρήγορη διαδικασία, χωρίς περιττά χαρτιά. Σου εξηγούμε τα πάντα πριν υπογράψεις.</p>
+      </div>
+      <ul class="req-list">
+        {requirements.map((r) => (
+          <li><span class="check" aria-hidden="true">✓</span>{r}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- How -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="head center">
+        <span class="eyebrow">Πώς λειτουργεί</span>
+        <h2>Από την κράτηση στο τιμόνι, σε 4 βήματα</h2>
+      </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li>
+            <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section class="section section--soft" id="locations">
+    <div class="wrap loc-grid">
+      <div class="loc-map" aria-hidden="true">
+        <div class="pin p1"></div>
+        <div class="pin p2"></div>
+        <div class="pin p3"></div>
+        <span class="map-label">Σαλαμίνα · Πειραιάς · Αθήνα</span>
+      </div>
+      <div>
+        <span class="eyebrow">Τοποθεσίες</span>
+        <h2>Παραλαβή εκεί που σε βολεύει</h2>
+        <ul class="loc-list">
+          {locations.map((l) => (
+            <li><strong>{l.name}</strong><span>{l.hours}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extras + Reviews -->
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <span class="eyebrow">Extras</span>
+        <h2>Πρόσθεσε ό,τι χρειάζεσαι</h2>
+        <ul class="extras">
+          {extras.map((e) => (
+            <li><span>{e.name}</span><strong>{e.price}</strong></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <span class="eyebrow">Κριτικές</span>
+        <h2>Τι λένε οι πελάτες</h2>
+        <div class="rev-grid">
+          {reviews.map((r) => (
+            <figure class="rev">
+              <div class="stars">★★★★★</div>
+              <blockquote>{r.text}</blockquote>
+              <figcaption>{r.name}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--soft" id="faq">
+    <div class="wrap faq-wrap">
+      <div class="head center">
+        <span class="eyebrow">Συχνές ερωτήσεις</span>
+        <h2>Ό,τι ρωτούν συχνότερα</h2>
+      </div>
+      <div class="faq-list">
+        {faq.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}<span class="faq-plus" aria-hidden="true">+</span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Κράτηση</span>
+        <h2>Έτοιμος να ξεκινήσεις;</h2>
+        <p>Συμπλήρωσε τη φόρμα ή πάρε μας τηλέφωνο. Θα σου απαντήσουμε άμεσα με διαθεσιμότητα και τιμή.</p>
+        <ul class="contact-list">
+          <li>Τηλέφωνο <a href="tel:6970000000">697 000 0000</a></li>
+          <li>Email <a href="mailto:book@autogo.gr">book@autogo.gr</a></li>
+          <li>Έδρα <span>Σαλαμίνα, Αττική</span></li>
+        </ul>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault(); this.reset();">
+        <input type="text" placeholder="Ονοματεπώνυμο" required />
+        <div class="form-2">
+          <input type="tel" placeholder="Τηλέφωνο" required />
+          <input type="date" required />
+        </div>
+        <select required>
+          <option value="">Κατηγορία οχήματος</option>
+          <option>Οικονομικό</option>
+          <option>Compact</option>
+          <option>SUV</option>
+          <option>Premium</option>
+          <option>Van 9 θέσεων</option>
+        </select>
+        <textarea rows="3" placeholder="Σημείο παραλαβής / σχόλια"></textarea>
+        <button type="submit" class="btn-primary btn-block">Ζήτα κράτηση</button>
+        <small>Ενδεικτική φόρμα demo — δεν αποστέλλει δεδομένα.</small>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap foot-inner">
+      <span class="brand brand-foot">{brand}<span class="brand-sub">Rentals</span></span>
+      <span>© 2026 {brand} Rentals · Ενοικιάσεις αυτοκινήτων.</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .car {
+    --ink: #0b1220;
+    --navy: #101b30;
+    --blue: #2563eb;
+    --blue-d: #1d4ed8;
+    --amber: #f59e0b;
+    --slate: #64748b;
+    --line: #e2e8f0;
+    --soft: #f6f8fc;
+    background: #fff;
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .car h1,
+  .car h2,
+  .car h3 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .car h1 {
+    font-size: clamp(2.1rem, 4.6vw, 3.3rem);
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .car h2 {
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    margin: 10px 0 12px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  /* Topbar */
+  .topbar {
+    background: var(--ink);
+    color: #94a3b8;
+    font-size: 0.82rem;
+  }
+
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 24px;
+    flex-wrap: wrap;
+  }
+
+  .topbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .topbar .sep {
+    margin: 0 8px;
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 72px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--blue);
+    color: #fff;
+  }
+
+  .brand-sub {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-left: 2px;
+    align-self: flex-end;
+    margin-bottom: 4px;
+  }
+
+  .links {
+    display: flex;
+    gap: 26px;
+    font-weight: 600;
+    font-size: 0.94rem;
+  }
+
+  .links a {
+    color: #334155;
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    color: var(--blue);
+  }
+
+  .nav-cta {
+    background: var(--amber);
+    color: #1f2937;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 11px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover {
+    background: #e08e0a;
+  }
+
+  /* Hero */
+  .hero {
+    background:
+      radial-gradient(90% 120% at 85% -10%, rgba(37, 99, 235, 0.45), transparent 60%),
+      linear-gradient(180deg, #0b1220, #101b30);
+    color: #fff;
+    padding: 72px 0 0;
+  }
+
+  .hero-copy {
+    max-width: 760px;
+  }
+
+  .hero h1 {
+    color: #fff;
+    margin: 16px 0 18px;
+  }
+
+  .hero p {
+    color: #cbd5e1;
+    font-size: 1.12rem;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #dbeafe;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 7px 15px;
+    border-radius: 999px;
+  }
+
+  /* Search */
+  .search {
+    margin-top: 44px;
+    transform: translateY(44px);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 40px 80px -50px rgba(11, 18, 32, 0.9);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.8fr 1.4fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .search-field label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate);
+  }
+
+  .search input,
+  .search select {
+    width: 100%;
+    padding: 12px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: var(--ink);
+    background: #fff;
+  }
+
+  .search input:focus,
+  .search select:focus {
+    outline: none;
+    border-color: var(--blue);
+  }
+
+  .search-btn {
+    border: none;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 13px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    height: 46px;
+  }
+
+  .search-btn:hover {
+    background: var(--blue-d);
+  }
+
+  /* Benefits */
+  .benefits {
+    background: #fff;
+    padding: 96px 0 40px;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .benefit {
+    border-left: 3px solid var(--amber);
+    padding-left: 16px;
+  }
+
+  .benefit strong {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .benefit span {
+    color: var(--slate);
+    font-size: 0.9rem;
+  }
+
+  .benefit-dot {
+    display: none;
+  }
+
+  /* Sections */
+  .section {
+    padding: 80px 0;
+  }
+
+  .section--soft {
+    background: var(--soft);
+  }
+
+  .head {
+    max-width: 660px;
+    margin-bottom: 42px;
+  }
+
+  .head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .head p {
+    color: var(--slate);
+    font-size: 1.02rem;
+    margin-top: 6px;
+  }
+
+  /* Fleet */
+  .fleet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .car-card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .car-card:hover {
+    transform: translateY(-5px);
+    border-color: transparent;
+    box-shadow: 0 30px 50px -34px rgba(11, 18, 32, 0.6);
+  }
+
+  .car-img {
+    position: relative;
+    height: 170px;
+    display: grid;
+    place-items: center;
+  }
+
+  .tone-a { background: linear-gradient(150deg, #1e3a8a, #0b1220); }
+  .tone-b { background: linear-gradient(150deg, #0e7490, #0b1220); }
+  .tone-c { background: linear-gradient(150deg, #334155, #0b1220); }
+  .tone-d { background: linear-gradient(150deg, #1d4ed8, #0b1220); }
+  .tone-e { background: linear-gradient(150deg, #111827, #020617); }
+  .tone-f { background: linear-gradient(150deg, #7c2d12, #0b1220); }
+
+  .car-cat {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+
+  .car-sil {
+    opacity: 0.85;
+  }
+
+  .car-body {
+    padding: 22px;
+  }
+
+  .car-body h3 {
+    font-size: 1.15rem;
+    margin-bottom: 14px;
+  }
+
+  .specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .specs span {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #475569;
+    background: var(--soft);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    border-radius: 7px;
+  }
+
+  .car-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  .car-price {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--ink);
+  }
+
+  .car-price small {
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--slate);
+  }
+
+  .car-book {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 10px 20px;
+    border-radius: 9px;
+    text-decoration: none;
+  }
+
+  .car-book:hover {
+    background: var(--blue-d);
+  }
+
+  /* Requirements */
+  .req-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .req-lead {
+    color: var(--slate);
+    font-size: 1.03rem;
+    margin-top: 8px;
+  }
+
+  .req-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .req-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-weight: 600;
+  }
+
+  .check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  /* Steps */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .steps li {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px;
+  }
+
+  .step-num {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 1.5rem;
+  }
+
+  .steps h3 {
+    font-size: 1.08rem;
+    margin: 10px 0 8px;
+  }
+
+  .steps p {
+    color: var(--slate);
+    font-size: 0.92rem;
+  }
+
+  /* Locations */
+  .loc-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .loc-map {
+    position: relative;
+    height: 340px;
+    border-radius: 16px;
+    background:
+      linear-gradient(rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+      linear-gradient(150deg, #e8eefb, #dbe4f5);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .pin {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.18);
+  }
+
+  .pin.p1 { top: 30%; left: 28%; }
+  .pin.p2 { top: 55%; left: 62%; }
+  .pin.p3 { top: 22%; left: 74%; }
+
+  .map-label {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .loc-list {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+  }
+
+  .loc-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .loc-list li span {
+    color: var(--slate);
+    font-size: 0.9rem;
+    text-align: right;
+  }
+
+  /* Two col (extras + reviews) */
+  .two-col {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .extras {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .extras li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .extras li strong {
+    color: var(--blue);
+  }
+
+  .rev-grid {
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .rev {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    margin: 0;
+  }
+
+  .stars {
+    color: var(--amber);
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .rev blockquote {
+    margin: 0 0 12px;
+    color: #334155;
+    font-size: 0.96rem;
+  }
+
+  .rev figcaption {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* FAQ */
+  .faq-wrap {
+    max-width: 780px;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .faq-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-plus {
+    color: var(--blue);
+    font-size: 1.3rem;
+    transition: transform 0.2s ease;
+  }
+
+  .faq-item[open] .faq-plus {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    padding: 0 22px 20px;
+    color: var(--slate);
+  }
+
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .contact-grid p {
+    color: var(--slate);
+    font-size: 1.03rem;
+    margin-bottom: 20px;
+  }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .contact-list li {
+    display: flex;
+    gap: 10px;
+    color: var(--slate);
+  }
+
+  .contact-list a {
+    color: var(--blue);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .contact-form {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 30px 60px -46px rgba(11, 18, 32, 0.8);
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--blue);
+  }
+
+  .form-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .btn-primary {
+    border: none;
+    background: var(--amber);
+    color: #1f2937;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-primary:hover {
+    background: #e08e0a;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  .contact-form small {
+    color: var(--slate);
+    text-align: center;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--ink);
+    color: #94a3b8;
+    padding: 34px 0;
+  }
+
+  .foot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .brand-foot {
+    color: #fff;
+  }
+
+  .brand-foot .brand-sub {
+    color: #94a3b8;
+  }
+
+  /* Responsive */
+  @media (max-width: 1000px) {
+    .search {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .btn-search-wrap,
+    .search-btn {
+      grid-column: span 2;
+    }
+
+    .fleet-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .benefits-grid,
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .loc-grid,
+    .req-grid,
+    .two-col,
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .links {
+      display: none;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .search {
+      grid-template-columns: 1fr;
+    }
+
+    .search-btn {
+      grid-column: auto;
+    }
+
+    .fleet-grid,
+    .benefits-grid,
+    .steps,
+    .form-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .topbar-right {
+      display: none;
+    }
+  }
+</style>

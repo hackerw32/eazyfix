@@ -1,6 +1,7 @@
 ---
 import DemoLayout from '../../layouts/DemoLayout.astro';
 import HandmadeCandles from '../../components/templates/HandmadeCandles.astro';
+import CarRental from '../../components/templates/CarRental.astro';
 import { getTemplate } from '../../data/templates';
 
 export const prerender = false;
@@ -14,6 +15,7 @@ if (!template || !template.built) {
 
 const components: Record<string, any> = {
   keri: HandmadeCandles,
+  'enoikiasi-autokiniton': CarRental,
 };
 
 const Demo = components[template.slug];
